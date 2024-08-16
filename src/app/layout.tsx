@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Tabs from "@/components/ui/Tabs";
+import FireIcon from "@/components/icons/FireIcon";
+import HistoryIcon from "@/components/icons/HistoryIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,8 +13,8 @@ export const metadata: Metadata = {
 };
 
 const navigationTabs = [
-  { name: "Current auction", href: "/" },
-  { name: "Past auctions", href: "/history" },
+  { name: "Current auction", href: "/", icon: <FireIcon /> },
+  { name: "Past auctions", href: "/history", icon: <HistoryIcon /> },
 ];
 
 export default function RootLayout({

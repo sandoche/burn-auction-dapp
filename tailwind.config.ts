@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "evmos-darkish": "#26211f",
         "evmos-dark": "#1c1716",
+        "evmos-light": "#D8C2BB",
       },
     },
   },
