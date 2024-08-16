@@ -14,6 +14,7 @@
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
     "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "clsx": "^2.1.1",
     "dappstore": "^0.0.6",
     "next": "14.2.5",

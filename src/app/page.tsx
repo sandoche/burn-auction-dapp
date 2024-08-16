@@ -2,6 +2,7 @@ import Chip from "@/components/ui/Chip";
 import StatusIndicatorIcon from "@/components/icons/StatusIndicatorIcon";
 import ProgressBar from "@/components/ui/ProgressBar";
 import AssetsTable from "./_components/AssetsTable";
+import BiddingHistory from "./_components/BiddingHistory";
 
 export default function CurrentAuction() {
   // dummy data for now
@@ -83,7 +84,7 @@ export default function CurrentAuction() {
           </a>
         </p>
         <div className="mb-6">Place a bid widget will be here</div>
-        <div>Bidding History</div>
+        <BiddingHistory />
       </section>
     </main>
   );
