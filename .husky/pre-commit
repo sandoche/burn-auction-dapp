@@ -1,1 +1,2 @@
-pnpm
+pnpm lint
+pnpm format
