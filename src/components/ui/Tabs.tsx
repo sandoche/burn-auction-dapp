@@ -12,7 +12,7 @@ export default function Tabs({ tabs }: Readonly<{ tabs: TabLink[] }>) {
   return (
     <TabGroup
       selectedIndex={tabs.findIndex((tab) => tab.href === pathname)}
-      className="mb-4"
+      className="mb-6"
     >
       <TabList className="flex bg-evmos-dark rounded-full p-2">
         {tabs.map((tab) => (

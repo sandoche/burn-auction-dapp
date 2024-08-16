@@ -12,6 +12,11 @@ const config: Config = {
         "evmos-darkish": "#26211f",
         "evmos-dark": "#1c1716",
         "evmos-light": "#D8C2BB",
+        success: {
+          dark: "#9BD679",
+          light: "#366A1A",
+        },
+        "evmos-secondary": "#55377b",
       },
     },
   },
