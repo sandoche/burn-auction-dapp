@@ -1,6 +1,7 @@
 import Chip from "@/components/ui/Chip";
 import StatusIndicatorIcon from "@/components/icons/StatusIndicatorIcon";
 import ProgressBar from "@/components/ui/ProgressBar";
+import AssetsTable from "./_components/AssetsTable";
 
 export default function CurrentAuction() {
   // dummy data for now
@@ -14,12 +15,14 @@ export default function CurrentAuction() {
         name: "Atom",
         amount: 100,
         valueInUsd: 1000,
+        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/3794.png",
       },
       {
         ticker: "ETH",
         name: "Ethereum",
         amount: 10,
         valueInUsd: 3000,
+        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
       },
     ],
     totalAuctionnedValue: 4000,
@@ -34,7 +37,7 @@ export default function CurrentAuction() {
 
   return (
     <main>
-      <section className="mb-10">
+      <section className="mb-12">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl">Auction #{auction.round}</h1>
           <Chip>
@@ -51,12 +54,12 @@ export default function CurrentAuction() {
           2024 - 23:59 CET
         </p>
       </section>
-      <section className="mb-10">
+      <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">
           Current total auctioned value
         </h2>
         <p className="text-3xl mb-6 font-semibold">$1,200,100.00</p>
-        <div>TABLE WILL BE HERE</div>
+        <AssetsTable assets={auction.auctionnedAssets} />
       </section>
       <section>
         <div className="flex items-center mb-1">
