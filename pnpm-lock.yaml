@@ -11,6 +11,9 @@ dependencies:
   '@headlessui/react':
     specifier: ^2.1.2
     version: 2.1.2(react-dom@18.3.1)(react@18.3.1)
+  clsx:
+    specifier: ^2.1.1
+    version: 2.1.1
   dappstore:
     specifier: ^0.0.6
     version: 0.0.6(commander@12.1.0)(typescript@5.5.4)(zod@3.23.8)
