@@ -5,7 +5,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export default function BiddingHistory() {
+export const BiddingHistory = () => {
   return (
     <Disclosure>
       <DisclosureButton className="group flex items-center gap-2 text-evmos-lightish">
@@ -15,4 +15,4 @@ export default function BiddingHistory() {
       <DisclosurePanel>Coming soon</DisclosurePanel>
     </Disclosure>
   );
-}
+};

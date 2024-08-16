@@ -1,7 +1,7 @@
 import type { Assets } from "../_types/Assets";
 import Image from "next/image";
 
-export default function AssetsTable({ assets }: { assets: Assets }) {
+export const AssetsTable = ({ assets }: { assets: Assets }) => {
   return (
     <table className="min-w-full divide-y divide-evmos-darkish">
       <thead>
@@ -55,4 +55,4 @@ export default function AssetsTable({ assets }: { assets: Assets }) {
       </tbody>
     </table>
   );
-}
+};

@@ -1,4 +1,4 @@
-export default function FireIcon() {
+export const FireIcon = () => {
   return (
     <svg
       width="21"
@@ -18,4 +18,4 @@ export default function FireIcon() {
       </g>
     </svg>
   );
-}
+};

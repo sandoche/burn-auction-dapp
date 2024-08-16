@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Tabs from "@/components/ui/Tabs";
-import FireIcon from "@/components/icons/FireIcon";
-import HistoryIcon from "@/components/icons/HistoryIcon";
+import { Tabs } from "@/components/ui/Tabs";
+import { FireIcon } from "@/components/icons/FireIcon";
+import { HistoryIcon } from "@/components/icons/HistoryIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +17,11 @@ const navigationTabs = [
   { name: "Past auctions", href: "/history", icon: <HistoryIcon /> },
 ];
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -34,4 +34,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

@@ -1,4 +1,4 @@
-export default function ProgressBar({ progress }: { progress: number }) {
+export const ProgressBar = ({ progress }: { progress: number }) => {
   return (
     <div className="pt-2">
       <div className="overflow-hidden h-2 mb-4 flex rounded bg-evmos-dark">
@@ -9,4 +9,4 @@ export default function ProgressBar({ progress }: { progress: number }) {
       </div>
     </div>
   );
-}
+};

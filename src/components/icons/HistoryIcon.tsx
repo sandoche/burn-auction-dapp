@@ -1,4 +1,4 @@
-export default function HistoryIcon() {
+export const HistoryIcon = () => {
   return (
     <svg
       width="21"
@@ -18,4 +18,4 @@ export default function HistoryIcon() {
       </g>
     </svg>
   );
-}
+};

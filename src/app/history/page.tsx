@@ -1,8 +1,10 @@
-export default function History() {
+const History = () => {
   return (
     <section className="mb-10">
       <h1 className="text-3xl">History</h1>
       <p className="mt-4">Coming soon</p>
     </section>
   );
-}
+};
+
+export default History;

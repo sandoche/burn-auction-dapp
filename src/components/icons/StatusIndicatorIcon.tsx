@@ -1,4 +1,4 @@
-export default function StatusIndicatorIcon() {
+export const StatusIndicatorIcon = () => {
   return (
     <svg
       width="8"
@@ -12,4 +12,4 @@ export default function StatusIndicatorIcon() {
       </g>
     </svg>
   );
-}
+};

@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 type TabLink = { name: string; href: string; icon: React.ReactNode };
 
-export default function Tabs({ tabs }: Readonly<{ tabs: TabLink[] }>) {
+export const Tabs = ({ tabs }: Readonly<{ tabs: TabLink[] }>) => {
   const pathname = usePathname();
 
   return (
@@ -32,4 +32,4 @@ export default function Tabs({ tabs }: Readonly<{ tabs: TabLink[] }>) {
       </TabList>
     </TabGroup>
   );
-}
+};

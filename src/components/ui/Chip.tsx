@@ -5,7 +5,7 @@ type ChipProps = {
   children: React.ReactNode;
 };
 
-export default function Chip({ moreVisible = false, children }: ChipProps) {
+export const Chip = ({ moreVisible = false, children }: ChipProps) => {
   return (
     <div
       className={clsx(
@@ -18,4 +18,4 @@ export default function Chip({ moreVisible = false, children }: ChipProps) {
       {children}
     </div>
   );
-}
+};
