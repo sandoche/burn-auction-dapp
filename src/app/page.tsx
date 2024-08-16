@@ -33,8 +33,8 @@ export default function CurrentAuction() {
   const biddingHistory = [];
 
   return (
-    <main className="">
-      <section>
+    <main>
+      <section className="mb-10">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl">Auction #{auction.round}</h1>
           <Chip>
@@ -43,29 +43,43 @@ export default function CurrentAuction() {
           </Chip>
         </div>
         <ProgressBar progress={auction.progress} />
-        <p>
-          Closing in <span>4d 23h 33m 2s</span>
+        <p className="text-2xl mb-1.5">
+          <span className="text-evmos-lightish">Closing in</span> 4d 23h 33m 2s
         </p>
         <p>
-          Ending <span>Mon 11th of August 2024 - 23:59 CET</span>
+          <span className="text-evmos-lightish">Ending</span> Mon 11th of August
+          2024 - 23:59 CET
         </p>
       </section>
-      <section>
-        <h2>Current total auctioned value</h2>
-        <p>$1,200,100.00</p>
+      <section className="mb-10">
+        <h2 className="text-evmos-lightish mb-1">
+          Current total auctioned value
+        </h2>
+        <p className="text-3xl mb-6 font-semibold">$1,200,100.00</p>
         <div>TABLE WILL BE HERE</div>
       </section>
       <section>
-        <div>
-          <h2>Current highest bid</h2>
-          <Chip>🔥 12x cheaper than market value</Chip>
+        <div className="flex items-center mb-1">
+          <h2 className="text-evmos-lightish mr-2">Current highest bid</h2>
+          <Chip moreVisible>🔥 12x cheaper than market value</Chip>
         </div>
-        <div>
-          <span>{auction.currentHighestBidinEvmos} EVMOS</span>
-          <span>${auction.currentHighestBidInUsd}</span>
-          <a href="#">{auction.currentHighestBidder}</a>
+        <div className="flex items-end mb-1">
+          <span className="text-3xl font-semibold mr-4">
+            {auction.currentHighestBidinEvmos} EVMOS
+          </span>
+          <span className="text-xl text-evmos-lightish">
+            ${auction.currentHighestBidInUsd}
+          </span>
         </div>
-        <div>Place a bid widget will be here</div>
+        <p className="mb-6">
+          <a
+            href="#"
+            className="text-evmos-primary hover:text-evmos-primary-light"
+          >
+            {auction.currentHighestBidder}
+          </a>
+        </p>
+        <div className="mb-6">Place a bid widget will be here</div>
         <div>Bidding History</div>
       </section>
     </main>
