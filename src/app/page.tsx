@@ -3,6 +3,7 @@ import { StatusIndicatorIcon } from "@/components/icons/StatusIndicatorIcon";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { AssetsTable } from "./_components/AssetsTable";
 import { BiddingHistory } from "./_components/BiddingHistory";
+import { BiddingForm } from "./_components/BiddingForm";
 
 const CurrentAuction = () => {
   // dummy data for now
@@ -83,7 +84,9 @@ const CurrentAuction = () => {
             {auction.currentHighestBidder}
           </a>
         </p>
-        <div className="mb-6">Place a bid widget will be here</div>
+        <div className="mb-6">
+          <BiddingForm />
+        </div>
         <BiddingHistory />
       </section>
     </main>
