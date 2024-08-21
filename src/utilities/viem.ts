@@ -17,7 +17,7 @@ const evmos = defineChain({
   },
 });
 
-const viemClient = createPublicClient({
+export const viemClient = createPublicClient({
   chain: evmos,
   transport: http(),
 });
