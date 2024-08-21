@@ -1,4 +1,4 @@
-import { createDAppStoreClient } from "@evmos/dappstore-sdk";
+import { createDAppStoreClient } from '@evmos/dappstore-sdk';
 
 export const dappstore = createDAppStoreClient();
 

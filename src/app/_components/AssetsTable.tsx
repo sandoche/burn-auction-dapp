@@ -1,5 +1,5 @@
-import type { Assets } from "../_types/Assets";
-import Image from "next/image";
+import type { Assets } from '../_types/Assets';
+import Image from 'next/image';
 
 export const AssetsTable = ({ assets }: { assets: Assets }) => {
   return (

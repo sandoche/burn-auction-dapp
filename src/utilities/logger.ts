@@ -3,14 +3,14 @@
 
 const { log, error, trace, table, warn } = console;
 
-type LogCategory = "notion" | "tracking" | "dev-cache-mode" | "general";
+type LogCategory = 'notion' | 'tracking' | 'dev-cache-mode' | 'general';
 /**
  * This works just as console.log, but it's to be used when we intentionally want to keep logs in production.
  * using console.log directly will trigger eslint errors.
  */
 
-export const Log = (category: LogCategory | (string & {}) = "general") => {
-  const isEnabled = process.env.NEXT_PUBLIC_ENABLED_LOGS === "true" || process.env.NEXT_PUBLIC_ENABLED_LOGS?.split(",").includes(category);
+export const Log = (category: LogCategory | (string & {}) = 'general') => {
+  const isEnabled = process.env.NEXT_PUBLIC_ENABLED_LOGS === 'true' || process.env.NEXT_PUBLIC_ENABLED_LOGS?.split(',').includes(category);
   return {
     info: (message: unknown, ...messages: unknown[]) => {
       if (!isEnabled) return;

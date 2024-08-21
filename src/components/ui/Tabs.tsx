@@ -1,8 +1,8 @@
-"use client";
-import { Tab, TabGroup, TabList } from "@headlessui/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
+'use client';
+import { Tab, TabGroup, TabList } from '@headlessui/react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 
 type TabLink = { name: string; href: string; icon: React.ReactNode };
 
@@ -17,7 +17,7 @@ export const Tabs = ({ tabs }: Readonly<{ tabs: TabLink[] }>) => {
             key={tab.name}
             as={Link}
             href={tab.href}
-            className={clsx("py-3 px-4 flex-1 rounded-full flex items-center justify-center text-evmos-light", tab.href === pathname && "bg-evmos-darkish")}
+            className={clsx('py-3 px-4 flex-1 rounded-full flex items-center justify-center text-evmos-light', tab.href === pathname && 'bg-evmos-darkish')}
           >
             <div className="mr-1">{tab.icon} </div>
             {tab.name}

@@ -2,7 +2,7 @@ export type AuctionnedAsset = {
   denom: string;
   name: string;
   ticker: string;
-  amount: number;
+  amount: bigint;
   valueInUsd: number;
   iconUrl: string;
 };

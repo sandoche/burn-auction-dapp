@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { ensureError } from "./normalizeError";
+import { ensureError } from './normalizeError';
 
 /**
  * Throws an Error with the specified message

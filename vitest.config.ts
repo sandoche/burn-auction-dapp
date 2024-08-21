@@ -1,19 +1,20 @@
-import { config } from "dotenv";
-import { defineConfig } from "vitest/config";
-import react from "@vitejs/plugin-react";
-import path from "path";
+import { config } from 'dotenv';
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: "jsdom",
+    environment: 'jsdom',
     env: {
-      ...config({ path: "./.env.test" }).parsed,
+      ...config({ path: './.env.test' }).parsed,
     },
+    // reporters: ["verbose"],
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });

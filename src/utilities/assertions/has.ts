@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { isObject } from "./isObject";
+import { isObject } from './isObject';
 
 export const has = <T extends Record<string, unknown>>(
   obj: unknown,

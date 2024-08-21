@@ -1,7 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { has, isString } from "../assertions";
+import { has, isString } from '../assertions';
 
 function matchByCode<TCode>(
   error: unknown,
@@ -9,7 +9,7 @@ function matchByCode<TCode>(
 ): error is {
   code: TCode;
 } {
-  if (!has(error, "code")) return false;
+  if (!has(error, 'code')) return false;
   return error.code === code;
 }
 
@@ -19,7 +19,7 @@ function matchByName<TName>(
 ): error is {
   name: TName;
 } {
-  if (!has(error, "name")) return false;
+  if (!has(error, 'name')) return false;
   return error.name === name;
 }
 
@@ -29,12 +29,12 @@ function matchByMessage(
 ): error is {
   message: string;
 } {
-  if (!has(error, "message")) return false;
+  if (!has(error, 'message')) return false;
   return error.message === message;
 }
 
 function matchByPattern(error: unknown, pattern: RegExp) {
-  if (!has(error, "message")) return false;
+  if (!has(error, 'message')) return false;
   if (!isString(error.message)) return false;
   return pattern.test(error.message);
 }

@@ -1,20 +1,20 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { Tabs } from "@/components/ui/Tabs";
-import { FireIcon } from "@/components/icons/FireIcon";
-import { HistoryIcon } from "@/components/icons/HistoryIcon";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { Tabs } from '@/components/ui/Tabs';
+import { FireIcon } from '@/components/icons/FireIcon';
+import { HistoryIcon } from '@/components/icons/HistoryIcon';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Evmos Burn Auction",
-  description: "The Evmos Burn Auction Instant dApp",
+  title: 'Evmos Burn Auction',
+  description: 'The Evmos Burn Auction Instant dApp',
 };
 
 const navigationTabs = [
-  { name: "Current auction", href: "/", icon: <FireIcon /> },
-  { name: "Past auctions", href: "/history", icon: <HistoryIcon /> },
+  { name: 'Current auction', href: '/', icon: <FireIcon /> },
+  { name: 'Past auctions', href: '/history', icon: <HistoryIcon /> },
 ];
 
 const RootLayout = ({

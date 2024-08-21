@@ -1,9 +1,9 @@
-import type { HexAddress } from "./HexAddress";
-import type { AuctionnedAsset } from "./AuctionnedAsset";
+import type { HexAddress } from './HexAddress';
+import type { AuctionnedAsset } from './AuctionnedAsset';
 
 export type AuctionDetailed = {
   round: {
-    round: number;
+    round: bigint;
     isLast: boolean;
     endTime: Date;
   };
@@ -12,7 +12,7 @@ export type AuctionDetailed = {
     totalValue: number;
   };
   highestBid: {
-    bidInEvmos: number;
+    bidInEvmos: bigint;
     bidInUsd: number;
     bidderAddress: HexAddress;
   };

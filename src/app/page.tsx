@@ -1,10 +1,10 @@
-import { Chip } from "@/components/ui/Chip";
-import { StatusIndicatorIcon } from "@/components/icons/StatusIndicatorIcon";
-import { ProgressBar } from "@/components/ui/ProgressBar";
-import { AssetsTable } from "./_components/AssetsTable";
-import { BiddingHistory } from "./_components/BiddingHistory";
-import { BiddingForm } from "./_components/BiddingForm";
-import type { AuctionDetailed } from "@/types/AuctionDetailed";
+import { Chip } from '@/components/ui/Chip';
+import { StatusIndicatorIcon } from '@/components/icons/StatusIndicatorIcon';
+import { ProgressBar } from '@/components/ui/ProgressBar';
+import { AssetsTable } from './_components/AssetsTable';
+import { BiddingHistory } from './_components/BiddingHistory';
+import { BiddingForm } from './_components/BiddingForm';
+import type { AuctionDetailed } from '@/types/AuctionDetailed';
 
 const CurrentAuction = async () => {
   // dummy data for now, remove any type
@@ -14,24 +14,24 @@ const CurrentAuction = async () => {
     isCurrentRound: true,
     auctionnedAssets: [
       {
-        ticker: "ATOM",
-        name: "Atom",
+        ticker: 'ATOM',
+        name: 'Atom',
         amount: 100,
         valueInUsd: 1000,
-        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/3794.png",
+        iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/3794.png',
       },
       {
-        ticker: "ETH",
-        name: "Ethereum",
+        ticker: 'ETH',
+        name: 'Ethereum',
         amount: 10,
         valueInUsd: 3000,
-        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+        iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
       },
     ],
     totalAuctionnedValue: 4000,
     currentHighestBidinEvmos: 10000,
     currentHighestBidInUsd: 1000,
-    currentHighestBidder: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+    currentHighestBidder: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
     progress: 0.25 * 100,
   };
 
