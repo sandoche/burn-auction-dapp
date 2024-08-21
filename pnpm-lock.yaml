@@ -29,6 +29,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.3.1(react@18.3.1)
+  viem:
+    specifier: ^2.19.9
+    version: 2.19.9(typescript@5.5.4)(zod@3.23.8)
 
 devDependencies:
   '@types/node':
@@ -137,7 +140,7 @@ packages:
       express: 4.19.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      viem: 2.19.6(typescript@5.5.4)(zod@3.23.8)
+      viem: 2.19.9(typescript@5.5.4)(zod@3.23.8)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -3703,8 +3706,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /viem@2.19.6(typescript@5.5.4)(zod@3.23.8):
-    resolution: {integrity: sha512-7jiuX+ZncPZE8iEzgW/iO7EaAMRJEW8hYeJy9YFTMK34Wa9aWzqOm4lrORgemlsqJ/kpQG4InzhG0jc2HY67FA==}
+  /viem@2.19.9(typescript@5.5.4)(zod@3.23.8):
+    resolution: {integrity: sha512-KFPSfewr8tFaSYcLAC+sgkYXdZ1llX8rJrBjd/OMg1D+T4eeQyYy5S6iJTSnwYpjz8hrjSlL30RuFf4BF3jtMw==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
