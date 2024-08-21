@@ -5,10 +5,7 @@ export const BiddingForm = () => {
     <Card>
       <div className="flex justify-between">
         <h3 className="font-semibold">Place a bid</h3>
-        <a
-          href="#"
-          className="text-evmos-primary hover:text-evmos-primary-light"
-        >
+        <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
           Max
         </a>
       </div>

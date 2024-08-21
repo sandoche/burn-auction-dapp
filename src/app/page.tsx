@@ -53,14 +53,11 @@ const CurrentAuction = () => {
           <span className="text-evmos-lightish">Closing in</span> 4d 23h 33m 2s
         </p>
         <p>
-          <span className="text-evmos-lightish">Ending</span> Mon 11th of August
-          2024 - 23:59 CET
+          <span className="text-evmos-lightish">Ending</span> Mon 11th of August 2024 - 23:59 CET
         </p>
       </section>
       <section className="mb-12">
-        <h2 className="text-evmos-lightish mb-1">
-          Current total auctioned value
-        </h2>
+        <h2 className="text-evmos-lightish mb-1">Current total auctioned value</h2>
         <p className="text-3xl mb-6 font-semibold">$1,200,100.00</p>
         <AssetsTable assets={auction.auctionnedAssets} />
       </section>
@@ -70,18 +67,11 @@ const CurrentAuction = () => {
           <Chip moreVisible>🔥 12x cheaper than market value</Chip>
         </div>
         <div className="flex items-end mb-1">
-          <span className="text-3xl font-semibold mr-4">
-            {auction.currentHighestBidinEvmos} EVMOS
-          </span>
-          <span className="text-xl text-evmos-lightish">
-            ${auction.currentHighestBidInUsd}
-          </span>
+          <span className="text-3xl font-semibold mr-4">{auction.currentHighestBidinEvmos} EVMOS</span>
+          <span className="text-xl text-evmos-lightish">${auction.currentHighestBidInUsd}</span>
         </div>
         <p className="mb-6">
-          <a
-            href="#"
-            className="text-evmos-primary hover:text-evmos-primary-light"
-          >
+          <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
             {auction.currentHighestBidder}
           </a>
         </p>

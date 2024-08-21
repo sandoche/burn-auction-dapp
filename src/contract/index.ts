@@ -1,7 +1,6 @@
 import type { HexAddress } from "@/types/HexAddress";
 
-export const CONTRACT_ADDRESS: HexAddress =
-  "0x0000000000000000000000000000000000000900";
+export const CONTRACT_ADDRESS: HexAddress = "0x0000000000000000000000000000000000000900";
 
 export const ABI = [
   {
