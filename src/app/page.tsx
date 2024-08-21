@@ -4,13 +4,14 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { AssetsTable } from "./_components/AssetsTable";
 import { BiddingHistory } from "./_components/BiddingHistory";
 import { BiddingForm } from "./_components/BiddingForm";
+import type { AuctionDetailed } from "@/types/AuctionDetailed";
 
 const CurrentAuction = () => {
-  // dummy data for now
-  const auction = {
+  // dummy data for now, remove any type
+  const auction: AuctionDetailed | any = {
     round: 3,
     endTime: new Date(Date.now() + 10 * 60 * 1000),
-    isOngoing: true,
+    isCurrentRound: true,
     auctionnedAssets: [
       {
         ticker: "ATOM",
