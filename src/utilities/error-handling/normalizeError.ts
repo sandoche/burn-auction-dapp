@@ -4,10 +4,7 @@
 import { has, isObject } from "../assertions";
 
 const isError = (error: unknown): error is Error => {
-  return (
-    error instanceof Error ||
-    (isObject(error) && has(error, "message") && has(error, "stack"))
-  );
+  return error instanceof Error || (isObject(error) && has(error, "message") && has(error, "stack"));
 };
 export const ensureError = (error: unknown) => {
   if (isError(error)) {

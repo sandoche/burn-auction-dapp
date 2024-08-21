@@ -34,10 +34,7 @@ export const raise = (error: Error | string): never => {
  * ```
  */
 
-export function assert(
-  condition: unknown,
-  error: Error | string,
-): asserts condition {
+export function assert(condition: unknown, error: Error | string): asserts condition {
   if (!condition) {
     throw ensureError(error);
   }
