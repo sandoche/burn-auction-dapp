@@ -6,9 +6,6 @@ import { BiddingHistory } from "./_components/BiddingHistory";
 import { BiddingForm } from "./_components/BiddingForm";
 import type { AuctionDetailed } from "@/types/AuctionDetailed";
 
-// temporary
-import { rpcFetchCurrentAuctionInfo } from "@/queries/fetchCurrentAuction";
-
 const CurrentAuction = () => {
   // dummy data for now, remove any type
   const auction: AuctionDetailed | any = {
@@ -37,8 +34,6 @@ const CurrentAuction = () => {
     currentHighestBidder: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
     progress: 0.25 * 100,
   };
-
-  const test = rpcFetchCurrentAuctionInfo();
 
   return (
     <main>
