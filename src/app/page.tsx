@@ -6,7 +6,7 @@ import { BiddingHistory } from "./_components/BiddingHistory";
 import { BiddingForm } from "./_components/BiddingForm";
 import type { AuctionDetailed } from "@/types/AuctionDetailed";
 
-const CurrentAuction = () => {
+const CurrentAuction = async () => {
   // dummy data for now, remove any type
   const auction: AuctionDetailed | any = {
     round: 3,
