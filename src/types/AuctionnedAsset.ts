@@ -1,5 +1,5 @@
 export type AuctionnedAsset = {
-  coinmarketcapId: string;
+  coingeckoId: string;
   denom: string;
   name: string;
   ticker: string;

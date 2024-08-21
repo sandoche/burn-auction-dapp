@@ -52,7 +52,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     currentAuctionInfo.auction.totalValue += 0; // TO UPDATE
 
     return {
-      coinmarketcapId: '',
+      coingeckoId: '',
       denom: token.denom,
       name: '',
       ticker: '',
