@@ -15,6 +15,7 @@ describe('rpcFetchCurrentAuctionInfo()', async () => {
 describe('fetchCurrentAuction()', async () => {
   it('should return the current auction info of type AuctionDetailed', async () => {
     const result = await fetchCurrentAuction();
+    console.log(result);
     expect(result).toBeDefined();
     expectTypeOf(result).toMatchTypeOf<AuctionDetailed>();
   });
