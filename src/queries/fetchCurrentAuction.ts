@@ -7,6 +7,7 @@ import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
+import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 
 export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
   const [error, result] = await E.try(() =>
@@ -40,8 +41,6 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     throw errorMetadata;
   }
 
-  Log().info('Tokens metadata:', tokensMetadata);
-
   const currentAuctionInfo = {
     round: {
       round: auctionInfo.currentRound,
@@ -60,18 +59,51 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   };
 
   currentAuctionInfo.auction.assets = auctionInfo.tokens.map((token) => {
-    currentAuctionInfo.auction.totalValue += 0; // TO UPDATE
+    const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
+
+    // TODO: handle the case where the token is not found
+    if (!tokenMetadata) {
+      return {
+        coingeckoId: '',
+        denom: token.denom,
+        name: 'Unknown Token',
+        ticker: '',
+        amount: token.amount,
+        valueInUsd: 0,
+        iconUrl: '',
+      };
+    }
 
     return {
-      coingeckoId: '',
+      coingeckoId: tokenMetadata.coingeckoId,
       denom: token.denom,
-      name: '',
-      ticker: '',
+      name: tokenMetadata.name,
+      ticker: tokenMetadata.coinDenom,
       amount: token.amount,
       valueInUsd: 0,
-      iconUrl: '',
+      iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
     };
   });
+
+  const coingeckoIds = currentAuctionInfo.auction.assets.map((asset) => asset.coingeckoId);
+  const [_, prices] = await E.try(() => fetchCurrentCryptoPrice(coingeckoIds));
+
+  Log().info('Prices:', prices);
+
+  if (prices) {
+    currentAuctionInfo.auction.assets = currentAuctionInfo.auction.assets.map((asset) => {
+      if (!asset.coingeckoId) {
+        return asset;
+      }
+
+      // TODO: decimals are not handled yet
+      asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amount);
+
+      return asset;
+    });
+  }
+
+  currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
 
   return currentAuctionInfo;
 };
