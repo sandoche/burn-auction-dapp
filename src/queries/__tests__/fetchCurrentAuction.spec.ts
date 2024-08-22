@@ -8,10 +8,16 @@ const mockCoinGeckoResponse = {
   cosmos: {
     usd: 5.9,
   },
+  'wrapped-bitcoin': {
+    usd: 70000,
+  },
 };
 
 const mockAuctionResponse: AuctionInfo = {
-  tokens: [{ denom: 'uatom', amount: BigInt(10000000) }],
+  tokens: [
+    { denom: 'uatom', amount: BigInt(10000000) },
+    { denom: 'wbtc-satoshi', amount: BigInt(10000000) },
+  ],
   highestBid: { denom: 'aevmos', amount: BigInt(0) },
   currentRound: BigInt(100),
   bidderAddress: '0x0000000000000000000000000000000000000000',

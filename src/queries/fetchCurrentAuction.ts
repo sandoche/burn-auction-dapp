@@ -81,7 +81,6 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
         return asset;
       }
 
-      // TODO: decimals are not handled yet
       asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amountWithDecimals);
 
       return asset;
