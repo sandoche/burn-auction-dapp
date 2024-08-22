@@ -19,6 +19,10 @@ const evmos = defineChain({
 
 export const viemClient = createPublicClient({
   chain: evmos,
-  transport: http(rpcUrl),
+  transport: http(rpcUrl, {
+    fetchOptions: {
+      cache: 'no-store',
+    },
+  }),
   cacheTime: 0,
 });
