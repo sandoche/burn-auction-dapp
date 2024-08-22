@@ -6,6 +6,7 @@ import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
+import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 
 export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
   const [error, result] = await E.try(() =>
@@ -24,16 +25,22 @@ export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
   return result;
 };
 
-// todo: update type
-const fetchTokensData = async (): Promise<any> => {};
-
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
 
-  if (error && !auctionInfo) {
+  if (error || !auctionInfo) {
     Log().error('Error fetching current auction info:', error);
     throw error;
   }
+
+  const [errorMetadata, tokensMetadata] = await E.try(() => fetchChainRegistryDir<TokenEntity>('tokens'));
+
+  if (errorMetadata || !tokensMetadata) {
+    Log().error('Error fetching tokens metadata:', errorMetadata);
+    throw errorMetadata;
+  }
+
+  Log().info('Tokens metadata:', tokensMetadata);
 
   const currentAuctionInfo = {
     round: {
