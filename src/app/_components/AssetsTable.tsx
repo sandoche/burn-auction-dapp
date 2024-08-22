@@ -1,7 +1,7 @@
-import type { Assets } from '../_types/Assets';
+import type { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import Image from 'next/image';
 
-export const AssetsTable = ({ assets }: { assets: Assets }) => {
+export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
   return (
     <table className="min-w-full divide-y divide-evmos-darkish">
       <thead>

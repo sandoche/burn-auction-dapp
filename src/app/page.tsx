@@ -5,9 +5,12 @@ import { AssetsTable } from './_components/AssetsTable';
 import { BiddingHistory } from './_components/BiddingHistory';
 import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
+import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
 
 const CurrentAuction = async () => {
   const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
+
+  // update progress
 
   return (
     <main>
@@ -21,7 +24,7 @@ const CurrentAuction = async () => {
             </Chip>
           )}
         </div>
-        <ProgressBar progress={auction.progress} />
+        <ProgressBar progress={100} />
         <p className="text-2xl mb-1.5">
           <span className="text-evmos-lightish">Closing in</span> 4d 23h 33m 2s
         </p>
@@ -32,7 +35,7 @@ const CurrentAuction = async () => {
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">Current total auctioned value</h2>
         <p className="text-3xl mb-6 font-semibold">$1,200,100.00</p>
-        <AssetsTable assets={auction.auctionnedAssets} />
+        <AssetsTable assets={auction.assets} />
       </section>
       <section>
         <div className="flex items-center mb-1">
