@@ -6,10 +6,21 @@ import { BiddingHistory } from './_components/BiddingHistory';
 import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
-import { rpcFetchCurrentAuctionInfo } from '@/queries/rpcFetchCurrentAuctionInfo';
+import { Countdown } from './_components/CountDown';
 
 const CurrentAuction = async () => {
   const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
+
+  const endDate = new Date(round.endDate);
+  const formattedEndDate = endDate.toLocaleString('en-US', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: 'short',
+  });
 
   return (
     <main>
@@ -24,11 +35,11 @@ const CurrentAuction = async () => {
           )}
         </div>
         <ProgressBar progress={100} />
-        <p className="text-2xl mb-1.5">
-          <span className="text-evmos-lightish">Closing in</span> 4d 23h 33m 2s
-        </p>
+        <div className="text-2xl mb-1.5 flex">
+          <span className="text-evmos-lightish mr-2">Closing in</span> <Countdown date={endDate} />
+        </div>
         <p>
-          <span className="text-evmos-lightish">Ending</span> Mon 11th of August 2024 - 23:59 CET
+          <span className="text-evmos-lightish">Ending</span> {formattedEndDate}
         </p>
       </section>
       <section className="mb-12">
