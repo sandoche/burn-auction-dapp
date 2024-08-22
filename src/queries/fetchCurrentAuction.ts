@@ -35,7 +35,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     },
     auction: {
       assets: [] as AuctionnedAsset[],
-      totalValue: 0, // TODO: fix the total value
+      totalValue: 0,
     },
   };
 
@@ -52,6 +52,8 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
         amount: token.amount,
         valueInUsd: 0,
         iconUrl: '',
+        exponent: 0,
+        amountWithDecimals: 0,
       };
     }
 
@@ -63,6 +65,8 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
       amount: token.amount,
       valueInUsd: 0,
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
+      exponent: Number(tokenMetadata.exponent),
+      amountWithDecimals: Number(token.amount) / 10 ** Number(tokenMetadata.exponent),
     };
   });
 
@@ -78,13 +82,16 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
       }
 
       // TODO: decimals are not handled yet
-      asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amount);
+      asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amountWithDecimals);
 
       return asset;
     });
   }
 
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
+
+  Log().info('Current auction info:', currentAuctionInfo);
+  Log().info('Assets detailed:', currentAuctionInfo.auction.assets);
 
   return currentAuctionInfo;
 };

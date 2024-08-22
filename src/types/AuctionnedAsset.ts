@@ -4,6 +4,8 @@ export type AuctionnedAsset = {
   name: string;
   ticker: string;
   amount: bigint;
+  exponent: number;
+  amountWithDecimals: number;
   valueInUsd: number;
   iconUrl: string;
 };

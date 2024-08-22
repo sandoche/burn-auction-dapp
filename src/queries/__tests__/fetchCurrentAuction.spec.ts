@@ -11,7 +11,7 @@ const mockCoinGeckoResponse = {
 };
 
 const mockAuctionResponse: AuctionInfo = {
-  tokens: [{ denom: 'uatom', amount: BigInt(1000000) }],
+  tokens: [{ denom: 'uatom', amount: BigInt(10000000) }],
   highestBid: { denom: 'aevmos', amount: BigInt(0) },
   currentRound: BigInt(100),
   bidderAddress: '0x0000000000000000000000000000000000000000',
