@@ -1,5 +1,5 @@
 type EpochInfo = {
-  identifier: string;
+  identifier: 'day' | 'week';
   start_time: string;
   duration: string;
   current_epoch: string;
