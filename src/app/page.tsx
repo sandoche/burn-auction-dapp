@@ -9,6 +9,7 @@ import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
 import { Countdown } from './_components/Countdown';
 import { formatUnits } from '@/utilities/formatUnits';
 import { RefreshHome } from './_components/RefreshHome';
+import { BiddingProgress } from './_components/BiddingProgress';
 
 const CurrentAuction = async () => {
   const EVMOS_DECIMALS = 18;
@@ -39,7 +40,7 @@ const CurrentAuction = async () => {
             </Chip>
           )}
         </div>
-        <ProgressBar progress={100} />
+        <BiddingProgress startDate={round.startDate} endDate={round.endDate} />
         <div className="text-2xl mb-1.5 flex">
           <span className="text-evmos-lightish mr-2">Closing in</span> <Countdown date={endDate} />
         </div>
