@@ -9,7 +9,7 @@ type TimeLeft = {
 };
 
 const calculateTimeLeft = (date: Date): TimeLeft => {
-  const difference = +new Date(date) - +new Date();
+  const difference = +date - +new Date();
   let timeLeft = {
     days: 0,
     hours: 0,
@@ -30,19 +30,27 @@ const calculateTimeLeft = (date: Date): TimeLeft => {
 };
 
 export const Countdown = ({ date }: { date: Date }) => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setInterval(() => {
       setTimeLeft(calculateTimeLeft(date));
     }, 1000);
-
-    return () => clearTimeout(timer);
   }, [date]);
 
   return (
     <div>
-      {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+      {isClient && (
+        <>
+          {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+        </>
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { BiddingHistory } from './_components/BiddingHistory';
 import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
-import { Countdown } from './_components/CountDown';
+import { Countdown } from './_components/Countdown';
 import { formatUnits } from '@/utilities/formatUnits';
 
 const CurrentAuction = async () => {

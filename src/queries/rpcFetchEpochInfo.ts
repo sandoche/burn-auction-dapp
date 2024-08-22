@@ -5,7 +5,7 @@ import { Log } from '@/utilities/logger';
 const COSMOS_RPC_HOST = process.env.COSMOS_RPC_HOST;
 
 export const rpcFetchEpochInfo = async (): Promise<EpochResponse> => {
-  const [error, result] = await E.try(() => fetch(COSMOS_RPC_HOST + '/evmos/epochs/v1/epochs', { next: { revalidate: 60 } }));
+  const [error, result] = await E.try(() => fetch(COSMOS_RPC_HOST + '/evmos/epochs/v1/epochs', { next: { revalidate: 1 } }));
 
   if (error) {
     Log().error('Error querying contract:', error);
