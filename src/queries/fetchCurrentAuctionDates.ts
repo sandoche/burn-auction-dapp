@@ -22,6 +22,7 @@ export const fetchCurrentAuctionDates = async (): Promise<AuctionDates> => {
   const currentEpochDuration = parseInt(currentEpoch.duration, 10);
   const currentEpochEnd = new Date(currentEpochStart.getTime() + currentEpochDuration * 1000);
 
+  Log().info('Current start date:', currentEpochStart);
   Log().info('Current end date:', currentEpochEnd);
 
   return {
