@@ -1,30 +1,11 @@
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
-import type { AuctionInfo } from '@/types/AuctionInfo';
-import { viemClient } from '@/utilities/viem';
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from '@/contract';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
-
-export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
-  const [error, result] = await E.try(() =>
-    viemClient.readContract({
-      address: CONTRACT_ADDRESS,
-      abi: CONTRACT_ABI,
-      functionName: 'auctionInfo',
-    }),
-  );
-
-  if (error) {
-    Log().error('Error querying contract:', error);
-    throw error;
-  }
-
-  return result;
-};
+import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
@@ -104,8 +85,6 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   }
 
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
-
-  Log().info(currentAuctionInfo.auction.assets);
 
   return currentAuctionInfo;
 };
