@@ -7,43 +7,19 @@ import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 
 const CurrentAuction = async () => {
-  // dummy data for now, remove any type
-  const auction: AuctionDetailed | any = {
-    round: 3,
-    endTime: new Date(Date.now() + 10 * 60 * 1000),
-    isCurrentRound: true,
-    auctionnedAssets: [
-      {
-        ticker: 'ATOM',
-        name: 'Atom',
-        amount: 100,
-        valueInUsd: 1000,
-        iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/3794.png',
-      },
-      {
-        ticker: 'ETH',
-        name: 'Ethereum',
-        amount: 10,
-        valueInUsd: 3000,
-        iconUrl: 'https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png',
-      },
-    ],
-    totalAuctionnedValue: 4000,
-    currentHighestBidinEvmos: 10000,
-    currentHighestBidInUsd: 1000,
-    currentHighestBidder: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
-    progress: 0.25 * 100,
-  };
+  const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
 
   return (
     <main>
       <section className="mb-12">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl">Auction #{auction.round}</h1>
-          <Chip>
-            <StatusIndicatorIcon />
-            In progress
-          </Chip>
+          <h1 className="text-3xl">Auction #{round.round}</h1>
+          {round.isLast && (
+            <Chip>
+              <StatusIndicatorIcon />
+              In progress
+            </Chip>
+          )}
         </div>
         <ProgressBar progress={auction.progress} />
         <p className="text-2xl mb-1.5">

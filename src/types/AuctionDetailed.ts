@@ -5,7 +5,8 @@ export type AuctionDetailed = {
   round: {
     round: bigint;
     isLast: boolean;
-    endTime: Date;
+    startDate: Date;
+    endDate: Date;
   };
   auction: {
     assets: AuctionnedAsset[];

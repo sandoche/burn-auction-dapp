@@ -6,7 +6,7 @@ import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
-import { fetchCurrentEndDate } from './fetchCurrentEndDate';
+import { fetchCurrentAuctionDates } from './fetchCurrentAuctionDates';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
@@ -23,9 +23,9 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     throw errorMetadata;
   }
 
-  const [errorEndDate, endDate] = await E.try(() => fetchCurrentEndDate());
+  const [errorEndDate, dates] = await E.try(() => fetchCurrentAuctionDates());
 
-  if (errorEndDate || !endDate) {
+  if (errorEndDate || !dates) {
     Log().error('Error fetching current end date:', errorEndDate);
     throw errorEndDate;
   }
@@ -34,7 +34,8 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     round: {
       round: auctionInfo.currentRound,
       isLast: true,
-      endTime: endDate,
+      startDate: dates.start,
+      endDate: dates.end,
     },
     highestBid: {
       bidInEvmos: auctionInfo.highestBid.amount,

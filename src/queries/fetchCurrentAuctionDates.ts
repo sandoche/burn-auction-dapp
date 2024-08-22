@@ -1,8 +1,9 @@
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import { rpcFetchEpochInfo } from './rpcFetchEpochInfo';
+import type { AuctionDates } from '@/types/AuctionDates';
 
-export const fetchCurrentEndDate = async (): Promise<Date> => {
+export const fetchCurrentAuctionDates = async (): Promise<AuctionDates> => {
   const [error, epochInfo] = await E.try(() => rpcFetchEpochInfo());
 
   if (error) {
@@ -23,5 +24,8 @@ export const fetchCurrentEndDate = async (): Promise<Date> => {
 
   Log().info('Current end date:', currentEpochEnd);
 
-  return currentEpochEnd;
+  return {
+    start: currentEpochStart,
+    end: currentEpochEnd,
+  };
 };
