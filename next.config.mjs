@@ -3,10 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "s2.coinmarketcap.com",
-        port: "",
-        pathname: "/static/img/coins/64x64/**",
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: 'm/evmos/chain-token-registry/main/assets/tokens/',
       },
     ],
   },

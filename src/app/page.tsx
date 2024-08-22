@@ -6,17 +6,16 @@ import { BiddingHistory } from './_components/BiddingHistory';
 import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
+import { rpcFetchCurrentAuctionInfo } from '@/queries/rpcFetchCurrentAuctionInfo';
 
 const CurrentAuction = async () => {
   const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
-
-  // update progress
 
   return (
     <main>
       <section className="mb-12">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl">Auction #{round.round}</h1>
+          <h1 className="text-3xl">Auction #{Number(round.round)}</h1>
           {round.isLast && (
             <Chip>
               <StatusIndicatorIcon />
@@ -34,7 +33,7 @@ const CurrentAuction = async () => {
       </section>
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">Current total auctioned value</h2>
-        <p className="text-3xl mb-6 font-semibold">$1,200,100.00</p>
+        <p className="text-3xl mb-6 font-semibold">${auction.totalValue}</p>
         <AssetsTable assets={auction.assets} />
       </section>
       <section>
@@ -43,13 +42,15 @@ const CurrentAuction = async () => {
           <Chip moreVisible>🔥 12x cheaper than market value</Chip>
         </div>
         <div className="flex items-end mb-1">
-          <span className="text-3xl font-semibold mr-4">{auction.currentHighestBidinEvmos} EVMOS</span>
-          <span className="text-xl text-evmos-lightish">${auction.currentHighestBidInUsd}</span>
+          <span className="text-3xl font-semibold mr-4">{Number(highestBid.bidInEvmos)} EVMOS</span>
+          <span className="text-xl text-evmos-lightish">${highestBid.bidInUsd}</span>
         </div>
         <p className="mb-6">
-          <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
-            {auction.currentHighestBidder}
-          </a>
+          {highestBid.bidderAddress !== '0x0000000000000000000000000000000000000000' && (
+            <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
+              {highestBid.bidderAddress}
+            </a>
+          )}
         </p>
         <div className="mb-6">
           <BiddingForm />

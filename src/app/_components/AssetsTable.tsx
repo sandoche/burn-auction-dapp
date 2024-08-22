@@ -29,7 +29,7 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
               </div>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <p className="text-evmos-lightish">{asset.amount}</p>
+              <p className="text-evmos-lightish">{Number(asset.amountWithDecimals)}</p>
               <p className="text-evmos-lightish opacity-70 text-sm">${asset.valueInUsd}</p>
             </td>
           </tr>
