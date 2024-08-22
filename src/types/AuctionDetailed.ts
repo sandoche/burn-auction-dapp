@@ -14,6 +14,7 @@ export type AuctionDetailed = {
   };
   highestBid: {
     bidInEvmos: bigint;
+    bidInEvmosWithDecimals: number;
     bidInUsd: number;
     bidderAddress: HexAddress;
   };

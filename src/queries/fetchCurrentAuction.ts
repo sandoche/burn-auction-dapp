@@ -39,6 +39,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     },
     highestBid: {
       bidInEvmos: auctionInfo.highestBid.amount,
+      bidInEvmosWithDecimals: Number(auctionInfo.highestBid.amount) / 10 ** 18,
       bidderAddress: auctionInfo.bidderAddress,
       bidInUsd: 0,
     },
