@@ -5,6 +5,7 @@ import { CONTRACT_ADDRESS, CONTRACT_ABI } from '@/contract';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
+import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 
 export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
   const [error, result] = await E.try(() =>
@@ -22,6 +23,9 @@ export const rpcFetchCurrentAuctionInfo = async (): Promise<AuctionInfo> => {
 
   return result;
 };
+
+// todo: update type
+const fetchTokensData = async (): Promise<any> => {};
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
