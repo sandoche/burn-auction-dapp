@@ -105,5 +105,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
 
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
 
+  Log().info(currentAuctionInfo.auction.assets);
+
   return currentAuctionInfo;
 };

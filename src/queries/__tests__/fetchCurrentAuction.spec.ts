@@ -1,7 +1,29 @@
-import { expect, describe, it, expectTypeOf } from 'vitest';
+import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { rpcFetchCurrentAuctionInfo, fetchCurrentAuction } from '../fetchCurrentAuction';
 import { AuctionInfo } from '@/types/AuctionInfo';
 import { AuctionDetailed } from '@/types/AuctionDetailed';
+
+beforeEach(() => {
+  vi.mock('../fetchCurrentCryptoPrice', async (importOriginal) => {
+    const actual = await importOriginal();
+
+    return {
+      // @ts-ignore
+      ...actual,
+      fetchCurrentCryptoPrice: vi.fn(() => {
+        return {
+          cosmos: {
+            usd: 5.9,
+          },
+        };
+      }),
+    };
+  });
+});
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 describe('rpcFetchCurrentAuctionInfo()', async () => {
   it('should return the current auction info of type AuctionInfo', async () => {
