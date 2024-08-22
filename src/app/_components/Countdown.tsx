@@ -39,9 +39,12 @@ export const Countdown = ({ date }: { date: Date }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(date));
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       setTimeLeft(calculateTimeLeft(date));
     }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [date]);
 
   return (
