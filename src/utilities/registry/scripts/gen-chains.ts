@@ -1,21 +1,17 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import { mkdir, writeFile } from "fs/promises";
-import { ChainRegistry } from "./types/chain";
-import { TokenRegistry } from "./types/token";
-import { groupBy } from "lodash-es";
-import { fileHeader } from "./constants";
-import { overwrites } from "./rpc-overwrites";
-import { readFiles } from "./readFiles";
-import { testnetConfigByChain, testnetTokensByIdentifiers } from "./testnets";
+import { mkdir, writeFile } from 'fs/promises';
+import { ChainRegistry } from './types/chain';
+import { TokenRegistry } from './types/token';
+import { groupBy } from 'lodash-es';
+import { fileHeader } from './constants';
+import { overwrites } from './rpc-overwrites';
+import { readFiles } from './readFiles';
+import { testnetConfigByChain, testnetTokensByIdentifiers } from './testnets';
 
 const readRegistryChain = async () =>
-  (
-    await readFiles<ChainRegistry>(
-      "node_modules/chain-token-registry/chainConfig/*.json",
-    )
-  )
+  (await readFiles<ChainRegistry>('node_modules/chain-token-registry/chainConfig/*.json'))
     .map((chain) => {
       const { prefix } = chain;
       const testnets = testnetConfigByChain[prefix];
@@ -33,8 +29,7 @@ const readRegistryChain = async () =>
         : [],
     );
 
-const readRegistryToken = () =>
-  readFiles<TokenRegistry>("node_modules/chain-token-registry/tokens/*.json");
+const readRegistryToken = () => readFiles<TokenRegistry>('node_modules/chain-token-registry/tokens/*.json');
 
 const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   if (!urls) {
@@ -46,41 +41,31 @@ const normalizeNetworkUrls = (urls?: (string | undefined)[]) => {
   }
   return http;
 };
-const normalizeIdentifier = (
-  configuration: (ChainRegistry["configurations"] & {})[number],
-) => {
+const normalizeIdentifier = (configuration: (ChainRegistry['configurations'] & {})[number]) => {
   let identifier = configuration.identifier.toLowerCase();
-  if (configuration.identifier === "gravity") {
-    identifier = "gravitybridge";
+  if (configuration.identifier === 'gravity') {
+    identifier = 'gravitybridge';
   }
 
   return identifier;
 };
 const chains = await readRegistryChain();
 
-const tokenByIdentifier = groupBy(
-  await readRegistryToken(),
-  ({ ibc, prefix }) => {
-    const chain = chains.find(({ configuration }) => {
-      return (
-        configuration.identifier.toLowerCase() === ibc?.source?.toLowerCase()
-      );
-    });
-    if (!chain) {
-      return prefix;
-    }
+const tokenByIdentifier = groupBy(await readRegistryToken(), ({ ibc, prefix }) => {
+  const chain = chains.find(({ configuration }) => {
+    return configuration.identifier.toLowerCase() === ibc?.source?.toLowerCase();
+  });
+  if (!chain) {
+    return prefix;
+  }
 
-    return normalizeIdentifier(chain.configuration);
-  },
-);
+  return normalizeIdentifier(chain.configuration);
+});
 Object.entries(testnetTokensByIdentifiers).forEach(([identifier, tokens]) => {
-  tokenByIdentifier[identifier] = [
-    ...(tokenByIdentifier[identifier] ?? []),
-    ...tokens,
-  ];
+  tokenByIdentifier[identifier] = [...(tokenByIdentifier[identifier] ?? []), ...tokens];
 });
 
-await mkdir("src/chains", { recursive: true });
+await mkdir('src/chains', { recursive: true });
 
 for (const chainRegistry of chains) {
   const configuration = chainRegistry.configuration;
@@ -96,16 +81,12 @@ for (const chainRegistry of chains) {
         symbol: token.coinDenom,
         denom: token.coinDenom,
         sourcePrefix: chainRegistry.prefix,
-        sourceDenom:
-          chainRegistry.prefix === "evmos"
-            ? token.cosmosDenom
-            : token.ibc.sourceDenom,
+        sourceDenom: chainRegistry.prefix === 'evmos' ? token.cosmosDenom : token.ibc.sourceDenom,
         // TODO: minCoinDenom for evmos is wrong in our registry, we should fix that there
-        minCoinDenom:
-          token.minCoinDenom === "EVMOS" ? "aevmos" : token.minCoinDenom,
-        category: token.category === "none" ? null : token.category,
+        minCoinDenom: token.minCoinDenom === 'EVMOS' ? 'aevmos' : token.minCoinDenom,
+        category: token.category === 'none' ? null : token.category,
         tokenRepresentation: token.tokenRepresentation as string | null,
-        type: token.type === "IBC" ? "IBC" : "ERC20",
+        type: token.type === 'IBC' ? 'IBC' : 'ERC20',
         decimals: Number(token.exponent),
         erc20Address: token.erc20Address as string | null,
         handledByExternalUI: token.handledByExternalUI ?? null,
@@ -114,7 +95,7 @@ for (const chainRegistry of chains) {
       };
     }) ?? [];
 
-  const isTestnet = configuration.configurationType === "testnet";
+  const isTestnet = configuration.configurationType === 'testnet';
   const feeTokenFromChainConfig = configuration.currencies[0]!;
   let feeToken = tokens.find(
     (token) =>
@@ -124,12 +105,12 @@ for (const chainRegistry of chains) {
   );
   if (!feeToken) {
     feeToken = {
-      category: "cosmos",
+      category: 'cosmos',
       decimals: parseInt(feeTokenFromChainConfig.coinDecimals!),
       denom: feeTokenFromChainConfig.coinDenom!,
       erc20Address: null,
       handledByExternalUI: null,
-      description: "",
+      description: '',
       listed: false,
       minCoinDenom: feeTokenFromChainConfig.coinMinDenom!,
       name: feeTokenFromChainConfig.coinDenom!,
@@ -139,27 +120,16 @@ for (const chainRegistry of chains) {
       symbol: feeTokenFromChainConfig.coinDenom!,
       tokenRepresentation: null,
       coingeckoId: null,
-      type: "IBC",
+      type: 'IBC',
     };
     tokens.push(feeToken);
   }
 
-  const isMainnet = configuration.configurationType === "mainnet";
+  const isMainnet = configuration.configurationType === 'mainnet';
 
-  const cosmosRest = normalizeNetworkUrls([
-    overwrites[identifier]?.cosmosRest,
-    isMainnet ? `https://rest.cosmos.directory/${identifier}` : "",
-    ...configuration.rest,
-  ]);
-  const tendermintRest = normalizeNetworkUrls([
-    overwrites[identifier]?.tendermintRest,
-    isMainnet ? `https://rpc.cosmos.directory/${identifier}` : "",
-    ...configuration.rpc,
-  ]);
-  const evmRest = normalizeNetworkUrls([
-    overwrites[identifier]?.evmRest,
-    ...(configuration.web3 ?? []),
-  ]);
+  const cosmosRest = normalizeNetworkUrls([overwrites[identifier]?.cosmosRest, isMainnet ? `https://rest.cosmos.directory/${identifier}` : '', ...configuration.rest]);
+  const tendermintRest = normalizeNetworkUrls([overwrites[identifier]?.tendermintRest, isMainnet ? `https://rpc.cosmos.directory/${identifier}` : '', ...configuration.rpc]);
+  const evmRest = normalizeNetworkUrls([overwrites[identifier]?.evmRest, ...(configuration.web3 ?? [])]);
 
   const chain = {
     prefix: chainRegistry.prefix,
@@ -167,10 +137,10 @@ for (const chainRegistry of chains) {
     cosmosId: configuration.chainId,
     identifier,
     gasPriceStep: chainRegistry.gasPriceStep,
-    evmId: chainRegistry.prefix !== "evmos" ? null : isTestnet ? 9000 : 9001,
+    evmId: chainRegistry.prefix !== 'evmos' ? null : isTestnet ? 9000 : 9001,
     channels:
       // TODO: When we start supporting IBC between other chains, we need to add the proper channels here
-      chainRegistry.prefix !== "evmos" && configuration.source
+      chainRegistry.prefix !== 'evmos' && configuration.source
         ? {
             evmos: {
               channelId: configuration.source.sourceChannel,
@@ -189,20 +159,10 @@ for (const chainRegistry of chains) {
     explorerUrl: configuration.explorerTxUrl,
     env: configuration.configurationType,
   };
-  await writeFile(`src/chains/${chain.identifier}.ts`, [
-    fileHeader,
-    `export default ${JSON.stringify(chain, null, 2)} as const;`,
-  ]);
+  await writeFile(`src/chains/${chain.identifier}.ts`, [fileHeader, `export default ${JSON.stringify(chain, null, 2)} as const;`]);
 }
 
-await writeFile("src/chains/index.ts", [
+await writeFile('src/chains/index.ts', [
   fileHeader,
-  chains
-    .map(
-      ({ configuration }) =>
-        `export { default as ${normalizeIdentifier(
-          configuration,
-        )} } from "./${normalizeIdentifier(configuration)}";`,
-    )
-    .join("\n"),
+  chains.map(({ configuration }) => `export { default as ${normalizeIdentifier(configuration)} } from "./${normalizeIdentifier(configuration)}";`).join('\n'),
 ]);

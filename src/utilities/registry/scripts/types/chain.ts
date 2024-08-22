@@ -109,7 +109,7 @@ export interface ChainRegistry {
       /**
        * Add the correct explorer data type
        */
-      type: "evm" | "cosmos";
+      type: 'evm' | 'cosmos';
       /**
        * Link to explorer
        */
@@ -118,7 +118,7 @@ export interface ChainRegistry {
     /**
      * Must select either mainnet or testnet
      */
-    configurationType: "mainnet" | "testnet" | "localtestnet";
+    configurationType: 'mainnet' | 'testnet' | 'localtestnet';
     /**
      * Explorer tx URL for the chain, i.e https://www.mintscan.io/evmos/txs.
      */

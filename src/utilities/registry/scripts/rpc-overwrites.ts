@@ -10,10 +10,10 @@ export const overwrites: Record<
   }
 > = {
   evmos: {
-    cosmosRest: "https://proxy.evmos.org/cosmos",
-    evmRest: "https://proxy.evmos.org/web3",
+    cosmosRest: 'https://proxy.evmos.org/cosmos',
+    evmRest: 'https://proxy.evmos.org/web3',
   },
   osmosis: {
-    tendermintRest: "https://proxy.evmos.org/osmosis",
+    tendermintRest: 'https://proxy.evmos.org/osmosis',
   },
 };

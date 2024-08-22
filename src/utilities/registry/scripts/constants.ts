@@ -1,13 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/apps/blob/main/LICENSE)
 
-import path from "path";
-import { fileURLToPath } from "url";
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const autogenDir = path.join(__dirname, "../autogen");
+export const autogenDir = path.join(__dirname, '../autogen');
 
 export const fileHeader = `/* eslint-disable */
 /**

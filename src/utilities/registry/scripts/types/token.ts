@@ -21,7 +21,7 @@ export interface TokenRegistry {
    * Link must be png source. If this image is coming from Github, make sure it has a pattern of 'https://raw.githubusercontent.com/cosmos/chain-registry/master/${chain}/images/${coin}.png' and the link directly opens the image only and not the site of Github with the image.
    */
   pngSrc: string;
-  type: "IBC" | "ERC-20" | "CW20";
+  type: 'IBC' | 'ERC-20' | 'CW20';
   exponent: string;
   /**
    * Starting with ibc/...
@@ -73,13 +73,7 @@ export interface TokenRegistry {
   /**
    * Select a parental category of this asset. If a category does not exist, please feel free to create a PR to update the schema. For example, all wrapped token are part of the parent category, gWBTC is 'bitcoin'.
    */
-  category:
-    | "bitcoin"
-    | "ethereum"
-    | "stablecoin"
-    | "cosmos"
-    | "polygon"
-    | "none";
+  category: 'bitcoin' | 'ethereum' | 'stablecoin' | 'cosmos' | 'polygon' | 'none';
   /**
    * Use this field to declare if the coin is part of a network's ecosystem, like for example, gWBTC is part of Gravity. If the coin is the main network coin, then the response will be itself still. the string here should match the network prefix.
    */
@@ -92,12 +86,7 @@ export interface TokenRegistry {
     /**
      * Specify if the external UI is for Deposit, Withdraw, Convert, or others.
      */
-    handlingAction:
-      | "Deposit"
-      | "Withdraw"
-      | "Convert"
-      | "Deposit and Withdraw"
-      | "All";
+    handlingAction: 'Deposit' | 'Withdraw' | 'Convert' | 'Deposit and Withdraw' | 'All';
     [k: string]: unknown;
   }[];
   [k: string]: unknown;
