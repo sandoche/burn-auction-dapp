@@ -7,8 +7,11 @@ import { BiddingForm } from './_components/BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
 import { Countdown } from './_components/CountDown';
+import { formatUnits } from '@/utilities/formatUnits';
 
 const CurrentAuction = async () => {
+  const EVMOS_DECIMALS = 18;
+
   const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
 
   const endDate = new Date(round.endDate);
@@ -44,7 +47,12 @@ const CurrentAuction = async () => {
       </section>
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">Current total auctioned value</h2>
-        <p className="text-3xl mb-6 font-semibold">${auction.totalValue}</p>
+        <p className="text-3xl mb-6 font-semibold">
+          {auction.totalValue.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          })}
+        </p>
         <AssetsTable assets={auction.assets} />
       </section>
       <section>
@@ -53,8 +61,13 @@ const CurrentAuction = async () => {
           <Chip moreVisible>🔥 12x cheaper than market value</Chip>
         </div>
         <div className="flex items-end mb-1">
-          <span className="text-3xl font-semibold mr-4">{Number(highestBid.bidInEvmos)} EVMOS</span>
-          <span className="text-xl text-evmos-lightish">${highestBid.bidInUsd}</span>
+          <span className="text-3xl font-semibold mr-4">{formatUnits(highestBid.bidInEvmos, EVMOS_DECIMALS, 2)} EVMOS</span>
+          <span className="text-xl text-evmos-lightish">
+            {highestBid.bidInUsd.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </span>
         </div>
         <p className="mb-6">
           {highestBid.bidderAddress !== '0x0000000000000000000000000000000000000000' && (

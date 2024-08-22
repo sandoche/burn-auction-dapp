@@ -1,5 +1,6 @@
 import type { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import Image from 'next/image';
+import { formatUnits } from '@/utilities/formatUnits';
 
 export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
   return (
@@ -29,8 +30,13 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
               </div>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <p className="text-evmos-lightish">{Number(asset.amountWithDecimals)}</p>
-              <p className="text-evmos-lightish opacity-70 text-sm">${asset.valueInUsd}</p>
+              <p className="text-evmos-lightish">{formatUnits(asset.amount, asset.exponent, 2)}</p>
+              <p className="text-evmos-lightish opacity-70 text-sm">
+                {asset.valueInUsd.toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                })}
+              </p>
             </td>
           </tr>
         ))}
