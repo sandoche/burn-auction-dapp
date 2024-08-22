@@ -8,6 +8,7 @@ import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
 import { Countdown } from './_components/Countdown';
 import { formatUnits } from '@/utilities/formatUnits';
+import { RefreshHome } from './_components/RefreshHome';
 
 const CurrentAuction = async () => {
   const EVMOS_DECIMALS = 18;
@@ -27,6 +28,7 @@ const CurrentAuction = async () => {
 
   return (
     <main>
+      <RefreshHome />
       <section className="mb-12">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl">Auction #{Number(round.round)}</h1>
