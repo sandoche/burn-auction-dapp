@@ -11,7 +11,8 @@
     "dev:dappstore": "dappstore dev --target 3000",
     "prepare": "husky",
     "test": "vitest",
-    "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.ts"
+    "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.ts",
+    "postinstall": "npm run gen:types"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
