@@ -15,6 +15,15 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
           </th>
         </tr>
       </thead>
+      {assets.length === 0 && (
+        <tbody>
+          <tr>
+            <td colSpan={2} className="text-center py-4 text-evmos-lightish">
+              There are no assets in this auction yet
+            </td>
+          </tr>
+        </tbody>
+      )}
       <tbody className="divide-y divide-evmos-dark">
         {assets.map((asset) => (
           <tr key={asset.ticker}>
