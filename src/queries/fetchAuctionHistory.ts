@@ -11,7 +11,7 @@ export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
     throw error;
   }
 
-  const auctionHistory: AuctionHistory = auctionEvents.map((event) => {
+  const history: AuctionHistory['history'] = auctionEvents.map((event) => {
     return {
       round: BigInt(event.args.round),
       amountInEvmos: BigInt(event.args.burned),
@@ -20,5 +20,10 @@ export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
     };
   });
 
-  return auctionHistory.reverse();
+  const auctionHistory = {
+    history: history.reverse(),
+    totalBurned: history.reduce((acc, curr) => acc + curr.amountInEvmos, BigInt(0)),
+  };
+
+  return auctionHistory;
 };

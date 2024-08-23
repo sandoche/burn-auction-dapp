@@ -7,4 +7,7 @@ export type AuctionHistoryItem = {
   blockNumber: bigint;
 };
 
-export type AuctionHistory = AuctionHistoryItem[];
+export type AuctionHistory = {
+  history: AuctionHistoryItem[];
+  totalBurned: bigint;
+};
