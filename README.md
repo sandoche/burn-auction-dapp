@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🚧 Work in progress, not ready for production 🚧
 
-## Getting Started
+<div align="center">
+  <h1> Evmos Burn Auction Instant dApp </h1>
+</div>
 
-First, run the development server:
+<div align="center">
+<a href="https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE">
+<img alt="License: ENCL-1.0" src="https://img.shields.io/badge/license-ENCL--1.0-orange" />
+</a>
+<a href="https://discord.gg/evmos">
+<img alt="Discord" src="https://img.shields.io/discord/809048090249134080.svg" />
+</a>
+<a href="https://twitter.com/EvmosOrg">
+<img alt="Twitter Follow Evmos" src="https://img.shields.io/twitter/follow/EvmosOrg"/>
+</a>
+</div>
+
+The instant dapp for the Burn Auction module of Evmos.
+
+> https://store.evmos.org/dapps/defi/burn-auction
+
+## Documentation
+
+Pre-requisites:
+
+- [Node.js](https://nodejs.org/en/download/) (v20.16.0 or higher)
+- [Pnpm](https://pnpm.io/installation)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+
+cp .env.example .env
+# edit the .env file with your own values
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+pnpm dev:dappstore # to run the dappstore sdk preview that handles the wallet connection
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Build
 
-## Learn More
+```bash
+pnpm build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Test with a local node
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Follow the instructions described in this issue in order to run a local node with the Burn Auction module enabled: https://github.com/evmos/burn-auction-dapp/issues/5
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Community
 
-## Deploy on Vercel
+The following chat channels and forums are a great spot to ask questions about Evmos:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- [Evmos Twitter](https://twitter.com/EvmosOrg)
+- [Evmos Discord](https://discord.gg/evmos)
+- [Evmos Forum](https://commonwealth.im/evmos)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Looking for a good place to start contributing?
+Check out some
+[`good first issues`](https://github.com/evmos/burn-auction-dapp/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+
+For additional instructions, standards and style guides, please refer to the [Contributing](./CONTRIBUTING.md) document.
+
+## Careers
+
+See our open positions on [Greenhouse](https://boards.eu.greenhouse.io/evmos).
+
+## Disclaimer
+
+The software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+
+## Licensing
+
+Starting from April 21th, 2023, this repository will update its license to Evmos Non-Commercial License 1.0 (ENCL-1.0). For more information see [LICENSE](/LICENSE).
+
+### SPDX Identifier
+
+The following header including a license identifier in SPDX short form has been added in all ENCL-1.0 files:
+
+```js
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+```
+
+### License FAQ
+
+Find below an overview of Permissions and Limitations of the Evmos Non-Commercial License 1.0. For more information, check out the full ENCL-1.0 FAQ [here](/LICENSE_FAQ.md).
+
+| Permissions                                                                                                                                                                  | Prohibited                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| - Private Use, including distribution and modification<br />- Commercial use on designated blockchains<br />- Commercial use with Evmos permit (to be separately negotiated) | Commercial use, other than on designated blockchains, without Evmos permit |
