@@ -6,7 +6,6 @@ import { EVMOS_DECIMALS } from '@/constants';
 
 const History = async () => {
   const auctionHistory = await fetchAuctionHistory();
-  console.log(auctionHistory);
 
   return (
     <section className="mb-10">
