@@ -1,9 +1,15 @@
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { fetchBiddingHistory } from '@/queries/fetchBiddingHistory';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { formatUnits } from '@/utilities/formatUnits';
+import { shortenAddress } from '@/utilities/shortenAddress';
 
-export const BiddingHistory = () => {
-  // TODO: update types
-  const bids: any = [];
+dayjs.extend(relativeTime);
+
+export const BiddingHistory = async ({ round }: { round: bigint }) => {
+  const bids = await fetchBiddingHistory(round);
 
   return (
     <Disclosure>
@@ -39,12 +45,12 @@ export const BiddingHistory = () => {
             </tbody>
           )}
           <tbody className="divide-y divide-evmos-dark">
-            {bids.map((bid: any) => (
-              <tr key={bid.transactionId}>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">x</td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">x</td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">x</td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">x</td>
+            {bids.map((bid) => (
+              <tr key={bid.transactionHash}>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{shortenAddress(bid.bidder)}</td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm">{formatUnits(bid.amount, 18, 2)}</td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm">{bid.time ? dayjs(bid.time).fromNow() : ''}</td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm">{shortenAddress(bid.transactionHash)}</td>
               </tr>
             ))}
           </tbody>

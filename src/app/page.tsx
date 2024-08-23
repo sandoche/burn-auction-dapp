@@ -1,6 +1,5 @@
 import { Chip } from '@/components/ui/Chip';
 import { StatusIndicatorIcon } from '@/components/icons/StatusIndicatorIcon';
-import { ProgressBar } from '@/components/ui/ProgressBar';
 import { AssetsTable } from './_components/AssetsTable';
 import { BiddingHistory } from './_components/BiddingHistory';
 import { BiddingForm } from './_components/BiddingForm';
@@ -83,7 +82,7 @@ const CurrentAuction = async () => {
         <div className="mb-6">
           <BiddingForm />
         </div>
-        <BiddingHistory />
+        <BiddingHistory round={round.round} />
       </section>
     </main>
   );

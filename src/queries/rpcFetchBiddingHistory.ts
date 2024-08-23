@@ -6,7 +6,6 @@ import { Log } from '@/utilities/logger';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
-// TODO: update types
 export const rpcFetchBiddingHistory = async (round: bigint): Promise<BidEvent[]> => {
   const filter = await viemClient.createContractEventFilter({
     abi: CONTRACT_ABI,
