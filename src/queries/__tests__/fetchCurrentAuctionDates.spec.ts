@@ -1,5 +1,4 @@
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
-import { rpcFetchEpochInfo } from '../rpcFetchEpochInfo';
 import { fetchCurrentAuctionDates } from '../fetchCurrentAuctionDates';
 import { epochInfoResponse } from './mockedData';
 

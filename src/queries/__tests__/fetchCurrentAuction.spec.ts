@@ -4,6 +4,7 @@ import { rpcFetchCurrentAuctionInfo } from '../rpcFetchCurrentAuctionInfo';
 import type { AuctionInfo } from '@/types/AuctionInfo';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { mockCoinGeckoResponse, mockAuctionResponse } from './mockedData';
+import { epochInfoResponse } from './mockedData';
 
 beforeEach(() => {
   vi.mock('../fetchCurrentCryptoPrice', async (importOriginal) => {
@@ -22,6 +23,15 @@ beforeEach(() => {
       // @ts-ignore
       ...actual,
       rpcFetchCurrentAuctionInfo: vi.fn(() => mockAuctionResponse),
+    };
+  });
+
+  vi.mock('../rpcFetchEpochInfo', async (importOriginal) => {
+    const actual = await importOriginal();
+    return {
+      // @ts-ignore
+      ...actual,
+      rpcFetchEpochInfo: vi.fn(() => epochInfoResponse),
     };
   });
 });
