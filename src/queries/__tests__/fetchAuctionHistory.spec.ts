@@ -22,7 +22,6 @@ describe('fetchAuctionHistory()', async () => {
   it('should return the auction history and the total', async () => {
     const result = await fetchAuctionHistory();
     expect(result).toBeDefined();
-    console.log(result);
     expectTypeOf(result).toMatchTypeOf<AuctionHistory>();
   });
 });
