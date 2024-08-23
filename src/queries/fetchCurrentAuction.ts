@@ -81,6 +81,8 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   });
 
   const coingeckoIds = currentAuctionInfo.auction.assets.map((asset) => asset.coingeckoId);
+  coingeckoIds.push('evmos');
+
   const [_, prices] = await E.try(() => fetchCurrentCryptoPrice(coingeckoIds));
 
   Log().info('Prices:', prices);
@@ -95,6 +97,8 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
 
       return asset;
     });
+
+    currentAuctionInfo.highestBid.bidInUsd = currentAuctionInfo.highestBid.bidInEvmosWithDecimals * prices['evmos']['usd'];
   }
 
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);

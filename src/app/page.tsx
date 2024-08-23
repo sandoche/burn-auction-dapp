@@ -10,6 +10,7 @@ import { Countdown } from './_components/Countdown';
 import { formatUnits } from '@/utilities/formatUnits';
 import { RefreshHome } from './_components/RefreshHome';
 import { BiddingProgress } from './_components/BiddingProgress';
+import { DiscountChip } from './_components/DiscountChip';
 
 const CurrentAuction = async () => {
   const EVMOS_DECIMALS = 18;
@@ -61,7 +62,7 @@ const CurrentAuction = async () => {
       <section>
         <div className="flex items-center mb-1">
           <h2 className="text-evmos-lightish mr-2">Current highest bid</h2>
-          <Chip moreVisible>🔥 12x cheaper than market value</Chip>
+          <DiscountChip currentValueUsd={auction.totalValue} highestBidUsd={highestBid.bidInUsd} />
         </div>
         <div className="flex items-end mb-1">
           <span className="text-3xl font-semibold mr-4">{formatUnits(highestBid.bidInEvmos, EVMOS_DECIMALS, 2)} EVMOS</span>

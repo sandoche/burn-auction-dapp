@@ -19,6 +19,7 @@ export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPric
       'wrapped-bitcoin': {
         usd: 70000,
       },
+      evmos: { usd: 0.0227916 },
     };
   }
 

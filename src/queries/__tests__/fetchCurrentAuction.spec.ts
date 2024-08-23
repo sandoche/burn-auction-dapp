@@ -11,6 +11,7 @@ const mockCoinGeckoResponse = {
   'wrapped-bitcoin': {
     usd: 70000,
   },
+  evmos: { usd: 0.0227916 },
 };
 
 const mockAuctionResponse: AuctionInfo = {
