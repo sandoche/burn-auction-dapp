@@ -7,6 +7,7 @@ const config: Config = {
       colors: {
         'evmos-primary': '#ff8c5f',
         'evmos-primary-light': '#ffdbcf',
+        'evmos-darkish-less': '#302b29',
         'evmos-darkish': '#26211f',
         'evmos-dark': '#1c1716',
         'evmos-light': '#D8C2BB',
@@ -16,6 +17,9 @@ const config: Config = {
           light: '#366A1A',
         },
         'evmos-secondary': '#55377b',
+      },
+      divideWidth: {
+        DEFAULT: '1.5px',
       },
     },
   },

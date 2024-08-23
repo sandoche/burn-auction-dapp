@@ -15,7 +15,7 @@ export const BiddingHistory = async ({ round }: { round: bigint }) => {
         <ChevronDownIcon className="w-5 -rotate-90 group-data-[open]:rotate-0 transition duration-200 ease-out" />
       </DisclosureButton>
       <DisclosurePanel>
-        <table className="min-w-full divide-y divide-evmos-darkish">
+        <table className="min-w-full divide-y divide-evmos-darkish-less">
           <thead>
             <tr>
               <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">

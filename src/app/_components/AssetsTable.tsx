@@ -4,7 +4,7 @@ import { formatUnits } from '@/utilities/formatUnits';
 
 export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
   return (
-    <table className="min-w-full divide-y divide-evmos-darkish">
+    <table className="min-w-full divide-y divide-evmos-darkish-less">
       <thead>
         <tr>
           <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
@@ -24,7 +24,7 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
           </tr>
         </tbody>
       )}
-      <tbody className="divide-y divide-evmos-dark">
+      <tbody className="divide-y divide-evmos-darkish-less">
         {assets.map((asset) => (
           <tr key={asset.ticker}>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">

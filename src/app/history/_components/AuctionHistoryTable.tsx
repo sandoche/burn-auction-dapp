@@ -6,7 +6,7 @@ import { shortenAddress } from '@/utilities/shortenAddress';
 
 export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: AuctionHistory }) => {
   return (
-    <table className="min-w-full divide-y divide-evmos-darkish">
+    <table className="min-w-full divide-y divide-evmos-darkish-less">
       <thead>
         <tr>
           <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
@@ -30,11 +30,11 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
           </tr>
         </tbody>
       )}
-      <tbody className="divide-y divide-evmos-dark">
+      <tbody className="divide-y divide-evmos-darkish-less">
         {auctionHistory.history.map((auction) => (
           <tr key={Number(auction.round)}>
-            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{Number(auction.round)}</td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm flex justify-end">
+            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-evmos-lightish sm:pl-0">{Number(auction.round)}</td>
+            <td className="whitespace-nowrap px-3 py-4 text-sm flex justify-end text-evmos-lightish">
               <span className="mr-2">{formatUnits(auction.amountInEvmos, EVMOS_DECIMALS, 2)}</span>
               <Image src="/icons/evmos.svg" alt="Evmos Icon" width={20} height={20} />
             </td>
