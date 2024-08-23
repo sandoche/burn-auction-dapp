@@ -1,16 +1,7 @@
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { rpcFetchCurrentAuctionInfo } from '../rpcFetchCurrentAuctionInfo';
 import { AuctionInfo } from '@/types/AuctionInfo';
-
-const mockAuctionResponse: AuctionInfo = {
-  tokens: [
-    { denom: 'uatom', amount: BigInt(10000000) },
-    { denom: 'wbtc-satoshi', amount: BigInt(10000000) },
-  ],
-  highestBid: { denom: 'aevmos', amount: BigInt(0) },
-  currentRound: BigInt(100),
-  bidderAddress: '0x0000000000000000000000000000000000000000',
-};
+import { mockAuctionResponse } from './mockedData';
 
 beforeEach(() => {
   vi.mock('../rpcFetchCurrentAuctionInfo', async (importOriginal) => {
