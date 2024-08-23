@@ -19,7 +19,7 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
         <tbody>
           <tr>
             <td colSpan={2} className="text-center py-4 text-evmos-lightish">
-              There are no assets in this auction yet
+              There are no assets in this auction, come back for the next one!
             </td>
           </tr>
         </tbody>
