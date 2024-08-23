@@ -22,7 +22,7 @@ export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
 
   const auctionHistory = {
     history: history.reverse(),
-    totalBurned: history.reduce((acc, curr) => acc + curr.amountInEvmos, BigInt(0)),
+    totalBurned: history.reduce((acc, curr) => acc + curr.amountInEvmos, BigInt(0)), // in the future with pagination we should get the total from an indexer
   };
 
   return auctionHistory;
