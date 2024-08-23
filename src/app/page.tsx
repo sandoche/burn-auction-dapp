@@ -10,10 +10,9 @@ import { formatUnits } from '@/utilities/formatUnits';
 import { RefreshHome } from './_components/RefreshHome';
 import { BiddingProgress } from './_components/BiddingProgress';
 import { DiscountChip } from './_components/DiscountChip';
+import { EVMOS_DECIMALS } from '@/constants';
 
 const CurrentAuction = async () => {
-  const EVMOS_DECIMALS = 18;
-
   const { round, auction, highestBid }: AuctionDetailed = await fetchCurrentAuction();
 
   const endDate = new Date(round.endDate);

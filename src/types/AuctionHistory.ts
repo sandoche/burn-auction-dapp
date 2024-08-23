@@ -1,6 +1,6 @@
 import { HexAddress } from './HexAddress';
 
-export type AuctionHistoryItem = {
+export type HistoryItem = {
   round: bigint;
   amountInEvmos: bigint;
   winnerAddress: HexAddress;
@@ -8,6 +8,6 @@ export type AuctionHistoryItem = {
 };
 
 export type AuctionHistory = {
-  history: AuctionHistoryItem[];
+  history: HistoryItem[];
   totalBurned: bigint;
 };

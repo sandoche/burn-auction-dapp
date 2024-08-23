@@ -7,6 +7,7 @@ import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
 import { fetchCurrentAuctionDates } from './fetchCurrentAuctionDates';
+import { EVMOS_DECIMALS } from '@/constants';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
@@ -39,7 +40,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     },
     highestBid: {
       bidInEvmos: auctionInfo.highestBid.amount,
-      bidInEvmosWithDecimals: Number(auctionInfo.highestBid.amount) / 10 ** 18,
+      bidInEvmosWithDecimals: Number(auctionInfo.highestBid.amount) / 10 ** EVMOS_DECIMALS,
       bidderAddress: auctionInfo.bidderAddress,
       bidInUsd: 0,
     },

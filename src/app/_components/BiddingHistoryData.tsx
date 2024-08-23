@@ -4,6 +4,7 @@ import { fetchBiddingHistory } from '@/queries/fetchBiddingHistory';
 import { formatUnits } from '@/utilities/formatUnits';
 import { shortenAddress } from '@/utilities/shortenAddress';
 import Image from 'next/image';
+import { EVMOS_DECIMALS } from '@/constants';
 
 dayjs.extend(relativeTime);
 
@@ -30,7 +31,7 @@ export const BiddingHistoryData = async ({ round }: { round: bigint }) => {
               </a>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm flex">
-              <span className="mr-2">{formatUnits(bid.amount, 18, 2)}</span>
+              <span className="mr-2">{formatUnits(bid.amount, EVMOS_DECIMALS, 2)}</span>
               <Image src="/icons/evmos.svg" alt="Evmos Icon" width={20} height={20} />
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">{bid.time ? dayjs(bid.time).fromNow() : ''}</td>

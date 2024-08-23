@@ -1,4 +1,5 @@
 import { createPublicClient, http, defineChain } from 'viem';
+import { EVMOS_DECIMALS } from '@/constants';
 
 const chainId = parseInt(process.env.CHAIN_ID as string);
 const rpcUrl = process.env.RPC_HOST as string;
@@ -8,7 +9,7 @@ const evmos = defineChain({
   name: 'Evmos',
   network: 'evmos',
   nativeCurrency: {
-    decimals: 18,
+    decimals: EVMOS_DECIMALS,
     name: 'Evmos',
     symbol: 'EVMOS',
   },
