@@ -1,4 +1,3 @@
-import type { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import Image from 'next/image';
 import { formatUnits } from '@/utilities/formatUnits';
 import { AuctionHistory } from '@/types/AuctionHistory';
@@ -13,7 +12,7 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
           <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
             #
           </th>
-          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white text-right">
             Amount
           </th>
           <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
@@ -35,13 +34,13 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
         {auctionHistory.history.map((auction) => (
           <tr key={Number(auction.round)}>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{Number(auction.round)}</td>
-            <td className="whitespace-nowrap px-3 py-4 text-sm">
-              {formatUnits(auction.amountInEvmos, EVMOS_DECIMALS, 2)}
+            <td className="whitespace-nowrap px-3 py-4 text-sm flex justify-end">
+              <span className="mr-2">{formatUnits(auction.amountInEvmos, EVMOS_DECIMALS, 2)}</span>
               <Image src="/icons/evmos.svg" alt="Evmos Icon" width={20} height={20} />
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <a href={`https://www.mintscan.io/evmos/address/${auction.winnerAddress}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
-                {shortenAddress(auction.winnerAddress)}
+              <a href={`https://www.mintscan.io/evmos/address/${auction.winnerAddress}`} className="text-evmos-primary hover:text-evmos-primary-light flex" target="_blank">
+                <span className="mr-2">{shortenAddress(auction.winnerAddress)}</span>
                 <Image src="/icons/external.svg" alt="Evmos Icon" width={16} height={16} />
               </a>
             </td>
