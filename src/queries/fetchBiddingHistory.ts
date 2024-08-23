@@ -3,6 +3,7 @@ import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { BiddingHistory } from '@/types/BiddingHistory';
+import { BiddingHistory } from '@/app/_components/BiddingHistory';
 
 export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory> => {
   const [error, biddingEvents] = await E.try(() => rpcFetchBiddingHistory(round));
@@ -27,5 +28,5 @@ export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory
     item.time = time || null;
   }
 
-  return biddingHistory;
+  return biddingHistory.reverse();
 };
