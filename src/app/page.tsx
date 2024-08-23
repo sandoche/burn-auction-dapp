@@ -74,7 +74,7 @@ const CurrentAuction = async () => {
         </div>
         <p className="mb-6">
           {highestBid.bidderAddress !== '0x0000000000000000000000000000000000000000' && (
-            <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
+            <a href={`https://www.mintscan.io/evmos/address/${highestBid.bidderAddress}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
               {highestBid.bidderAddress}
             </a>
           )}
