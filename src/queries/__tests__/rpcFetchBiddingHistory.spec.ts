@@ -1,4 +1,4 @@
-import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { rpcFetchBiddingHistory } from '../rpcFetchBiddingHistory';
 
 describe('rpcFetchBiddingHistory(round)', async () => {
