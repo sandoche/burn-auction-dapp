@@ -5,6 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { formatUnits } from '@/utilities/formatUnits';
 import { shortenAddress } from '@/utilities/shortenAddress';
+import Image from 'next/image';
 
 dayjs.extend(relativeTime);
 
@@ -52,7 +53,10 @@ export const BiddingHistory = async ({ round }: { round: bigint }) => {
                     {shortenAddress(bid.bidder)}
                   </a>
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm">{formatUnits(bid.amount, 18, 2)}</td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm flex">
+                  <span className="mr-2">{formatUnits(bid.amount, 18, 2)}</span>
+                  <Image src="/icons/evmos.svg" alt="Evmos Icon" width={20} height={20} />
+                </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm">{bid.time ? dayjs(bid.time).fromNow() : ''}</td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                   <a href={`https://www.mintscan.io/evmos/tx/${bid.transactionHash}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
