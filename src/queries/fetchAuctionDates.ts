@@ -5,8 +5,9 @@ import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import { rpcFetchEpochInfo } from './rpcFetchEpochInfo';
 import type { AuctionDates } from '@/types/AuctionDates';
+import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 
-export const fetchCurrentAuctionDates = async (): Promise<AuctionDates> => {
+export const fetchAuctionDates = async (block: bigint | null = null): Promise<AuctionDates> => {
   const [error, epochInfo] = await E.try(() => rpcFetchEpochInfo());
 
   if (error) {
@@ -21,15 +22,21 @@ export const fetchCurrentAuctionDates = async (): Promise<AuctionDates> => {
     throw new Error('No current epoch found');
   }
 
-  const currentEpochStart = new Date(currentEpoch.current_epoch_start_time);
-  const currentEpochDuration = parseInt(currentEpoch.duration, 10);
-  const currentEpochEnd = new Date(currentEpochStart.getTime() + currentEpochDuration * 1000);
+  const blockEndDate = block ? await rpcFetchBlockDate(block) : null;
+  const epochDuration = parseInt(currentEpoch.duration, 10);
+  console.log(epochDuration);
 
-  Log().info('Current start date:', currentEpochStart);
-  Log().info('Current end date:', currentEpochEnd);
+  console.log('block: ' + block);
+  console.log(blockEndDate);
+
+  const start = blockEndDate ? new Date(blockEndDate.getTime() - epochDuration * 1000) : new Date(currentEpoch.current_epoch_start_time);
+  const end = blockEndDate ? blockEndDate : new Date(start.getTime() + epochDuration * 1000);
+
+  Log().info('Start date:', start);
+  Log().info('End date:', end);
 
   return {
-    start: currentEpochStart,
-    end: currentEpochEnd,
+    start,
+    end,
   };
 };

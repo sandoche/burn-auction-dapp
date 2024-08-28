@@ -103,7 +103,7 @@ export const epochInfoResponse = {
     {
       identifier: 'week',
       start_time: '2024-08-23T09:36:10.275537574Z',
-      duration: '3600s',
+      duration: '60s',
       current_epoch: '3',
       current_epoch_start_time: '2024-08-23T11:36:10.275537574Z',
       epoch_counting_started: true,

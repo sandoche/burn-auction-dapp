@@ -9,7 +9,7 @@ import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
-import { fetchCurrentAuctionDates } from './fetchCurrentAuctionDates';
+import { fetchAuctionDates } from './fetchAuctionDates';
 import { EVMOS_DECIMALS } from '@/constants';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
@@ -27,7 +27,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     throw errorMetadata;
   }
 
-  const [errorEndDate, dates] = await E.try(() => fetchCurrentAuctionDates());
+  const [errorEndDate, dates] = await E.try(() => fetchAuctionDates());
 
   if (errorEndDate || !dates) {
     Log().error('Error fetching current end date:', errorEndDate);

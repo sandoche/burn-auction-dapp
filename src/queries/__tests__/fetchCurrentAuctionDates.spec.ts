@@ -2,7 +2,7 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
-import { fetchCurrentAuctionDates } from '../fetchCurrentAuctionDates';
+import { fetchAuctionDates } from '../fetchAuctionDates';
 import { epochInfoResponse } from './mockedData';
 
 beforeEach(() => {
@@ -20,9 +20,9 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('fetchCurrentAuctionDates()', async () => {
+describe('fetchAuctionDates()', async () => {
   it('should return the start and end dates', async () => {
-    const result = await fetchCurrentAuctionDates();
+    const result = await fetchAuctionDates();
     expect(result).not.toBeNull();
     expectTypeOf(result.start).toMatchTypeOf<Date>();
     expectTypeOf(result.end).toMatchTypeOf<Date>();
