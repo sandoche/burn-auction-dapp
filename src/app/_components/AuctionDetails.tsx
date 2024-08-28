@@ -12,6 +12,8 @@ import { formatUnits } from '@/utilities/formatUnits';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
 import { EVMOS_DECIMALS } from '@/constants';
+import { ButtonLink } from '@/components/ui/ButtonLink';
+import Image from 'next/image';
 
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;
@@ -42,7 +44,16 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
     <main>
       <section className="mb-12">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl">Auction #{Number(round.round)}</h1>
+          <div className="flex items-center">
+            {!round.isLast && (
+              <div className="mr-3">
+                <ButtonLink href="/history">
+                  <Image src="/icons/arrow-left.svg" alt="Back" width={20} height={20} />
+                </ButtonLink>
+              </div>
+            )}
+            <h1 className="text-3xl flex">Auction #{Number(round.round)}</h1>
+          </div>
           {round.isLast && (
             <Chip>
               <StatusIndicatorIcon />
