@@ -25,7 +25,5 @@ export const rpcFetchAuctionEnd = async (round: bigint | null = null): Promise<A
     throw error;
   }
 
-  console.log('xxxxxxxxxx:', result);
-
   return result as AuctionEndEvent[];
 };
