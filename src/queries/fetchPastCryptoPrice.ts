@@ -14,7 +14,7 @@ export const fetchPastCryptoPrice = async (coinId: string, date: Date): Promise<
 
   const formattedDate = date.toISOString().split('T')[0].split('-').reverse().join('-');
 
-  const [error, result] = await E.try(() => fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${formattedDate}`));
+  const [error, result] = await E.try(() => fetch(`https://api.coingecko.com/api/v3/coins/${coinId}/history?date=${formattedDate}`, { next: { revalidate: 60 * 60 * 24 * 365 } }));
   Log().info('Fetching crypto price:', { coinId, date });
 
   if (error) {
