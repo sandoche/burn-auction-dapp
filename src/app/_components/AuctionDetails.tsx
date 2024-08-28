@@ -9,7 +9,6 @@ import { BiddingForm } from './BiddingForm';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { Countdown } from './Countdown';
 import { formatUnits } from '@/utilities/formatUnits';
-import { RefreshHome } from './RefreshHome';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
 import { EVMOS_DECIMALS } from '@/constants';
@@ -30,7 +29,6 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
 
   return (
     <main>
-      <RefreshHome />
       <section className="mb-12">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl">Auction #{Number(round.round)}</h1>

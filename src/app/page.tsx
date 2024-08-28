@@ -4,11 +4,17 @@
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
 import { AuctionDetails } from './_components/AuctionDetails';
+import { RefreshHome } from './_components/RefreshHome';
 
 const CurrentAuction = async () => {
   const auctionDetails: AuctionDetailed = await fetchCurrentAuction();
 
-  return <AuctionDetails auctionDetails={auctionDetails} />;
+  return (
+    <>
+      <RefreshHome />
+      <AuctionDetails auctionDetails={auctionDetails} />
+    </>
+  );
 };
 
 export default CurrentAuction;
