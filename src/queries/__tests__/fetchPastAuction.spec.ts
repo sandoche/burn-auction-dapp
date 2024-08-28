@@ -3,10 +3,9 @@
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchPastAuction } from '../fetchPastAuction';
-import type { AuctionInfo } from '@/types/AuctionInfo';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { mockCoinGeckoResponse, mockAuctionResponse } from './mockedData';
-import { epochInfoResponse } from './mockedData';
+import { epochInfoResponse, mockAuctionEndEventsRound3 } from './mockedData';
 
 beforeEach(() => {
   vi.mock('../fetchCurrentCryptoPrice', async (importOriginal) => {
@@ -34,6 +33,15 @@ beforeEach(() => {
       // @ts-ignore
       ...actual,
       rpcFetchEpochInfo: vi.fn(() => epochInfoResponse),
+    };
+  });
+
+  vi.mock('../rpcFetchAuctionEnd', async (importOriginal) => {
+    const actual = await importOriginal();
+    return {
+      // @ts-ignore
+      ...actual,
+      rpcFetchAuctionEnd: vi.fn(() => mockAuctionEndEventsRound3),
     };
   });
 });
