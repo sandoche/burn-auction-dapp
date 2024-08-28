@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 'use client';
 import { useState, useEffect } from 'react';
 import { ProgressBar } from '@/components/ui/ProgressBar';

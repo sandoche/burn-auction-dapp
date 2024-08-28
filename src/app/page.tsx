@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import { Chip } from '@/components/ui/Chip';
 import { StatusIndicatorIcon } from '@/components/icons/StatusIndicatorIcon';
 import { AssetsTable } from './_components/AssetsTable';

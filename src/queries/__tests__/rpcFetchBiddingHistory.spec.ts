@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import { expect, describe, it, beforeEach, afterEach, vi } from 'vitest';
 import { rpcFetchBiddingHistory } from '../rpcFetchBiddingHistory';
 import { mockBiddingHistoryResponse } from './mockedData';
