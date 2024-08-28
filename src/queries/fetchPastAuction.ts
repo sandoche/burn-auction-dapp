@@ -7,8 +7,6 @@ import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
-import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
-import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
 import { fetchAuctionDates } from './fetchAuctionDates';
 import { EVMOS_DECIMALS } from '@/constants';
 import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
