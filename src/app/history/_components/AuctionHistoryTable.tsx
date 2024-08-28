@@ -6,6 +6,7 @@ import { formatUnits } from '@/utilities/formatUnits';
 import { AuctionHistory } from '@/types/AuctionHistory';
 import { EVMOS_DECIMALS } from '@/constants';
 import { shortenAddress } from '@/utilities/shortenAddress';
+import Link from 'next/link';
 
 export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: AuctionHistory }) => {
   return (
@@ -48,9 +49,9 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
               </a>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
+              <Link href={`/history/${auction.round}`} className="text-evmos-primary hover:text-evmos-primary-light">
                 <Image src="/icons/eye.svg" alt="Evmos Icon" width={20} height={20} />
-              </a>
+              </Link>
             </td>
           </tr>
         ))}
