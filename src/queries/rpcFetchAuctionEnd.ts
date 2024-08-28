@@ -9,12 +9,13 @@ import type { AuctionEndEvent } from '@/types/AuctionEndEvent';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
-export const rpcFetchAuctionEnd = async (): Promise<AuctionEndEvent[]> => {
+export const rpcFetchAuctionEnd = async (round: bigint | null = null): Promise<AuctionEndEvent[]> => {
   const filter = await viemClient.createContractEventFilter({
     abi: CONTRACT_ABI,
     address: CONTRACT_ADDRESS,
     eventName: 'AuctionEnd',
     fromBlock: FIRST_AUCTION_BLOCK,
+    args: round ? { round } : {},
   });
 
   const [error, result] = await E.try(() => viemClient.getFilterLogs({ filter }));
