@@ -15,7 +15,7 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
           <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
             #
           </th>
-          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white text-right">
+          <th scope="col" className="px-3 py-3.5 text-sm font-semibold text-white text-right">
             Amount
           </th>
           <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
