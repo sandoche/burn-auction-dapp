@@ -56,7 +56,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   currentAuctionInfo.auction.assets = auctionInfo.tokens.map((token) => {
     const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
 
-    // TODO: handle the case where the token is not found
+    // TODO: handle the case where the token is not found (refactor to use a default data)
     if (!tokenMetadata) {
       return {
         coingeckoId: '',
