@@ -10,6 +10,7 @@ import { biddingStateMachine } from '@/app/_state-machines/biddingStateMachine';
 import { viemPublicClient } from '@/utilities/viem';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export const BiddingForm = () => {
   const [state, send] = useMachine(biddingStateMachine);
@@ -63,7 +64,7 @@ export const BiddingForm = () => {
             className="items-center justify-center rounded-full transition-[background-color,outline-color,filter] transition-200 flex gap-x-1 outline outline-offset-2 outline-1 outline-transparent bg-evmos-orange-500 hover:bg-evmos-orange-400 py-[9px] px-5 active:outline-evmos-secondary-dark"
             disabled={isSubmitDisabled}
           >
-            {state.matches('submitting') ? 'Bidding...' : 'Bid'}
+            {state.matches('submitting') ? <LoadingSpinner /> : 'Bid'}
           </button>
         </div>
       </form>
