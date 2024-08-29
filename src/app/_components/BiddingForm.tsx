@@ -22,10 +22,6 @@ export const BiddingForm = () => {
   const handleBid = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const amount = parseUnits(bidAmount, EVMOS_DECIMALS);
-
-    const balance = await viemPublicClient.getBalance({ address: wallet });
-    console.log(`User balance: ${balance}`);
-
     await bid(wallet as HexAddress, amount);
   };
 
