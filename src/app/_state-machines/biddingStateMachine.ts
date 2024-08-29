@@ -12,7 +12,7 @@ import { formatUnits } from '@/utilities/formatUnits';
 export const biddingStateMachine = setup({
   types: {
     context: {} as {
-      bidAmount: number;
+      bidAmount: number | string;
       wallet: HexAddress | null;
       error: string | null;
       balance: bigint;
@@ -43,7 +43,7 @@ export const biddingStateMachine = setup({
   },
   guards: {
     isBidValid: ({ context }) => {
-      return context.bidAmount > 0 && context.bidAmount <= Number(formatUnits(context.balance, EVMOS_DECIMALS, 2));
+      return Number(context.bidAmount) > 0 && Number(context.bidAmount) <= Number(formatUnits(context.balance, EVMOS_DECIMALS, 2));
     },
   },
 }).createMachine({
@@ -51,7 +51,7 @@ export const biddingStateMachine = setup({
   id: 'bidding',
   initial: 'idle',
   context: {
-    bidAmount: 0,
+    bidAmount: '',
     wallet: null as HexAddress | null,
     error: null as string | null,
     balance: BigInt(0),
@@ -80,7 +80,7 @@ export const biddingStateMachine = setup({
     submitting: {
       invoke: {
         src: 'bid',
-        input: ({ context: { wallet, bidAmount } }: { context: { bidAmount: number; wallet: HexAddress | null } }) => ({ wallet: wallet as HexAddress, bidAmount }),
+        input: ({ context: { wallet, bidAmount } }: { context: { bidAmount: string | number; wallet: HexAddress | null } }) => ({ wallet: wallet as HexAddress, bidAmount }),
         onDone: 'success',
         onError: {
           target: 'error',
