@@ -21,7 +21,7 @@ export const BiddingForm = () => {
   const handleBid = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const amount = parseUnits(bidAmount, EVMOS_DECIMALS);
-    // await bid(wallet as HexAddress, amount);
+    await bid(wallet as HexAddress, amount);
   };
 
   return (
