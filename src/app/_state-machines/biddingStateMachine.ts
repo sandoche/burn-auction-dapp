@@ -35,7 +35,7 @@ export const biddingStateMachine = setup({
       },
     }),
     setMaxBid: assign({
-      bidAmount: ({ context }) => Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1,
+      bidAmount: ({ context }) => Math.min(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1, 0),
     }),
   },
   actors: {
