@@ -15,6 +15,7 @@ export const bid = async (sender: HexAddress, amount: bigint) => {
       abi: CONTRACT_ABI,
       functionName: 'bid',
       args: [sender, amount],
+      account: sender,
     });
 
     return viemWalletClient.writeContract({ ...request, account: sender });
