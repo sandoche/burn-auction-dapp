@@ -1,12 +1,32 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
+'use client';
 import { Card } from '@/components/ui/Card';
+import { bid } from '@/wallet-actions/bid';
+import { dappstore } from '@/dappstore-client';
+import { useState, useEffect } from 'react';
+import { parseUnits } from 'viem';
+import { EVMOS_DECIMALS } from '@/constants';
+import { HexAddress } from '@/types/HexAddress';
 
 export const BiddingForm = () => {
+  const [bidAmount, setBidAmount] = useState<string>('');
+  const [wallet, setWallet] = useState<HexAddress | null>(null);
+
+  useEffect(() => {
+    dappstore.onAccountsChange((accounts) => setWallet(accounts[0]));
+  }, [wallet]);
+
+  const handleBid = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const amount = parseUnits(bidAmount, EVMOS_DECIMALS);
+    // await bid(wallet as HexAddress, amount);
+  };
+
   return (
     <Card>
-      <form>
+      <form onSubmit={handleBid}>
         <div className="flex justify-between">
           <label className="font-semibold" htmlFor="bid">
             Place a bid

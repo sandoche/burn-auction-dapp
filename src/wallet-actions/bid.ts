@@ -1,6 +1,7 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
+'use client';
 import { viemPublicClient, viemWalletClient } from '@/utilities/viem';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
