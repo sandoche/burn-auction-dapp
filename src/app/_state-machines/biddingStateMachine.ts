@@ -7,6 +7,7 @@ import { parseUnits } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
 import { assign, setup, fromPromise } from 'xstate';
+import { formatUnits } from '@/utilities/formatUnits';
 
 export const biddingStateMachine = setup({
   types: {
@@ -14,6 +15,7 @@ export const biddingStateMachine = setup({
       bidAmount: number;
       wallet: HexAddress | null;
       error: string | null;
+      balance: bigint;
     },
   },
   actions: {
@@ -23,11 +25,17 @@ export const biddingStateMachine = setup({
     setWallet: assign({
       wallet: ({ event }) => event.wallet,
     }),
+    setBalance: assign({
+      balance: ({ event }) => event.balance,
+    }),
     setError: assign({
       error: ({ event }) => {
         console.log(event);
         return null;
       },
+    }),
+    setMaxBid: assign({
+      bidAmount: ({ context }) => Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1,
     }),
   },
   actors: {
@@ -41,6 +49,7 @@ export const biddingStateMachine = setup({
     bidAmount: 0,
     wallet: null as HexAddress | null,
     error: null as string | null,
+    balance: BigInt(0),
   },
   states: {
     idle: {
@@ -50,6 +59,12 @@ export const biddingStateMachine = setup({
         },
         SET_WALLET: {
           actions: 'setWallet',
+        },
+        SET_BALANCE: {
+          actions: 'setBalance',
+        },
+        SET_MAX_BID: {
+          actions: 'setMaxBid',
         },
         SUBMIT: 'submitting',
       },

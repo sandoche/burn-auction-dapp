@@ -7,13 +7,22 @@ import { dappstore } from '@/dappstore-client';
 import { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { biddingStateMachine } from '@/app/_state-machines/biddingStateMachine';
+import { viemPublicClient } from '@/utilities/viem';
 
 export const BiddingForm = () => {
   const [state, send] = useMachine(biddingStateMachine);
 
   useEffect(() => {
     dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
-  }, [send]);
+
+    const fetchBalance = async () => {
+      if (state.context.wallet) {
+        const balance = await viemPublicClient.getBalance({ address: state.context.wallet });
+        send({ type: 'SET_BALANCE', balance });
+      }
+    };
+    fetchBalance();
+  }, [send, state.context.wallet]);
 
   const handleBid = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +36,7 @@ export const BiddingForm = () => {
           <label className="font-semibold" htmlFor="bid">
             Place a bid
           </label>
-          <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
+          <a className="text-evmos-primary hover:text-evmos-primary-light" onClick={() => send({ type: 'SET_MAX_BID' })}>
             Max
           </a>
         </div>
@@ -36,6 +45,7 @@ export const BiddingForm = () => {
             type="number"
             className="mr-2 w-full rounded-lg transition-all duration-200 p-2 bg-transparent border-2 border-[#3b3634] placeholder:text-[#998e8b] focus:ring-inset focus:ring-[#fe9367]"
             placeholder="Amount"
+            value={state.context.bidAmount}
             onChange={(e) => send({ type: 'SET_BID_AMOUNT', value: e.target.value })}
             disabled={state.matches('submitting')}
           />
