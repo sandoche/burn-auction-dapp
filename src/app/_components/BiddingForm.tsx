@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { biddingStateMachine } from '@/app/_state-machines/biddingStateMachine';
 import { viemPublicClient } from '@/utilities/viem';
+import { formatUnits } from '@/utilities/formatUnits';
+import { EVMOS_DECIMALS } from '@/constants';
 
 export const BiddingForm = () => {
   const [state, send] = useMachine(biddingStateMachine);
@@ -28,6 +30,14 @@ export const BiddingForm = () => {
     e.preventDefault();
     send({ type: 'SUBMIT' });
   };
+
+  const isSubmitDisabled = !state.can({ type: 'SUBMIT' }) || state.matches('submitting');
+  const errorMessage =
+    state.context.bidAmount < 0
+      ? 'Bid amount must be greater than 0'
+      : state.context.bidAmount > Number(formatUnits(state.context.balance, EVMOS_DECIMALS, 2))
+        ? 'Bid amount exceeds your balance'
+        : '';
 
   return (
     <Card>
@@ -51,12 +61,13 @@ export const BiddingForm = () => {
           />
           <button
             className="items-center justify-center rounded-full transition-[background-color,outline-color,filter] transition-200 flex gap-x-1 outline outline-offset-2 outline-1 outline-transparent bg-evmos-orange-500 hover:bg-evmos-orange-400 py-[9px] px-5 active:outline-evmos-secondary-dark"
-            disabled={state.matches('submitting')}
+            disabled={isSubmitDisabled}
           >
             {state.matches('submitting') ? 'Bidding...' : 'Bid'}
           </button>
         </div>
       </form>
+      {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
       {state.matches('error') && (
         <div className="text-red-500 mt-2">
           Error: {state.context.error}
