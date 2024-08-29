@@ -6,9 +6,34 @@ import { bid } from '@/wallet-actions/bid';
 import { parseUnits } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
-import { assign, createMachine, fromPromise } from 'xstate';
+import { assign, setup, fromPromise } from 'xstate';
 
-export const biddingStateMachine = createMachine({
+export const biddingStateMachine = setup({
+  types: {
+    context: {} as {
+      bidAmount: number;
+      wallet: HexAddress | null;
+      error: string | null;
+    },
+  },
+  actions: {
+    setBidAmount: assign({
+      bidAmount: ({ event }) => event.value,
+    }),
+    setWallet: assign({
+      wallet: ({ event }) => event.wallet,
+    }),
+    setError: assign({
+      error: ({ event }) => {
+        console.log(event);
+        return null;
+      },
+    }),
+  },
+  actors: {
+    bid: fromPromise(({ input }: { input: { wallet: HexAddress; bidAmount: number } }) => bid(input.wallet as HexAddress, parseUnits(input.bidAmount.toString(), EVMOS_DECIMALS))),
+  },
+}).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QCMCWEKoHZQHToBswBiAZQFEAVAfQCEBJAEWoEEBZAeQFUA5SgbQAMAXUSgADgHtYqAC6pJWMSAAeiAEwBOdbgAs6gOyDNu3QA4AjIYBsugDQgAnhs3Xcg3Retn1Fi7usAVkF1awBfMIc0DGw8QhIKGgB1FgAZVKohUSQQKRl5RWU1BABmP1xbQLNdQIsSs2qLMwdnBHVBQT0vawN1SzNbQUCIqPRMHHwIIjIuWjZ6ARFlPLkFJRzi811cIzMSwINrdRKDQJsWjV7cM4MDV0EDC0DNEs0RkGjxvFgAV2QAWzk8hwxAgijA+CwADdJABrCGfWK4X4AoGxBDYGEAYwAhgUsFksstpKtChtEFsdoI9gcjicbtYLghLLhuj0mk8+kF1O9ERMUYDZMCoMQwAAnMWSMW4cQEPEAMyl-1wfO+f0Fwox0MkuPxhKWORW+KKiE0mgsO3NBnqvm8JWsJSZxzMrI8Fju7XUXruZl5YyRvyxWLgsGIRMNJON5LaIVwJXj8c0gWsQW0JiZr06nhTL2CgmsVr9MQm4slYuIACUqBWAJrhiSRtYmhBWXy4SzqKpaJ69TTNJwUwQW04dPqmax1ErHCKREBYSQQODKVXE-JN6MAWkZA4QG8CuDNh6PR4GRa+kyIq9J61AxSnLs0Q6G3g6rheGdcFRTBf8Fnz1g6cJZ1VZF1TRHAryjW9EB8AwdleWw-CaDxOyde04wTeMzAefxuTPAMfiDENIPXaCEH0DM7i-Hohj2YxdA8fCSwlKUSLJMjJxKPQzFcO5Xl7D9tjZAxs12fYgIiIA */
   id: 'bidding',
   initial: 'idle',
@@ -21,31 +46,22 @@ export const biddingStateMachine = createMachine({
     idle: {
       on: {
         SET_BID_AMOUNT: {
-          actions: assign({
-            bidAmount: ({ event }) => event.value,
-          }),
+          actions: 'setBidAmount',
         },
         SET_WALLET: {
-          actions: assign({
-            wallet: ({ event }) => event.wallet,
-          }),
+          actions: 'setWallet',
         },
         SUBMIT: 'submitting',
       },
     },
     submitting: {
       invoke: {
-        src: fromPromise(({ input }) => bid(input.wallet, parseUnits(input.bidAmount.toString(), EVMOS_DECIMALS))),
-        input: ({ context: { wallet, bidAmount } }) => ({ wallet, bidAmount }),
+        src: 'bid',
+        input: ({ context: { wallet, bidAmount } }: { context: { bidAmount: number; wallet: HexAddress | null } }) => ({ wallet: wallet as HexAddress, bidAmount }),
         onDone: 'success',
         onError: {
           target: 'error',
-          actions: assign({
-            error: (_, event: unknown) => {
-              console.log(event);
-              return null;
-            },
-          }),
+          actions: 'setError',
         },
       },
     },
