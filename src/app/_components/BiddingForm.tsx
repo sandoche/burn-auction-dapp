@@ -68,14 +68,7 @@ export const BiddingForm = () => {
         </div>
       </form>
       {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
-      {state.matches('error') && (
-        <div className="text-red-500 mt-2">
-          Error: {state.context.error}
-          <button onClick={() => send({ type: 'RETRY' })} className="ml-2 text-evmos-primary">
-            Retry
-          </button>
-        </div>
-      )}
+      {state.matches('error') && <div className="text-red-500 mt-2">Error: {state.context.error}</div>}
       {state.matches('success') && <div className="text-green-500 mt-2">Bid placed successfully!</div>}
     </Card>
   );

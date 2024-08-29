@@ -97,7 +97,10 @@ export const biddingStateMachine = setup({
     },
     error: {
       on: {
-        RETRY: 'idle',
+        SUBMIT: {
+          target: 'submitting',
+          guard: 'isBidValid',
+        },
       },
     },
   },
