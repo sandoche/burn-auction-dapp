@@ -6,12 +6,20 @@ import { Card } from '@/components/ui/Card';
 export const BiddingForm = () => {
   return (
     <Card>
-      <div className="flex justify-between">
-        <h3 className="font-semibold">Place a bid</h3>
-        <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
-          Max
-        </a>
-      </div>
+      <form>
+        <div className="flex justify-between">
+          <label className="font-semibold" htmlFor="bid">
+            Place a bid
+          </label>
+          <a href="#" className="text-evmos-primary hover:text-evmos-primary-light">
+            Max
+          </a>
+        </div>
+        <div className="flex">
+          <input type="text" />
+          <button>Bid</button>
+        </div>
+      </form>
     </Card>
   );
 };
