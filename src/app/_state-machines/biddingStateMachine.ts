@@ -80,7 +80,10 @@ export const biddingStateMachine = setup({
     submitting: {
       invoke: {
         src: 'bid',
-        input: ({ context: { wallet, bidAmount } }: { context: { bidAmount: string | number; wallet: HexAddress | null } }) => ({ wallet: wallet as HexAddress, bidAmount }),
+        input: ({ context: { wallet, bidAmount } }: { context: { bidAmount: string | number; wallet: HexAddress | null } }) => ({
+          wallet: wallet as HexAddress,
+          bidAmount: Number(bidAmount),
+        }),
         onDone: 'success',
         onError: {
           target: 'error',
