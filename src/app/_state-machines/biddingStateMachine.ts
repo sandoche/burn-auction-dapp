@@ -21,6 +21,7 @@ export const biddingStateMachine = setup({
   actions: {
     setBidAmount: assign({
       bidAmount: ({ event }) => event.value,
+      error: () => null,
     }),
     setWallet: assign({
       wallet: ({ event }) => event.wallet,
@@ -29,13 +30,13 @@ export const biddingStateMachine = setup({
       balance: ({ event }) => event.balance,
     }),
     setError: assign({
-      error: ({ event }) => {
-        console.log(event);
-        return null;
+      error: () => {
+        return 'Sorry an error occurred, please try again.';
       },
     }),
     setMaxBid: assign({
       bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1, 0),
+      error: () => null,
     }),
   },
   actors: {
@@ -97,6 +98,12 @@ export const biddingStateMachine = setup({
     },
     error: {
       on: {
+        SET_BID_AMOUNT: {
+          actions: 'setBidAmount',
+        },
+        SET_MAX_BID: {
+          actions: 'setMaxBid',
+        },
         SUBMIT: {
           target: 'submitting',
           guard: 'isBidValid',
