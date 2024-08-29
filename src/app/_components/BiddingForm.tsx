@@ -6,10 +6,10 @@ import { Card } from '@/components/ui/Card';
 import { dappstore } from '@/dappstore-client';
 import { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
-import { biddingMachine } from '@/app/_state-machines/biddingStateMachine';
+import { biddingStateMachine } from '@/app/_state-machines/biddingStateMachine';
 
 export const BiddingForm = () => {
-  const [state, send] = useMachine(biddingMachine);
+  const [state, send] = useMachine(biddingStateMachine);
 
   useEffect(() => {
     dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
