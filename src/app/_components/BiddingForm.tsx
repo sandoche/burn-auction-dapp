@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { parseUnits } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
+import { viemPublicClient } from '@/utilities/viem';
 
 export const BiddingForm = () => {
   const [bidAmount, setBidAmount] = useState<string>('');
@@ -21,6 +22,10 @@ export const BiddingForm = () => {
   const handleBid = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const amount = parseUnits(bidAmount, EVMOS_DECIMALS);
+
+    const balance = await viemPublicClient.getBalance({ address: wallet });
+    console.log(`User balance: ${balance}`);
+
     await bid(wallet as HexAddress, amount);
   };
 

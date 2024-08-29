@@ -5,7 +5,7 @@ import { createPublicClient, http, defineChain, custom, createWalletClient } fro
 import { EVMOS_DECIMALS } from '@/constants';
 import { provider } from '@/dappstore-client';
 
-const chainId = parseInt(process.env.CHAIN_ID as string);
+const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string);
 const rpcUrl = process.env.NEXT_PUBLIC_RPC_HOST as string;
 
 const evmos = defineChain({
