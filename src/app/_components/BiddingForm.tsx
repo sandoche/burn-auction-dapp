@@ -9,10 +9,10 @@ import { useState, useEffect } from 'react';
 import { parseUnits } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
-import { viemPublicClient } from '@/utilities/viem';
 
 export const BiddingForm = () => {
   const [bidAmount, setBidAmount] = useState<string>('');
+
   const [wallet, setWallet] = useState<HexAddress | null>(null);
 
   useEffect(() => {
