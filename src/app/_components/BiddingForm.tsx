@@ -67,9 +67,9 @@ export const BiddingForm = () => {
           </button>
         </div>
       </form>
-      {errorMessage && <div className="text-red-500 mt-2">{errorMessage}</div>}
-      {state.matches('error') && <div className="text-red-500 mt-2">{state.context.error}</div>}
-      {state.matches('success') && <div className="text-green-500 mt-2">Bid placed successfully!</div>}
+      {errorMessage && <div className="text-evmos-error text-sm mt-2">{errorMessage}</div>}
+      {state.matches('error') && <div className="text-evmos-error text-sm mt-2">{state.context.error}</div>}
+      {state.matches('success') && <div className="text-green-500 text-sm mt-2">Bid placed successfully!</div>}
     </Card>
   );
 };
