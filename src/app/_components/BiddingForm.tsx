@@ -33,9 +33,9 @@ export const BiddingForm = () => {
 
   const isSubmitDisabled = !state.can({ type: 'SUBMIT' }) || state.matches('submitting');
   const errorMessage =
-    state.context.bidAmount < 0
+    Number(state.context.bidAmount) < 0
       ? 'Bid amount must be greater than 0'
-      : state.context.bidAmount > Number(formatUnits(state.context.balance, EVMOS_DECIMALS, 2))
+      : Number(state.context.bidAmount) > Number(formatUnits(state.context.balance, EVMOS_DECIMALS, 2))
         ? 'Bid amount exceeds your balance'
         : '';
 
