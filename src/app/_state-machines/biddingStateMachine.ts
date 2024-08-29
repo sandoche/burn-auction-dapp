@@ -93,8 +93,18 @@ export const biddingStateMachine = setup({
       },
     },
     success: {
-      type: 'final',
-      always: 'idle',
+      on: {
+        SET_BID_AMOUNT: {
+          actions: 'setBidAmount',
+        },
+        SET_MAX_BID: {
+          actions: 'setMaxBid',
+        },
+        SUBMIT: {
+          target: 'submitting',
+          guard: 'isBidValid',
+        },
+      },
     },
     error: {
       on: {

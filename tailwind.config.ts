@@ -26,6 +26,7 @@ const config: Config = {
         'evmos-secondary': '#55377b',
         'evmos-secondary-dark': '#55397b',
         'evmos-error': '#e05c4e',
+        'evmos-success': '#8ec876',
       },
       divideWidth: {
         DEFAULT: '1.5px',
