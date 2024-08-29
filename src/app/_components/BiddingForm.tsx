@@ -46,7 +46,7 @@ export const BiddingForm = () => {
           <label className="font-semibold" htmlFor="bid">
             Place a bid
           </label>
-          <a className="text-evmos-primary hover:text-evmos-primary-light" onClick={() => send({ type: 'SET_MAX_BID' })}>
+          <a className="text-evmos-primary hover:text-evmos-primary-light cursor-pointer" onClick={() => send({ type: 'SET_MAX_BID' })}>
             Max
           </a>
         </div>
