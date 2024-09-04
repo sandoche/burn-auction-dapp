@@ -3,12 +3,11 @@
 
 import { createPublicClient, http, defineChain, custom, createWalletClient } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
-import { provider } from '@/dappstore-client';
 
 const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string);
 const rpcUrl = process.env.NEXT_PUBLIC_RPC_HOST as string;
 
-const evmos = defineChain({
+export const evmos = defineChain({
   id: chainId,
   name: 'Evmos',
   network: 'evmos',
@@ -30,9 +29,4 @@ export const viemPublicClient = createPublicClient({
     },
   }),
   cacheTime: 0,
-});
-
-export const viemWalletClient = createWalletClient({
-  chain: evmos,
-  transport: custom(provider),
 });
