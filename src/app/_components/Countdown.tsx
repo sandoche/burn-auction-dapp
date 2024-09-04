@@ -1,8 +1,6 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
-
 'use client';
 import { useState, useEffect } from 'react';
+import reloadData from '../_actions/reloadData';
 
 type TimeLeft = {
   days: number;
@@ -43,7 +41,15 @@ export const Countdown = ({ date }: { date: Date }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft(date));
+      const newTimeLeft = calculateTimeLeft(date);
+      setTimeLeft(newTimeLeft);
+
+      if (newTimeLeft.days === 0 && newTimeLeft.hours === 0 && newTimeLeft.minutes === 0 && newTimeLeft.seconds === 0) {
+        clearInterval(interval);
+        setTimeout(() => {
+          reloadData();
+        }, 5000);
+      }
     }, 1000);
     return () => {
       clearInterval(interval);
