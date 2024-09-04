@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
@@ -6,7 +9,7 @@ import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
-import { fetchCurrentAuctionDates } from './fetchCurrentAuctionDates';
+import { fetchAuctionDates } from './fetchAuctionDates';
 import { EVMOS_DECIMALS } from '@/constants';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
@@ -24,7 +27,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     throw errorMetadata;
   }
 
-  const [errorEndDate, dates] = await E.try(() => fetchCurrentAuctionDates());
+  const [errorEndDate, dates] = await E.try(() => fetchAuctionDates());
 
   if (errorEndDate || !dates) {
     Log().error('Error fetching current end date:', errorEndDate);
@@ -53,7 +56,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   currentAuctionInfo.auction.assets = auctionInfo.tokens.map((token) => {
     const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
 
-    // TODO: handle the case where the token is not found
+    // TODO: handle the case where the token is not found (refactor to use a default data)
     if (!tokenMetadata) {
       return {
         coingeckoId: '',

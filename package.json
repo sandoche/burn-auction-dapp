@@ -11,8 +11,10 @@
     "dev:dappstore": "dappstore dev --target 3000",
     "prepare": "husky",
     "test": "vitest",
-    "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.ts",
-    "postinstall": "npm run gen:types"
+    "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.mts",
+    "postinstall": "npm run gen:types",
+    "license": "node ./check-license.mjs",
+    "license:fix": "node ./check-license.mjs --fix"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
@@ -39,6 +41,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
+    "globby": "^14.0.2",
     "husky": "^9.1.4",
     "jsdom": "^24.1.1",
     "json-schema-to-typescript": "^15.0.1",

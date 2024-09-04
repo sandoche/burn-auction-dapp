@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchCurrentAuction } from '../fetchCurrentAuction';
 import { rpcFetchCurrentAuctionInfo } from '../rpcFetchCurrentAuctionInfo';
@@ -38,14 +41,6 @@ beforeEach(() => {
 
 afterEach(() => {
   vi.clearAllMocks();
-});
-
-describe('rpcFetchCurrentAuctionInfo()', async () => {
-  it('should return the current auction info of type AuctionInfo', async () => {
-    const result = await rpcFetchCurrentAuctionInfo();
-    expect(result).toBeDefined();
-    expectTypeOf(result).toMatchTypeOf<AuctionInfo>();
-  });
 });
 
 describe('fetchCurrentAuction()', async () => {

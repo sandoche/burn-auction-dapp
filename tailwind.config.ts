@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -5,6 +8,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'evmos-orange': {
+          400: '#d45710',
+          500: '#d04b00',
+        },
         'evmos-primary': '#ff8c5f',
         'evmos-primary-light': '#ffdbcf',
         'evmos-darkish-less': '#302b29',
@@ -17,6 +24,7 @@ const config: Config = {
           light: '#366A1A',
         },
         'evmos-secondary': '#55377b',
+        'evmos-secondary-dark': '#55397b',
       },
       divideWidth: {
         DEFAULT: '1.5px',
