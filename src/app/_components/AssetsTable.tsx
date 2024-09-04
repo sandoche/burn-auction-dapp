@@ -43,7 +43,7 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
               <span className="text-evmos-lightish">{formatUnits(asset.amount, asset.exponent, 2)}</span>
-              <span className="text-evmos-lightish opacity-70 text-sm">
+              <span className="text-evmos-lightish opacity-70 text-sm ml-2">
                 {asset.valueInUsd.toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD',
