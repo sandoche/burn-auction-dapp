@@ -63,9 +63,9 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
         </div>
         <BiddingProgress startDate={round.startDate} endDate={round.endDate} />
         {round.isLast ? (
-          <p className="text-2xl mb-1.5 flex">
+          <div className="text-2xl mb-1.5 flex">
             <span className="text-evmos-lightish mr-2">Closing in</span> <Countdown date={endDate} />
-          </p>
+          </div>
         ) : (
           <p className="mb-1.5">
             <span className="text-evmos-lightish mr-2">Started on</span> {formattedStartDate}
