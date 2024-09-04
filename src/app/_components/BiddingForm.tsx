@@ -11,6 +11,7 @@ import { viemPublicClient } from '@/utilities/viem';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import Image from 'next/image';
 
 export const BiddingForm = () => {
   const [state, send] = useMachine(biddingStateMachine);
@@ -52,14 +53,17 @@ export const BiddingForm = () => {
           </a>
         </div>
         <div className="flex pt-2">
-          <input
-            type="number"
-            className="mr-2 w-full rounded-lg transition-all duration-200 p-2 bg-transparent border-2 border-[#3b3634] placeholder:text-[#998e8b] focus:ring-inset focus:ring-[#fe9367]"
-            placeholder="Amount"
-            value={state.context.bidAmount}
-            onChange={(e) => send({ type: 'SET_BID_AMOUNT', value: e.target.value })}
-            disabled={state.matches('submitting')}
-          />
+          <div className="relative flex-grow mr-2">
+            <input
+              type="number"
+              className="w-full rounded-lg transition-all duration-200 p-2 pr-10 bg-transparent border-2 border-[#3b3634] placeholder:text-[#998e8b] focus:ring-inset focus:ring-[#fe9367]"
+              placeholder="Amount"
+              value={state.context.bidAmount}
+              onChange={(e) => send({ type: 'SET_BID_AMOUNT', value: e.target.value })}
+              disabled={state.matches('submitting')}
+            />
+            <Image src="/icons/evmos.svg" alt="EVMOS" width={24} height={24} className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+          </div>
           <button
             className="disabled:text-evmos-gray-light disabled:bg-evmos-gray disabled:border-evmos-gray items-center justify-center rounded-full transition-[background-color,outline-color,filter] transition-200 flex gap-x-1 outline outline-offset-2 outline-1 outline-transparent bg-evmos-orange-500 hover:bg-evmos-orange-400 py-[9px] px-5 active:outline-evmos-secondary-dark"
             disabled={isSubmitDisabled}
