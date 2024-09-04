@@ -13,7 +13,7 @@ import { EVMOS_DECIMALS } from '@/constants';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import Image from 'next/image';
 
-export const BiddingForm = () => {
+export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
   const [state, send] = useMachine(biddingStateMachine);
 
   useEffect(() => {
@@ -70,6 +70,9 @@ export const BiddingForm = () => {
           >
             {state.matches('submitting') ? <LoadingSpinner /> : 'Bid'}
           </button>
+        </div>
+        <div className="flex justify-between mt-2">
+          {Number(state.context.bidAmount) > 0 && <span className="text-evmos-lightish text-sm">≈ ${(Number(state.context.bidAmount) * evmosToUsdRate).toFixed(2)}</span>}
         </div>
       </form>
       {errorMessage && <div className="text-evmos-error text-sm mt-2">{errorMessage}</div>}

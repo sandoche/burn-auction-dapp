@@ -14,6 +14,7 @@ import { DiscountChip } from './DiscountChip';
 import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import Image from 'next/image';
+import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
 
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;
@@ -39,6 +40,8 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
     minute: 'numeric',
     timeZoneName: 'short',
   });
+
+  const evmosToUsdRate = await fetchCurrentCryptoPrice(['evmos']).then((res) => res.evmos.usd);
 
   return (
     <main>
@@ -106,7 +109,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
             </a>
           )}
         </p>
-        <div className="mb-6">{round.isLast && <BiddingForm />}</div>
+        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} />}</div>
         <BiddingHistory round={round.round} />
       </section>
     </main>
