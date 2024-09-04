@@ -55,6 +55,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     auction: {
       assets: [] as AuctionnedAsset[],
       totalValue: 0,
+      hasPriceError: false,
     },
   };
 
@@ -87,6 +88,10 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
 
     const [errorFromFetchPastCryptoPrice, price] = await E.try(() => fetchPastCryptoPrice(tokenMetadata.coingeckoId, dates.end));
     const valueInUsd = price ? price * amountWithDecimals : 0;
+
+    if (errorFromFetchPastCryptoPrice) {
+      auctionDetails.auction.hasPriceError = true;
+    }
 
     asset = {
       coingeckoId: tokenMetadata.coingeckoId,

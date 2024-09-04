@@ -50,6 +50,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     auction: {
       assets: [] as AuctionnedAsset[],
       totalValue: 0,
+      hasPriceError: false,
     },
   };
 
@@ -97,6 +98,10 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
 
     asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amountWithDecimals);
     asset.priceError = prices[asset.coingeckoId]['error'];
+
+    if (asset.priceError) {
+      currentAuctionInfo.auction.hasPriceError = true;
+    }
 
     return asset;
   });
