@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import type { HexAddress } from '@/types/HexAddress';
 
 export const CONTRACT_ADDRESS: HexAddress = '0x0000000000000000000000000000000000000900';

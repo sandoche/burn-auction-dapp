@@ -1,3 +1,6 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 
@@ -25,6 +28,7 @@ export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPric
 
   const coingeckoIds = ids.join(',');
   const [error, result] = await E.try(() => fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coingeckoIds}&vs_currencies=usd`, { next: { revalidate: 60 } }));
+  Log().info('Fetching crypto price:', coingeckoIds);
 
   if (error) {
     Log().error('Error fetching crypto price:', error);
