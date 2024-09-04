@@ -74,6 +74,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       iconUrl: '',
       exponent: 0,
       amountWithDecimals: 0,
+      priceError: true,
     };
 
     if (!tokenMetadata) {
@@ -83,7 +84,9 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
 
     const exponent = Number(tokenMetadata.exponent);
     const amountWithDecimals = Number(token.amount) / 10 ** exponent;
-    const valueInUsd = (await fetchPastCryptoPrice(tokenMetadata.coingeckoId, dates.end)) * amountWithDecimals;
+
+    const [errorFromFetchPastCryptoPrice, price] = await E.try(() => fetchPastCryptoPrice(tokenMetadata.coingeckoId, dates.end));
+    const valueInUsd = price ? price * amountWithDecimals : 0;
 
     asset = {
       coingeckoId: tokenMetadata.coingeckoId,
@@ -95,6 +98,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
       exponent,
       amountWithDecimals,
+      priceError: errorFromFetchPastCryptoPrice ? true : false,
     };
 
     totalValue += valueInUsd;
