@@ -8,6 +8,7 @@ import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
 import { assign, setup, fromPromise } from 'xstate';
 import { formatUnits } from '@/utilities/formatUnits';
+import reloadData from '@/app/_actions/reloadData';
 
 export const biddingStateMachine = setup({
   types: {
@@ -38,6 +39,9 @@ export const biddingStateMachine = setup({
       bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1, 0),
       error: () => null,
     }),
+    refreshPage: () => {
+      reloadData();
+    },
   },
   actors: {
     bid: fromPromise(({ input }: { input: { wallet: HexAddress; bidAmount: number } }) => bid(input.wallet as HexAddress, parseUnits(input.bidAmount.toString(), EVMOS_DECIMALS))),
@@ -103,6 +107,13 @@ export const biddingStateMachine = setup({
         SUBMIT: {
           target: 'submitting',
           guard: 'isBidValid',
+        },
+      },
+      after: {
+        // average block time is 3 seconds, added a bit of buffer here
+        5000: {
+          target: 'success',
+          actions: 'refreshPage',
         },
       },
     },
