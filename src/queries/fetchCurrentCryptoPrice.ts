@@ -28,6 +28,7 @@ export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPric
 
   const coingeckoIds = ids.join(',');
   const [error, result] = await E.try(() => fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coingeckoIds}&vs_currencies=usd`, { next: { revalidate: 60 } }));
+  Log().info('Fetching crypto price:', coingeckoIds);
 
   if (error) {
     Log().error('Error fetching crypto price:', error);
