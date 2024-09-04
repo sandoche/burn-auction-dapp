@@ -5,7 +5,7 @@ export const Tooltip = ({ children, content }: { children: React.ReactNode; cont
   return (
     <>
       <div className="has-tooltip">
-        <span className="tooltip rounded shadow-lg p-2 bg-evmos-darkish text-evmos-lightish -mt-8 -translate-x-1/2">{content}</span>
+        <span className="tooltip rounded shadow-lg p-2 bg-evmos-darkish text-evmos-lightish -mt-10 -translate-x-1/2">{content}</span>
         {children}
       </div>
     </>
