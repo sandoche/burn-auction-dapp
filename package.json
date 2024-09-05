@@ -20,6 +20,7 @@
     "@evmos/dappstore-sdk": "^0.0.6",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@xstate/react": "^4.1.1",
     "clsx": "^2.1.1",
     "dappstore": "^0.0.6",
     "dayjs": "^1.11.13",
@@ -27,7 +28,9 @@
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "viem": "^2.19.9"
+    "tailwind-merge": "^2.5.2",
+    "viem": "^2.19.9",
+    "xstate": "^5.17.4"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
