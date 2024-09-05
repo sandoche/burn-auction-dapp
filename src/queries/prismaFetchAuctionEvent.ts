@@ -7,7 +7,7 @@ export const prismaFetchAuctionEvent = async (round: bigint | null = null) => {
   try {
     const auctionEndEvents = await prisma.auctionEndEvent.findMany({
       orderBy: {
-        blockNumber: 'desc',
+        blockNumber: 'asc',
       },
       where: {
         round: round ? round.toString() : undefined,

@@ -7,7 +7,7 @@ export const prismaFetchBidEvent = async (round: bigint) => {
   try {
     const bidEvents = await prisma.bidEvent.findMany({
       orderBy: {
-        blockNumber: 'desc',
+        blockNumber: 'asc',
       },
       where: {
         round: round.toString(),
