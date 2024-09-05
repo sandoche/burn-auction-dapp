@@ -103,7 +103,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
       exponent,
       amountWithDecimals,
-      priceError: errorFromFetchPastCryptoPrice ? true : false,
+      priceError: !!errorFromFetchPastCryptoPrice,
     };
 
     totalValue += valueInUsd;
