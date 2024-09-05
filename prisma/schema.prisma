@@ -13,10 +13,10 @@ datasource db {
 model AuctionEndEvent {
   id               Int      @id @default(autoincrement())
   winner           String
-  round            BigInt
+  round            String
   coins            Coin[]
-  burned           BigInt
-  blockNumber      BigInt
+  burned           String
+  blockNumber      String
   transactionHash  String
   transactionIndex Int
   blockHash        String
@@ -40,7 +40,7 @@ model BidEvent {
 model Coin {
   id               Int              @id @default(autoincrement())
   denom            String
-  amount           BigInt
+  amount           String
   auctionEndEvent  AuctionEndEvent  @relation(fields: [auctionEndEventId], references: [id])
   auctionEndEventId Int
 }

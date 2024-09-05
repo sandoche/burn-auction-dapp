@@ -18,23 +18,29 @@ export async function GET() {
 
     let fromBlock = latestEvent ? latestEvent.blockNumber + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
-    let toBlock = fromBlock + BigInt(10000);
+    let toBlock = BigInt(fromBlock) + BigInt(10000);
 
-    while (fromBlock <= latestBlock) {
+    while (BigInt(fromBlock) <= latestBlock) {
       if (toBlock > latestBlock) {
         toBlock = latestBlock;
       }
 
-      const auctionEndEvents = await rpcFetchAuctionEnd(fromBlock, toBlock);
+      const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), BigInt(toBlock));
 
       for (const event of auctionEndEvents) {
         await prisma.auctionEndEvent.create({
           data: {
             winner: event.args.winner,
-            round: event.args.round,
-            // coins: null,
-            burned: event.args.burned,
-            blockNumber: event.blockNumber,
+            round: event.args.round.toString(),
+            coins: {
+              create:
+                event.args.coins?.map((coin) => ({
+                  denom: coin.denom,
+                  amount: coin.amount.toString(),
+                })) || [],
+            },
+            burned: event.args.burned.toString(),
+            blockNumber: event.blockNumber.toString(),
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
             blockHash: event.blockHash,
