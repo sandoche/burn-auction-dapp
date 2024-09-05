@@ -39,7 +39,10 @@ cp .env.example .env
 ### Development
 
 ```bash
-pnpm dev
+pnpm dev # to run all the services (next, dappstore, indexer)
+
+# or run each service separately
+pnpm dev:next # to run only the next.js app
 pnpm dev:dappstore # to run the dappstore sdk preview that handles the wallet connection
 pnpm dev:indexer # to run the indexer that indexes the blockchain events into the database
 ```
