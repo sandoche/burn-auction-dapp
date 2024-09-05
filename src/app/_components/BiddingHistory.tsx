@@ -7,6 +7,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Suspense } from 'react';
 import { BiddingHistoryData } from './BiddingHistoryData';
+import { SkeletonBlob } from '@/components/ui/Skeleton';
 
 dayjs.extend(relativeTime);
 
@@ -35,7 +36,24 @@ export const BiddingHistory = async ({ round }: { round: bigint }) => {
               </th>
             </tr>
           </thead>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense
+            fallback={
+              <tr>
+                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
+                  <SkeletonBlob className="w-full h-2" />
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                  <SkeletonBlob className="w-full h-2" />
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                  <SkeletonBlob className="w-full h-2" />
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                  <SkeletonBlob className="w-full h-2" />
+                </th>
+              </tr>
+            }
+          >
             <BiddingHistoryData round={round} />
           </Suspense>
         </table>
