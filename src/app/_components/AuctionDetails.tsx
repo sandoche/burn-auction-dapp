@@ -15,6 +15,7 @@ import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import Image from 'next/image';
 import { Tooltip } from '@/components/ui/Tooltip';
+import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
 
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;
@@ -41,6 +42,8 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
     timeZoneName: 'short',
   });
 
+  const evmosToUsdRate = await fetchCurrentCryptoPrice(['evmos']).then((res) => res.evmos.usd);
+
   return (
     <main>
       <section className="mb-12">
@@ -64,16 +67,16 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
         </div>
         <BiddingProgress startDate={round.startDate} endDate={round.endDate} />
         {round.isLast ? (
-          <p className="text-2xl mb-1.5 flex">
+          <div className="text-2xl mb-1.5 flex">
             <span className="text-evmos-lightish mr-2">Closing in</span> <Countdown date={endDate} />
-          </p>
+          </div>
         ) : (
           <p className="mb-1.5">
             <span className="text-evmos-lightish mr-2">Started on</span> {formattedStartDate}
           </p>
         )}
         <p>
-          <span className="text-evmos-lightish">Ended on</span> {formattedEndDate}
+          <span className="text-evmos-lightish">{round.isLast ? 'Ending at' : 'Ended'}</span> {formattedEndDate}
         </p>
       </section>
       <section className="mb-12">
@@ -114,7 +117,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
             </a>
           )}
         </p>
-        <div className="mb-6">{round.isLast && <BiddingForm />}</div>
+        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} />}</div>
         <BiddingHistory round={round.round} />
       </section>
     </main>
