@@ -6,7 +6,7 @@ export const ButtonAction = ({
   action,
 }: Readonly<{
   children: React.ReactNode;
-  action: Function;
+  action: () => void;
 }>) => {
   return (
     <button
