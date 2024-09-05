@@ -16,7 +16,9 @@
     "license": "node ./check-license.mjs",
     "license:fix": "node ./check-license.mjs --fix",
     "prisma:validate": "prisma validate",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "prisma:db:push": "prisma db push",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
@@ -61,3 +63,4 @@
     "vitest": "^2.0.5"
   }
 }
+

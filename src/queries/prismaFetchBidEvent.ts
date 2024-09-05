@@ -10,7 +10,7 @@ export const prismaFetchBidEvent = async (round: bigint) => {
         blockNumber: 'desc',
       },
       where: {
-        round: round,
+        round: round.toString(),
       },
     });
 

@@ -27,9 +27,9 @@ model AuctionEndEvent {
 model BidEvent {
   id               Int      @id @default(autoincrement())
   sender           String
-  round            BigInt
-  amount           BigInt
-  blockNumber      BigInt
+  round            String
+  amount           String
+  blockNumber      String
   transactionHash  String
   transactionIndex Int
   blockHash        String

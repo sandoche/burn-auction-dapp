@@ -2,14 +2,15 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { prisma } from '@/utilities/prisma';
-import { rpcFetchBiddingHistory } from '@/queries/rpcFetchBiddingHistory';
+import { rpcFetchAuctionEnd } from '@/queries/rpcFetchAuctionEnd';
 import { viemPublicClient } from '@/utilities/viem';
+import { Log } from '@/utilities/logger';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
 export async function GET() {
   try {
-    const latestEvent = await prisma.bidEvent.findFirst({
+    const latestEvent = await prisma.auctionEndEvent.findFirst({
       orderBy: {
         blockNumber: 'desc',
       },
@@ -24,14 +25,15 @@ export async function GET() {
         toBlock = latestBlock;
       }
 
-      const bidEvents = await rpcFetchBiddingHistory(fromBlock, toBlock);
+      const auctionEndEvents = await rpcFetchAuctionEnd(fromBlock, toBlock);
 
-      for (const event of bidEvents) {
-        await prisma.bidEvent.create({
+      for (const event of auctionEndEvents) {
+        await prisma.auctionEndEvent.create({
           data: {
-            sender: event.args.sender,
+            winner: event.args.winner,
             round: event.args.round,
-            amount: event.args.amount,
+            // coins: null,
+            burned: event.args.burned,
             blockNumber: event.blockNumber,
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
@@ -46,8 +48,9 @@ export async function GET() {
       toBlock = fromBlock + BigInt(10000);
     }
 
-    return Response.json({ message: 'Bid events indexed successfully' }, { status: 200 });
+    return Response.json({ message: 'Auction end events indexed successfully' }, { status: 200 });
   } catch (error) {
-    return Response.json({ error: 'Failed to index bid events' }, { status: 500 });
+    Log().error(error);
+    return Response.json({ error: 'Failed to index auction end events' }, { status: 500 });
   }
 }

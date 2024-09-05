@@ -2,14 +2,15 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { prisma } from '@/utilities/prisma';
-import { rpcFetchAuctionEnd } from '@/queries/rpcFetchAuctionEnd';
+import { rpcFetchBiddingHistory } from '@/queries/rpcFetchBiddingHistory';
 import { viemPublicClient } from '@/utilities/viem';
+import { Log } from '@/utilities/logger';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
 export async function GET() {
   try {
-    const latestEvent = await prisma.auctionEndEvent.findFirst({
+    const latestEvent = await prisma.bidEvent.findFirst({
       orderBy: {
         blockNumber: 'desc',
       },
@@ -17,23 +18,22 @@ export async function GET() {
 
     let fromBlock = latestEvent ? latestEvent.blockNumber + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
-    let toBlock = fromBlock + BigInt(10000);
+    let toBlock = BigInt(fromBlock) + BigInt(10000);
 
-    while (fromBlock <= latestBlock) {
+    while (BigInt(fromBlock) <= latestBlock) {
       if (toBlock > latestBlock) {
         toBlock = latestBlock;
       }
 
-      const auctionEndEvents = await rpcFetchAuctionEnd(fromBlock, toBlock);
+      const bidEvents = await rpcFetchBiddingHistory(BigInt(fromBlock), BigInt(toBlock));
 
-      for (const event of auctionEndEvents) {
-        await prisma.auctionEndEvent.create({
+      for (const event of bidEvents) {
+        await prisma.bidEvent.create({
           data: {
-            winner: event.args.winner,
-            round: event.args.round,
-            // coins: null,
-            burned: event.args.burned,
-            blockNumber: event.blockNumber,
+            sender: event.args.sender,
+            round: event.args.round.toString(),
+            amount: event.args.amount.toString(),
+            blockNumber: event.blockNumber.toString(),
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
             blockHash: event.blockHash,
@@ -47,8 +47,9 @@ export async function GET() {
       toBlock = fromBlock + BigInt(10000);
     }
 
-    return Response.json({ message: 'Auction end events indexed successfully' }, { status: 200 });
+    return Response.json({ message: 'Bid events indexed successfully' }, { status: 200 });
   } catch (error) {
-    return Response.json({ error: 'Failed to index auction end events' }, { status: 500 });
+    Log().error(error);
+    return Response.json({ error: 'Failed to index bid events' }, { status: 500 });
   }
 }
