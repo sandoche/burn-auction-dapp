@@ -8,7 +8,7 @@ import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchAuctionDates } from './fetchAuctionDates';
-import { EVMOS_DECIMALS } from '@/constants';
+import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
 import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 import { fetchPastCryptoPrice } from './fetchPastCryptoPrice';
 
@@ -63,17 +63,10 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
   for (const token of roundData.args.coins) {
     const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
 
-    // TODO: handle the case where the token is not found (refactor to use a default data)
     let asset = {
-      coingeckoId: '',
+      ...UNKNOWN_TOKEN_METADATA_DEFAULT,
       denom: token.denom,
-      name: 'Unknown Token',
-      ticker: '',
       amount: token.amount,
-      valueInUsd: 0,
-      iconUrl: '',
-      exponent: 0,
-      amountWithDecimals: 0,
     };
 
     if (!tokenMetadata) {
