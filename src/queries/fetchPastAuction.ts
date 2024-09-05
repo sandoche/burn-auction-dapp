@@ -49,7 +49,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     },
     highestBid: {
       bidInEvmos: BigInt(roundData.burned),
-      bidInEvmosWithDecimals: Number(roundData.args.burned) / 10 ** EVMOS_DECIMALS,
+      bidInEvmosWithDecimals: Number(roundData.burned) / 10 ** EVMOS_DECIMALS,
       bidderAddress: roundData.winner as HexAddress,
       bidInUsd: 0,
     },
