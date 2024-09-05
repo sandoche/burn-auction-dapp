@@ -16,7 +16,7 @@ export async function GET() {
       },
     });
 
-    let fromBlock = latestEvent ? latestEvent.blockNumber + BigInt(1) : FIRST_AUCTION_BLOCK;
+    let fromBlock = latestEvent ? BigInt(latestEvent.blockNumber) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
     let toBlock = BigInt(fromBlock) + BigInt(10000);
 
@@ -25,7 +25,7 @@ export async function GET() {
         toBlock = latestBlock;
       }
 
-      const bidEvents = await rpcFetchBiddingHistory(BigInt(fromBlock), BigInt(toBlock));
+      const bidEvents = await rpcFetchBiddingHistory(BigInt(fromBlock), BigInt(toBlock) > latestBlock ? BigInt(toBlock) : 'latest');
 
       for (const event of bidEvents) {
         await prisma.bidEvent.create({

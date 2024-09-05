@@ -25,7 +25,7 @@ export async function GET() {
         toBlock = latestBlock;
       }
 
-      const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), BigInt(toBlock));
+      const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), BigInt(toBlock) > latestBlock ? BigInt(toBlock) : 'latest');
 
       for (const event of auctionEndEvents) {
         await prisma.auctionEndEvent.create({
