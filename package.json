@@ -14,7 +14,8 @@
     "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.mts",
     "postinstall": "npm run gen:types",
     "license": "node ./check-license.mjs",
-    "license:fix": "node ./check-license.mjs --fix"
+    "license:fix": "node ./check-license.mjs --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
@@ -41,6 +42,10 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint-plugin-typescript-sort-keys": "^1.0.0",
+    "eslint-plugin-no-magic-numbers": "^2.0.0",
     "globby": "^14.0.2",
     "husky": "^9.1.4",
     "jsdom": "^24.1.1",
