@@ -57,8 +57,8 @@ Follow the instructions described in this issue in order to run a local node wit
 
 To index blockchain events into the database, you can use the following endpoints:
 
-- `/api/indexer/bid-events`: Indexes bid events from the blockchain to the database.
-- `/api/indexer/auction-end-events`: Indexes auction end events from the blockchain to the database.
+- `/api/v1/indexer/bid-events`: Indexes bid events from the blockchain to the database.
+- `/api/v1/indexer/auction-end-events`: Indexes auction end events from the blockchain to the database.
 
 These endpoints will index events from the block number specified in `process.env.FIRST_AUCTION_BLOCK` to the latest block number in batches of 10000 blocks.
 
