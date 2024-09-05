@@ -67,7 +67,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     let asset = {
       ...UNKNOWN_TOKEN_METADATA_DEFAULT,
       denom: token.denom,
-      amount: token.amount,
+      amount: BigInt(token.amount),
     };
 
     if (!tokenMetadata) {
@@ -84,7 +84,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       denom: token.denom,
       name: tokenMetadata.name,
       ticker: tokenMetadata.coinDenom,
-      amount: token.amount,
+      amount: BigInt(token.amount),
       valueInUsd,
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
       exponent,
