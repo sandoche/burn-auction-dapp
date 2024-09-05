@@ -33,6 +33,10 @@ const config: Config = {
           dark: '#302B29',
           light: '#FAEFEB',
         },
+        'evmos-error': '#e05c4e',
+        'evmos-success': '#8ec876',
+        'evmos-gray': '#3a271c',
+        'evmos-gray-light': '#665f5b',
       },
       divideWidth: {
         DEFAULT: '1.5px',
