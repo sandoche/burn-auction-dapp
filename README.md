@@ -53,6 +53,15 @@ pnpm build
 
 Follow the instructions described in this issue in order to run a local node with the Burn Auction module enabled: https://github.com/evmos/burn-auction-dapp/issues/5
 
+### Indexing Endpoints
+
+To index blockchain events into the database, you can use the following endpoints:
+
+- `/api/index/index-bid-event`: Indexes bid events from the blockchain to the database.
+- `/api/index/auction-end-event`: Indexes auction end events from the blockchain to the database.
+
+These endpoints will index events from the block number specified in `process.env.FIRST_AUCTION_BLOCK` to the latest block number in batches of 10000 blocks.
+
 ## Community
 
 The following chat channels and forums are a great spot to ask questions about Evmos:

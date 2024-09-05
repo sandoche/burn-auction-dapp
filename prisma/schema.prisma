@@ -1,0 +1,26 @@
+model AuctionEndEvent {
+  id               Int      @id @default(autoincrement())
+  winner           String
+  round            BigInt
+  coins            Json
+  burned           BigInt
+  blockNumber      BigInt
+  transactionHash  String
+  transactionIndex Int
+  blockHash        String
+  logIndex         Int
+  removed          Boolean
+}
+
+model BidEvent {
+  id               Int      @id @default(autoincrement())
+  sender           String
+  round            BigInt
+  amount           BigInt
+  blockNumber      BigInt
+  transactionHash  String
+  transactionIndex Int
+  blockHash        String
+  logIndex         Int
+  removed          Boolean
+}
