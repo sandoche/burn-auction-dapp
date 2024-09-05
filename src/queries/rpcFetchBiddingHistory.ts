@@ -7,7 +7,7 @@ import { CONTRACT_ADDRESS, CONTRACT_ABI } from '@/contract';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 
-export const rpcFetchBiddingHistory = async (fromBlock: bigint, toBlock: bigint): Promise<BidEvent[]> => {
+export const rpcFetchBiddingHistory = async (fromBlock: bigint, toBlock: bigint | 'latest'): Promise<BidEvent[]> => {
   const filter = await viemPublicClient.createContractEventFilter({
     abi: CONTRACT_ABI,
     address: CONTRACT_ADDRESS,

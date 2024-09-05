@@ -7,7 +7,7 @@ import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { AuctionEndEvent } from '@/types/AuctionEndEvent';
 
-export const rpcFetchAuctionEnd = async (fromBlock: bigint, toBlock: bigint): Promise<AuctionEndEvent[]> => {
+export const rpcFetchAuctionEnd = async (fromBlock: bigint, toBlock: bigint | 'latest'): Promise<AuctionEndEvent[]> => {
   const filter = await viemPublicClient.createContractEventFilter({
     abi: CONTRACT_ABI,
     address: CONTRACT_ADDRESS,
