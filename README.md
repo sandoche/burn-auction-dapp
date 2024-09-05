@@ -41,6 +41,7 @@ cp .env.example .env
 ```bash
 pnpm dev
 pnpm dev:dappstore # to run the dappstore sdk preview that handles the wallet connection
+pnpm dev:indexer # to run the indexer that indexes the blockchain events into the database
 ```
 
 ### Build
