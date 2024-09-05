@@ -9,6 +9,10 @@ export const formatUnits = (value: bigint, tokenDecimals: number, mode: 'short' 
 
   display = display.padStart(tokenDecimals, '0');
 
+  if (tokenDecimals === 0) {
+    return `${negative ? '-' : ''}${display}`;
+  }
+
   let [integer, fraction] = [display.slice(0, display.length - tokenDecimals), display.slice(display.length - tokenDecimals)];
   if (mode === 'long') {
     fraction = fraction.replace(/(0+)$/, '');
@@ -18,5 +22,5 @@ export const formatUnits = (value: bigint, tokenDecimals: number, mode: 'short' 
     return `${negative ? '-' : ''}${integer || '0'}`;
   }
   fraction = fraction.slice(0, typeof mode === 'number' ? mode : 7);
-  return `${negative ? '-' : ''}${integer || '0'}.${fraction}`;
+  return `${negative ? '-' : ''}${integer || '0'}${fraction ? `.${fraction}` : ''}`;
 };
