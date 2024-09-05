@@ -38,3 +38,6 @@ next-env.d.ts
 
 # autogen
 src/utilities/registry/autogen/*
+
+# db
+*.db

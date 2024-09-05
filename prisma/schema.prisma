@@ -1,8 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
 model AuctionEndEvent {
   id               Int      @id @default(autoincrement())
   winner           String
   round            BigInt
-  coins            Json
+  coins            Coin[]
   burned           BigInt
   blockNumber      BigInt
   transactionHash  String
@@ -23,4 +35,12 @@ model BidEvent {
   blockHash        String
   logIndex         Int
   removed          Boolean
+}
+
+model Coin {
+  id               Int              @id @default(autoincrement())
+  denom            String
+  amount           BigInt
+  auctionEndEvent  AuctionEndEvent  @relation(fields: [auctionEndEventId], references: [id])
+  auctionEndEventId Int
 }

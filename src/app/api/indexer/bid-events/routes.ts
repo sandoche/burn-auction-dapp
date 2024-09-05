@@ -1,13 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
-import { rpcFetchAuctionEnd } from '@/queries/rpcFetchAuctionEnd';
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
+import { prisma } from '@/utilities/prisma';
+import { rpcFetchBiddingHistory } from '@/queries/rpcFetchBiddingHistory';
 import { viemPublicClient } from '@/utilities/viem';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
-    const latestEvent = await prisma.auctionEndEvent.findFirst({
+    const latestEvent = await prisma.bidEvent.findFirst({
       orderBy: {
         blockNumber: 'desc',
       },
@@ -22,15 +24,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         toBlock = latestBlock;
       }
 
-      const auctionEndEvents = await rpcFetchAuctionEnd(fromBlock, toBlock);
+      const bidEvents = await rpcFetchBiddingHistory(fromBlock, toBlock);
 
-      for (const event of auctionEndEvents) {
-        await prisma.auctionEndEvent.create({
+      for (const event of bidEvents) {
+        await prisma.bidEvent.create({
           data: {
-            winner: event.args.winner,
+            sender: event.args.sender,
             round: event.args.round,
-            coins: event.args.coins,
-            burned: event.args.burned,
+            amount: event.args.amount,
             blockNumber: event.blockNumber,
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
@@ -45,8 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       toBlock = fromBlock + BigInt(10000);
     }
 
-    res.status(200).json({ message: 'Auction end events indexed successfully' });
+    return Response.json({ message: 'Bid events indexed successfully' }, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to index auction end events' });
+    return Response.json({ error: 'Failed to index bid events' }, { status: 500 });
   }
 }

@@ -14,12 +14,15 @@
     "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.mts",
     "postinstall": "npm run gen:types",
     "license": "node ./check-license.mjs",
-    "license:fix": "node ./check-license.mjs --fix"
+    "license:fix": "node ./check-license.mjs --fix",
+    "prisma:validate": "prisma validate",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@prisma/client": "5.19.1",
     "@xstate/react": "^4.1.1",
     "clsx": "^2.1.1",
     "dappstore": "^0.0.6",
@@ -51,6 +54,7 @@
     "lodash-es": "^4.17.21",
     "postcss": "^8",
     "prettier": "3.3.3",
+    "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.17.0",
     "typescript": "^5",
