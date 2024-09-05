@@ -16,16 +16,20 @@ import Image from 'next/image';
 export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
   const [state, send] = useMachine(biddingStateMachine);
 
-  useEffect(() => {
-    dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
+  dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
 
+  useEffect(() => {
     const fetchBalance = async () => {
       if (state.context.wallet || dappstore.accounts[0]) {
         const balance = await viemPublicClient.getBalance({ address: state.context.wallet ?? dappstore.accounts[0] });
         send({ type: 'SET_BALANCE', balance });
-        console.log(balance);
       }
     };
+
+    if (!state.context.wallet && dappstore.accounts[0]) {
+      send({ type: 'SET_WALLET', wallet: dappstore.accounts[0] });
+    }
+
     fetchBalance();
   }, [send, state.context.wallet]);
 
