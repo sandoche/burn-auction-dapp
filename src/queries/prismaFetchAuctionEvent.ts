@@ -3,11 +3,14 @@
 
 import { prisma } from '@/utilities/prisma';
 
-export const prismaFetchAuctionEvent = async () => {
+export const prismaFetchAuctionEvent = async (round: bigint | null = null) => {
   try {
     const auctionEndEvents = await prisma.auctionEndEvent.findMany({
       orderBy: {
         blockNumber: 'desc',
+      },
+      where: {
+        round: round ? round.toString() : undefined,
       },
     });
 

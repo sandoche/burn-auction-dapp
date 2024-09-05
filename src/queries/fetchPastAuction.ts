@@ -9,11 +9,12 @@ import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchAuctionDates } from './fetchAuctionDates';
 import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
-import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 import { fetchPastCryptoPrice } from './fetchPastCryptoPrice';
+import { prismaFetchAuctionEvent } from './prismaFetchAuctionEvent';
+import type { HexAddress } from '@/types/HexAddress';
 
 export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> => {
-  const [error, auctionEndEvent] = await E.try(() => rpcFetchAuctionEnd(round));
+  const [error, auctionEndEvent] = await E.try(() => prismaFetchAuctionEvent(round));
 
   if (error || auctionEndEvent.length === 0) {
     Log().error('Error fetching auction end event info:', error);
@@ -21,7 +22,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
   }
 
   const roundData = auctionEndEvent[0];
-  if (!roundData.args.coins) {
+  if (!roundData.coins) {
     throw new Error('No coins found in the auction end event');
   }
 
@@ -32,7 +33,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     throw errorMetadata;
   }
 
-  const [errorEndDate, dates] = await E.try(() => fetchAuctionDates(roundData.blockNumber));
+  const [errorEndDate, dates] = await E.try(() => fetchAuctionDates(BigInt(roundData.blockNumber)));
 
   if (errorEndDate || !dates) {
     Log().error('Error fetching current end date:', errorEndDate);
@@ -47,9 +48,9 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       endDate: dates.end,
     },
     highestBid: {
-      bidInEvmos: roundData.args.burned,
+      bidInEvmos: BigInt(roundData.burned),
       bidInEvmosWithDecimals: Number(roundData.args.burned) / 10 ** EVMOS_DECIMALS,
-      bidderAddress: roundData.args.winner,
+      bidderAddress: roundData.winner as HexAddress,
       bidInUsd: 0,
     },
     auction: {
@@ -60,7 +61,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
 
   let totalValue = 0;
 
-  for (const token of roundData.args.coins) {
+  for (const token of roundData.coins) {
     const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
 
     let asset = {
