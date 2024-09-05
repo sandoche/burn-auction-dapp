@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { Log } from '@/utilities/logger';
 import { ButtonAction } from '@/components/ui/ButtonAction';
 
-export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     Log().error(error);
   }, [error]);
