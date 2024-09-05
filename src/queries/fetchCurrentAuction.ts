@@ -10,7 +10,7 @@ import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
 import { fetchAuctionDates } from './fetchAuctionDates';
-import { EVMOS_DECIMALS } from '@/constants';
+import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
@@ -56,18 +56,12 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   currentAuctionInfo.auction.assets = auctionInfo.tokens.map((token) => {
     const tokenMetadata = tokensMetadata.find((metadata) => metadata.minCoinDenom === token.denom);
 
-    // TODO: handle the case where the token is not found (refactor to use a default data)
     if (!tokenMetadata) {
       return {
-        coingeckoId: '',
+        ...UNKNOWN_TOKEN_METADATA_DEFAULT,
+        ticker: token.denom,
         denom: token.denom,
-        name: 'Unknown Token',
-        ticker: '',
         amount: token.amount,
-        valueInUsd: 0,
-        iconUrl: '',
-        exponent: 0,
-        amountWithDecimals: 0,
       };
     }
 

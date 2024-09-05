@@ -1,13 +1,13 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
-import { createPublicClient, http, defineChain } from 'viem';
+import { createPublicClient, http, defineChain, custom, createWalletClient } from 'viem';
 import { EVMOS_DECIMALS } from '@/constants';
 
-const chainId = parseInt(process.env.CHAIN_ID as string);
-const rpcUrl = process.env.RPC_HOST as string;
+const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID as string);
+const rpcUrl = process.env.NEXT_PUBLIC_RPC_HOST as string;
 
-const evmos = defineChain({
+export const evmos = defineChain({
   id: chainId,
   name: 'Evmos',
   network: 'evmos',
@@ -21,7 +21,7 @@ const evmos = defineChain({
   },
 });
 
-export const viemClient = createPublicClient({
+export const viemPublicClient = createPublicClient({
   chain: evmos,
   transport: http(rpcUrl, {
     fetchOptions: {
