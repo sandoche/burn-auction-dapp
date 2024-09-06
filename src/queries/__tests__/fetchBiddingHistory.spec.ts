@@ -57,10 +57,10 @@ describe('fetchBiddingHistory(round)', () => {
     expect(result.length).toBe(2);
     expect(result[0]).toEqual({
       bidder: '0xC6Fe5D33615a1C52c08018c47E8Bc53646A0E101',
-      amount: BigInt('199999999999998000').toString(),
+      amount: BigInt('199999999999998000'),
       time: new Date('2023-04-01T12:00:00Z'),
       transactionHash: '0xc90cd222f15b803faa699ce3fd7e31daa5eb2e99d1c25856c841c217a3214989',
-      blockNumber: BigInt(1231).toString(),
+      blockNumber: BigInt(1231),
     });
   });
 

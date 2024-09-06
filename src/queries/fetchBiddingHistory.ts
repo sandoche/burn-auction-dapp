@@ -17,11 +17,11 @@ export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory
 
   const biddingHistory: BiddingHistory = biddingEvents.map((event) => {
     return {
-      bidder: event.sender,
-      amount: event.amount,
+      bidder: event.sender as `0x${string}`,
+      amount: BigInt(event.amount),
       time: new Date(), // to fix
-      transactionHash: event.transactionHash,
-      blockNumber: event.blockNumber,
+      transactionHash: event.transactionHash as `0x${string}`,
+      blockNumber: BigInt(event.blockNumber),
     };
   });
 
