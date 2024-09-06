@@ -12,7 +12,7 @@ const History = async () => {
 
   return (
     <section className="mb-10">
-      <h1 className="text-3xl mb-6">History</h1>
+      <h1 className="text-3xl mb-6 font-bold">History</h1>
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">Total amount burned 🔥</h2>
         <p className="text-3xl mb-6 font-semibold flex">
