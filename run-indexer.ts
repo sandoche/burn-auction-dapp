@@ -13,6 +13,7 @@ const job = new CronJob(CRON_TIME, function () {
   try {
     console.log('[Indexer] Fetching bid events');
     fetch(`${API_HOST}/api/v1/indexer/bid-events`);
+    console.log('[Indexer] Fetching auction end events');
     fetch(`${API_HOST}/api/v1/indexer/auction-end-events`);
   } catch (error) {
     console.error('[Indexer] Error fetching bid events', error);

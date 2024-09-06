@@ -20,12 +20,13 @@ export async function GET() {
     const latestBlock = await viemPublicClient.getBlockNumber();
     let toBlock = BigInt(fromBlock) + BigInt(10000);
 
-    while (BigInt(fromBlock) <= latestBlock) {
-      if (toBlock > latestBlock) {
-        toBlock = latestBlock;
-      }
+    Log().info(`Fetching bid events initial target: ${fromBlock} to block ${toBlock}; latest block: ${latestBlock}`);
 
-      const bidEvents = await rpcFetchBiddingHistory(BigInt(fromBlock), BigInt(toBlock) > latestBlock ? BigInt(toBlock) : 'latest');
+    while (BigInt(fromBlock) <= latestBlock) {
+      const toBlockOrLatest = BigInt(toBlock) <= latestBlock ? BigInt(toBlock) : 'latest';
+
+      Log().info(`Fetching batch of bid events from block ${fromBlock} to block ${toBlockOrLatest}`);
+      const bidEvents = await rpcFetchBiddingHistory(BigInt(fromBlock), toBlockOrLatest);
 
       for (const event of bidEvents) {
         await prisma.bidEvent.create({
