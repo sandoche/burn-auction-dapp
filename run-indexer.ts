@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const CRON_TIME = process.env.CRON_TIME || '*/3 * * * * *';
+const CRON_TIME = process.env.CRON_TIME || '*/10 * * * * *';
 const API_HOST = process.env.API_HOST || 'http://localhost:3000';
 
 const job = new CronJob(CRON_TIME, function () {
