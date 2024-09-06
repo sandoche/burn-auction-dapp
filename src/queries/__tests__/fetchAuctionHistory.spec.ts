@@ -1,13 +1,16 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchAuctionHistory } from '../fetchAuctionHistory';
 import type { AuctionHistory } from '@/types/AuctionHistory';
 import { mockAuctionEndEvents } from './mockedData';
-import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
+import { prismaFetchAuctionEvents } from '../prismaFetchAuctionEvents';
 
-vi.mock('../prismaFetchAuctionEvent');
+vi.mock('../prismaFetchAuctionEvents');
 
 beforeEach(() => {
-  vi.mocked(prismaFetchAuctionEvent).mockReset();
+  vi.mocked(prismaFetchAuctionEvents).mockReset();
 });
 
 afterEach(() => {
@@ -16,7 +19,7 @@ afterEach(() => {
 
 describe('fetchAuctionHistory()', () => {
   it('should return the auction history and the correct total burned amount', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue(
+    vi.mocked(prismaFetchAuctionEvents).mockResolvedValue(
       mockAuctionEndEvents.map((event) => ({
         id: 1, // Add a dummy id
         round: event.args.round.toString(),
@@ -61,7 +64,7 @@ describe('fetchAuctionHistory()', () => {
   });
 
   it('should return an empty history and zero total burned amount when there are no events', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([]);
+    vi.mocked(prismaFetchAuctionEvents).mockResolvedValue([]);
 
     const result = await fetchAuctionHistory(1, 10);
 
@@ -71,7 +74,7 @@ describe('fetchAuctionHistory()', () => {
 
   it('should handle very large burned amounts without losing precision', async () => {
     const largeAmount = BigInt('1' + '0'.repeat(50)); // 1 followed by 50 zeros
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
+    vi.mocked(prismaFetchAuctionEvents).mockResolvedValue([
       {
         round: '1',
         burned: largeAmount.toString(),
@@ -95,7 +98,7 @@ describe('fetchAuctionHistory()', () => {
   });
 
   it('should throw an error when prismaFetchAuctionEvent fails', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockRejectedValue(new Error('Database error'));
+    vi.mocked(prismaFetchAuctionEvents).mockRejectedValue(new Error('Database error'));
 
     await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Database error');
   });
@@ -115,7 +118,7 @@ describe('fetchAuctionHistory()', () => {
       coins: [],
     }));
 
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue(mockData.slice(0, 1));
+    vi.mocked(prismaFetchAuctionEvents).mockResolvedValue(mockData.slice(0, 1));
 
     const result = await fetchAuctionHistory(1, 1);
 

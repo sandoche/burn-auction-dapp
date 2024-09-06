@@ -13,4 +13,5 @@ export type HistoryItem = {
 export type AuctionHistory = {
   history: HistoryItem[];
   totalBurned: bigint;
+  totalItems: number;
 };

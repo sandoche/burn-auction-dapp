@@ -1,27 +1,27 @@
+// Copyright Tharsis Labs Ltd.(Evmos)
+// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
+
+'use client';
 import React from 'react';
 
 interface PaginationProps {
   currentPage: number;
   itemsPerPage: number;
   totalItems: number;
-  onPageChange: (page: number) => void;
+  // onPageChange: (page: number) => void;
 }
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage, itemsPerPage, totalItems, onPageChange }) => {
+const Pagination: React.FC<PaginationProps> = ({ currentPage, itemsPerPage, totalItems }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page < 1 || page > totalPages) return;
-    onPageChange(page);
+    // onPageChange(page);
   };
 
   return (
     <div className="flex justify-center mt-4">
-      <button
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
-      >
+      <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} className="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded disabled:opacity-50">
         Previous
       </button>
       {Array.from({ length: totalPages }, (_, index) => (
