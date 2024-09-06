@@ -12,7 +12,7 @@ beforeEach(() => {
     return {
       // @ts-ignore
       ...actual,
-      rpcFetchAuctionEnd: vi.fn((round) => (round ? mockAuctionEndEventsRound3 : mockAuctionEndEvents)),
+      rpcFetchAuctionEnd: vi.fn((from, to) => mockAuctionEndEvents),
     };
   });
 });
@@ -21,19 +21,11 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('rpcFetchAuctionEnd()', async () => {
+describe('rpcFetchAuctionEnd(from, to)', async () => {
   it('should return all the AuctionEnd events', async () => {
-    const result = await rpcFetchAuctionEnd();
+    const result = await rpcFetchAuctionEnd(BigInt(1), BigInt(3));
     expect(result).toBeDefined();
-    expectTypeOf(result).toMatchTypeOf<AuctionEndEvent[]>();
-  });
-});
-
-describe('rpcFetchAuctionEnd(round)', async () => {
-  it('should return a specific AuctionEnd event', async () => {
-    const result = await rpcFetchAuctionEnd(BigInt(3));
-    expect(result).toBeDefined();
-    expect(result.length).toEqual(1);
+    expect(result.length).toEqual(2);
     expectTypeOf(result).toMatchTypeOf<AuctionEndEvent[]>();
   });
 });
