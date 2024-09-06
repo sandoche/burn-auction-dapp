@@ -11,26 +11,27 @@ datasource db {
 }
 
 model AuctionEndEvent {
-  id               Int      @id @default(autoincrement())
-  winner           String
-  round            String   @unique
-  coins            Coin[]
-  burned           String
-  blockNumber      String
-  transactionHash  String
-  transactionIndex Int
-  blockHash        String
-  logIndex         Int
-  removed          Boolean
+  id                    Int     @id @default(autoincrement())
+  winner                String
+  round                 String  @unique
+  coins                 Coin[]
+  burned                String
+  burnedWithoutDecimals Int
+  blockNumber           String
+  transactionHash       String
+  transactionIndex      Int
+  blockHash             String
+  logIndex              Int
+  removed               Boolean
 }
 
 model BidEvent {
-  id               Int      @id @default(autoincrement())
+  id               Int     @id @default(autoincrement())
   sender           String
   round            String
   amount           String
   blockNumber      String
-  transactionHash  String   @unique
+  transactionHash  String  @unique
   transactionIndex Int
   blockHash        String
   logIndex         Int
@@ -38,10 +39,10 @@ model BidEvent {
 }
 
 model Coin {
-  id               Int              @id @default(autoincrement())
-  denom            String
-  amount           String
-  auctionEndEvent  AuctionEndEvent  @relation(fields: [auctionEndEventId], references: [id])
+  id                Int             @id @default(autoincrement())
+  denom             String
+  amount            String
+  auctionEndEvent   AuctionEndEvent @relation(fields: [auctionEndEventId], references: [id])
   auctionEndEventId Int
 }
 

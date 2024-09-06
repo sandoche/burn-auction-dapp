@@ -5,6 +5,7 @@ import { prisma } from '@/utilities/prisma';
 import { rpcFetchAuctionEnd } from '@/queries/rpcFetchAuctionEnd';
 import { viemPublicClient } from '@/utilities/viem';
 import { Log } from '@/utilities/logger';
+import { EVMOS_DECIMALS } from '@/constants';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
 
@@ -28,6 +29,10 @@ export async function GET() {
       const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), toBlockOrLatest);
 
       for (const event of auctionEndEvents) {
+        console.log(event.args.burned);
+        console.log(EVMOS_DECIMALS);
+        console.log(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS));
+
         await prisma.auctionEndEvent.upsert({
           where: { round: event.args.round.toString() },
           update: {},
@@ -43,6 +48,7 @@ export async function GET() {
             },
             burned: event.args.burned.toString(),
             blockNumber: event.blockNumber.toString(),
+            burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
             blockHash: event.blockHash,

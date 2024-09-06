@@ -16,7 +16,7 @@ export const HistoryContent = ({ auctionHistory, pageNumber }: { auctionHistory:
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">Total amount burned 🔥</h2>
         <p className="text-3xl mb-6 font-semibold flex">
-          <span className="mr-2">{formatUnits(auctionHistory.totalBurned, EVMOS_DECIMALS, 2)}</span> <Image src="/icons/evmos.svg" alt="Evmos Icon" width={32} height={32} />
+          <span className="mr-2">{formatUnits(auctionHistory.totalBurned, 0, 2)}</span> <Image src="/icons/evmos.svg" alt="Evmos Icon" width={32} height={32} />
         </p>
         <AuctionHistoryTable auctionHistory={auctionHistory} />
         <Pagination currentPage={pageNumber} itemsPerPage={PAGINATION_ITEMS_PER_PAGE} totalItems={auctionHistory.totalItems} />

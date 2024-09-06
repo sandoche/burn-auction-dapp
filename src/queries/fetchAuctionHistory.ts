@@ -24,11 +24,21 @@ export const fetchAuctionHistory = async (page: number, itemsPerPage: number): P
     };
   });
 
-  const totalItems = await prismaFetchAuctionEvents.count();
+  const [errorTotalItems, totalItems] = await E.try(() => prismaFetchAuctionEvents.count());
+  if (errorTotalItems) {
+    Log().error('Error fetching total items:', errorTotalItems);
+    throw error;
+  }
+
+  const [errorTotalBurned, totalBurned] = await E.try(() => prismaFetchAuctionEvents.totalBurned());
+  if (errorTotalBurned || totalBurned === null) {
+    Log().error('Error fetching total burned:', errorTotalBurned);
+    throw error;
+  }
 
   const auctionHistory = {
     history: history.reverse(),
-    totalBurned: history.reduce((acc, curr) => acc + curr.amountInEvmos, BigInt(0)), // in the future with pagination we should get the total from an indexer
+    totalBurned: totalBurned, // in the future with pagination we should get the total from an indexer
     totalItems,
   };
 
