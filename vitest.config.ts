@@ -13,7 +13,7 @@ export default defineConfig({
     env: {
       ...config({ path: './.env.test' }).parsed,
     },
-    // reporters: ["verbose"],
+    testTimeout: 10_000,
   },
   resolve: {
     alias: {

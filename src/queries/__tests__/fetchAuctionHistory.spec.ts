@@ -47,7 +47,7 @@ describe('fetchAuctionHistory()', () => {
     expect(result.history[1].round).toBe(BigInt(1));
 
     // Calculate the expected total burned amount
-    const expectedTotalBurned = mockAuctionEndEvents.reduce((acc, event) => acc + event.args.burned, BigInt(0));
+    const expectedTotalBurned = Number(mockAuctionEndEvents.reduce((acc, event) => acc + event.args.burned, BigInt(0)) / BigInt(10 ** EVMOS_DECIMALS));
 
     // Check if the totalBurned matches the sum of all burned amounts
     expect(result.totalBurned).toBe(expectedTotalBurned);
@@ -71,7 +71,7 @@ describe('fetchAuctionHistory()', () => {
     const result = await fetchAuctionHistory(1, 10);
 
     expect(result.history).toEqual([]);
-    expect(result.totalBurned).toBe(BigInt(0));
+    expect(result.totalBurned).toBe(0);
   });
 
   it('should handle very large burned amounts without losing precision', async () => {
