@@ -3,8 +3,6 @@
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchCurrentAuction } from '../fetchCurrentAuction';
-import { rpcFetchCurrentAuctionInfo } from '../rpcFetchCurrentAuctionInfo';
-import type { AuctionInfo } from '@/types/AuctionInfo';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { mockCoinGeckoResponse, mockAuctionResponse } from './mockedData';
 import { epochInfoResponse } from './mockedData';
