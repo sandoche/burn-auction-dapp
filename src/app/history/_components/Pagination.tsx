@@ -16,19 +16,21 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, itemsPerPage, tota
 
   return (
     <div className="flex justify-center mt-16">
-      {currentPage > 1 && (
-        <ButtonLink href={`/history/${Number(currentPage) - 1}`} className="bg-transparent">
-          <Image src="/icons/arrow-left.svg" alt="Previous" width={20} height={20} />
-        </ButtonLink>
-      )}
-      {Array.from({ length: totalPages }, (_, index) => (
-        <ButtonLink key={index + 1} href={`/history/${index + 1}`} className={clsx(currentPage != index + 1 && '!bg-transparent')}>
-          {index + 1}
-        </ButtonLink>
-      ))}
       {currentPage < totalPages && (
         <ButtonLink href={`/history/${Number(currentPage) + 1}`} className="bg-transparent">
-          <Image src="/icons/arrow-right.svg" alt="Next" width={20} height={20} />
+          <Image src="/icons/arrow-left.svg" alt="Next" width={20} height={20} />
+        </ButtonLink>
+      )}
+
+      {Array.from({ length: totalPages }, (_, index) => (
+        <ButtonLink key={totalPages - index} href={`/history/${totalPages - index}`} className={clsx(currentPage != totalPages - index && '!bg-transparent')}>
+          {totalPages - index}
+        </ButtonLink>
+      ))}
+
+      {currentPage > 1 && (
+        <ButtonLink href={`/history/${Number(currentPage) - 1}`} className="bg-transparent">
+          <Image src="/icons/arrow-right.svg" alt="Previous" width={20} height={20} />
         </ButtonLink>
       )}
     </div>
