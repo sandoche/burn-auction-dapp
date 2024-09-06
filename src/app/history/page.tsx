@@ -1,14 +1,20 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
-
 import Image from 'next/image';
 import { fetchAuctionHistory } from '@/queries/fetchAuctionHistory';
 import { AuctionHistoryTable } from './_components/AuctionHistoryTable';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
+import { useState } from 'react';
+import Pagination from '@/app/_components/Pagination';
 
 const History = async () => {
-  const auctionHistory = await fetchAuctionHistory();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  const auctionHistory = await fetchAuctionHistory(currentPage, itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section className="mb-10">
@@ -19,6 +25,12 @@ const History = async () => {
           <span className="mr-2">{formatUnits(auctionHistory.totalBurned, EVMOS_DECIMALS, 2)}</span> <Image src="/icons/evmos.svg" alt="Evmos Icon" width={32} height={32} />
         </p>
         <AuctionHistoryTable auctionHistory={auctionHistory} />
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={auctionHistory.totalItems}
+          onPageChange={handlePageChange}
+        />
       </section>
     </section>
   );

@@ -1,14 +1,11 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
-
 import { prismaFetchAuctionEvent } from './prismaFetchAuctionEvent';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { AuctionHistory } from '@/types/AuctionHistory';
 import { HexAddress } from '@/types/HexAddress';
 
-export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
-  const [error, auctionEvents] = await E.try(() => prismaFetchAuctionEvent());
+export const fetchAuctionHistory = async (page: number, itemsPerPage: number): Promise<AuctionHistory> => {
+  const [error, auctionEvents] = await E.try(() => prismaFetchAuctionEvent(page, itemsPerPage));
 
   if (error) {
     Log().error('Error fetching events date:', error);
@@ -24,9 +21,12 @@ export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
     };
   });
 
+  const totalItems = await prismaFetchAuctionEvent.count();
+
   const auctionHistory = {
     history: history.reverse(),
     totalBurned: history.reduce((acc, curr) => acc + curr.amountInEvmos, BigInt(0)), // in the future with pagination we should get the total from an indexer
+    totalItems,
   };
 
   return auctionHistory;

@@ -1,6 +1,3 @@
-// Copyright Tharsis Labs Ltd.(Evmos)
-// SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
-
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchAuctionHistory } from '../fetchAuctionHistory';
 import type { AuctionHistory } from '@/types/AuctionHistory';
@@ -35,7 +32,7 @@ describe('fetchAuctionHistory()', () => {
       })),
     );
 
-    const result = await fetchAuctionHistory();
+    const result = await fetchAuctionHistory(1, 10);
 
     expect(result).toBeDefined();
     expectTypeOf(result).toMatchTypeOf<AuctionHistory>();
@@ -66,7 +63,7 @@ describe('fetchAuctionHistory()', () => {
   it('should return an empty history and zero total burned amount when there are no events', async () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([]);
 
-    const result = await fetchAuctionHistory();
+    const result = await fetchAuctionHistory(1, 10);
 
     expect(result.history).toEqual([]);
     expect(result.totalBurned).toBe(BigInt(0));
@@ -91,7 +88,7 @@ describe('fetchAuctionHistory()', () => {
       },
     ]);
 
-    const result = await fetchAuctionHistory();
+    const result = await fetchAuctionHistory(1, 10);
 
     expect(result.history[0].amountInEvmos).toBe(largeAmount);
     expect(result.totalBurned).toBe(largeAmount);
@@ -100,6 +97,29 @@ describe('fetchAuctionHistory()', () => {
   it('should throw an error when prismaFetchAuctionEvent fails', async () => {
     vi.mocked(prismaFetchAuctionEvent).mockRejectedValue(new Error('Database error'));
 
-    await expect(fetchAuctionHistory()).rejects.toThrow('Database error');
+    await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Database error');
+  });
+
+  it('should return paginated auction history', async () => {
+    const mockData = mockAuctionEndEvents.map((event) => ({
+      id: 1,
+      round: event.args.round.toString(),
+      burned: event.args.burned.toString(),
+      winner: event.args.winner,
+      blockNumber: event.blockNumber.toString(),
+      transactionHash: '0x123...',
+      transactionIndex: 0,
+      blockHash: '0x456...',
+      logIndex: 0,
+      removed: false,
+      coins: [],
+    }));
+
+    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue(mockData.slice(0, 1));
+
+    const result = await fetchAuctionHistory(1, 1);
+
+    expect(result.history.length).toBe(1);
+    expect(result.history[0].round).toBe(mockAuctionEndEvents[0].args.round);
   });
 });
