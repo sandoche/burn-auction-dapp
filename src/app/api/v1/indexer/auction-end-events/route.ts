@@ -29,10 +29,6 @@ export async function GET() {
       const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), toBlockOrLatest);
 
       for (const event of auctionEndEvents) {
-        console.log(event.args.burned);
-        console.log(EVMOS_DECIMALS);
-        console.log(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS));
-
         await prisma.auctionEndEvent.upsert({
           where: { round: Number(event.args.round) },
           update: {},
