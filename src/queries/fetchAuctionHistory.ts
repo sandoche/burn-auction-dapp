@@ -5,6 +5,7 @@ import { prismaFetchAuctionEvent } from './prismaFetchAuctionEvent';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { AuctionHistory } from '@/types/AuctionHistory';
+import { HexAddress } from '@/types/HexAddress';
 
 export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
   const [error, auctionEvents] = await E.try(() => prismaFetchAuctionEvent());
@@ -18,7 +19,7 @@ export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
     return {
       round: BigInt(event.round),
       amountInEvmos: BigInt(event.burned),
-      winnerAddress: event.winner,
+      winnerAddress: event.winner as HexAddress,
       blockNumber: BigInt(event.blockNumber),
     };
   });

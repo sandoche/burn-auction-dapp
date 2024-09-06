@@ -6,6 +6,7 @@ import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { BiddingHistory } from '@/types/BiddingHistory';
+import { HexAddress } from '@/types/HexAddress';
 
 export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory> => {
   const [error, biddingEvents] = await E.try(() => prismaFetchBidEvent(round));
@@ -17,10 +18,10 @@ export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory
 
   const biddingHistory: BiddingHistory = biddingEvents.map((event) => {
     return {
-      bidder: event.sender as `0x${string}`,
+      bidder: event.sender as HexAddress,
       amount: BigInt(event.amount),
       time: new Date(), // to fix
-      transactionHash: event.transactionHash as `0x${string}`,
+      transactionHash: event.transactionHash as HexAddress,
       blockNumber: BigInt(event.blockNumber),
     };
   });
