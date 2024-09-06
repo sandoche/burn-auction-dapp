@@ -17,6 +17,7 @@ export async function GET() {
     let fromBlock = lastBlockFetched ? BigInt(lastBlockFetched.lastBlock) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
     let toBlock = BigInt(fromBlock) + BigInt(10000);
+    let count = 0;
 
     Log().info(`Fetching auction end events initial target: ${fromBlock} to block ${toBlock}; latest block: ${latestBlock}`);
 
@@ -27,8 +28,10 @@ export async function GET() {
       const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), toBlockOrLatest);
 
       for (const event of auctionEndEvents) {
-        await prisma.auctionEndEvent.create({
-          data: {
+        await prisma.auctionEndEvent.upsert({
+          where: { round: event.args.round.toString() },
+          update: {},
+          create: {
             winner: event.args.winner,
             round: event.args.round.toString(),
             coins: {
@@ -47,6 +50,7 @@ export async function GET() {
             removed: event.removed,
           },
         });
+        count++;
       }
 
       await prisma.lastBlockFetched.upsert({
@@ -59,7 +63,7 @@ export async function GET() {
       toBlock = fromBlock + BigInt(10000);
     }
 
-    return Response.json({ message: 'Auction end events indexed successfully' }, { status: 200 });
+    return Response.json({ message: 'Auction end events indexed successfully', count }, { status: 200 });
   } catch (error) {
     Log().error(error);
     return Response.json({ error: 'Failed to index auction end events' }, { status: 500 });
