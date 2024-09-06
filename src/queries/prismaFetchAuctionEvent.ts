@@ -4,14 +4,14 @@
 import { prisma } from '@/utilities/prisma';
 import { E } from '@/utilities/error-handling';
 
-export const prismaFetchAuctionEvent = async (round: bigint | null = null) => {
+export const prismaFetchAuctionEvent = async (round: bigint) => {
   const [error, auctionEndEvents] = await E.try(() =>
     prisma.auctionEndEvent.findMany({
       orderBy: {
-        blockNumber: 'asc',
+        round: 'asc',
       },
       where: {
-        round: round ? round.toString() : undefined,
+        round: Number(round),
       },
       include: {
         coins: true,

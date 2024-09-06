@@ -34,11 +34,11 @@ export async function GET() {
         console.log(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS));
 
         await prisma.auctionEndEvent.upsert({
-          where: { round: event.args.round.toString() },
+          where: { round: Number(event.args.round) },
           update: {},
           create: {
             winner: event.args.winner,
-            round: event.args.round.toString(),
+            round: Number(event.args.round),
             coins: {
               create:
                 event.args.coins?.map((coin) => ({

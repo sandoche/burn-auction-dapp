@@ -6,6 +6,7 @@ import { fetchAuctionHistory } from '../fetchAuctionHistory';
 import type { AuctionHistory } from '@/types/AuctionHistory';
 import { mockAuctionEndEvents } from './mockedData';
 import { prismaFetchAuctionEvents } from '../prismaFetchAuctionEvents';
+import { EVMOS_DECIMALS } from '@/constants';
 
 vi.mock('../prismaFetchAuctionEvents');
 
@@ -22,7 +23,7 @@ describe('fetchAuctionHistory()', () => {
     vi.mocked(prismaFetchAuctionEvents).mockResolvedValue(
       mockAuctionEndEvents.map((event) => ({
         id: 1, // Add a dummy id
-        round: event.args.round.toString(),
+        round: Number(event.args.round),
         burned: event.args.burned.toString(),
         winner: event.args.winner,
         blockNumber: event.blockNumber.toString(),
@@ -32,6 +33,7 @@ describe('fetchAuctionHistory()', () => {
         logIndex: 0,
         removed: false,
         coins: [], // Add an empty coins array
+        burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
       })),
     );
 
@@ -76,7 +78,7 @@ describe('fetchAuctionHistory()', () => {
     const largeAmount = BigInt('1' + '0'.repeat(50)); // 1 followed by 50 zeros
     vi.mocked(prismaFetchAuctionEvents).mockResolvedValue([
       {
-        round: '1',
+        round: 1,
         burned: largeAmount.toString(),
         winner: '0x1234567890123456789012345678901234567890',
         blockNumber: '1000',
@@ -88,6 +90,7 @@ describe('fetchAuctionHistory()', () => {
         blockHash: '0x456...',
         logIndex: 0,
         removed: false,
+        burnedWithoutDecimals: Number(BigInt(largeAmount) / BigInt(10 ** EVMOS_DECIMALS)),
       },
     ]);
 
@@ -106,7 +109,7 @@ describe('fetchAuctionHistory()', () => {
   it('should return paginated auction history', async () => {
     const mockData = mockAuctionEndEvents.map((event) => ({
       id: 1,
-      round: event.args.round.toString(),
+      round: Number(event.args.round),
       burned: event.args.burned.toString(),
       winner: event.args.winner,
       blockNumber: event.blockNumber.toString(),
@@ -116,6 +119,7 @@ describe('fetchAuctionHistory()', () => {
       logIndex: 0,
       removed: false,
       coins: [],
+      burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
     }));
 
     vi.mocked(prismaFetchAuctionEvents).mockResolvedValue(mockData.slice(0, 1));
