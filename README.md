@@ -66,6 +66,8 @@ To index blockchain events into the database, you can use the following endpoint
 
 These endpoints will index events from the block number specified in `process.env.FIRST_AUCTION_BLOCK` to the latest block number in batches of 10000 blocks.
 
+In order to have the dApp work properly you will need a cron job to call these indexing endpoints ideally at every block, in practice every 30 seconds should be enough.
+
 ## Community
 
 The following chat channels and forums are a great spot to ask questions about Evmos:
