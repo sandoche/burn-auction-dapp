@@ -16,16 +16,17 @@ export async function GET() {
       },
     });
 
-    let fromBlock = latestEvent ? latestEvent.blockNumber + BigInt(1) : FIRST_AUCTION_BLOCK;
+    let fromBlock = latestEvent ? BigInt(latestEvent.blockNumber) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
     let toBlock = BigInt(fromBlock) + BigInt(10000);
 
-    while (BigInt(fromBlock) <= latestBlock) {
-      if (toBlock > latestBlock) {
-        toBlock = latestBlock;
-      }
+    Log().info(`Fetching auction end events initial target: ${fromBlock} to block ${toBlock}; latest block: ${latestBlock}`);
 
-      const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), BigInt(toBlock) > latestBlock ? BigInt(toBlock) : 'latest');
+    while (BigInt(fromBlock) <= latestBlock) {
+      const toBlockOrLatest = BigInt(toBlock) <= latestBlock ? BigInt(toBlock) : 'latest';
+
+      Log().info(`Fetching auction end events from block ${fromBlock} to block ${toBlockOrLatest}`);
+      const auctionEndEvents = await rpcFetchAuctionEnd(BigInt(fromBlock), toBlockOrLatest);
 
       for (const event of auctionEndEvents) {
         await prisma.auctionEndEvent.create({
