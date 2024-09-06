@@ -13,7 +13,7 @@ datasource db {
 model AuctionEndEvent {
   id               Int      @id @default(autoincrement())
   winner           String
-  round            String
+  round            String   @unique
   coins            Coin[]
   burned           String
   blockNumber      String
@@ -30,7 +30,7 @@ model BidEvent {
   round            String
   amount           String
   blockNumber      String
-  transactionHash  String
+  transactionHash  String   @unique
   transactionIndex Int
   blockHash        String
   logIndex         Int
