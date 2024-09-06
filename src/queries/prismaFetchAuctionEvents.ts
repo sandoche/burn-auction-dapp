@@ -9,7 +9,7 @@ export const prismaFetchAuctionEvents = async (page: number, itemsPerPage: numbe
   const [error, auctionEndEvents] = await E.try(() =>
     prisma.auctionEndEvent.findMany({
       orderBy: {
-        round: 'desc',
+        round: 'asc',
       },
       include: {
         coins: true,

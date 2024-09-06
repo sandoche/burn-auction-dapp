@@ -9,7 +9,7 @@ export const prismaFetchBidEvent = async (round: bigint) => {
   const [error, bidEvents] = await E.try(() =>
     prisma.bidEvent.findMany({
       orderBy: {
-        blockNumber: 'asc',
+        id: 'asc',
       },
       where: {
         round: round.toString(),
