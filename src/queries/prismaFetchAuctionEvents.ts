@@ -4,7 +4,7 @@
 import { prisma } from '@/utilities/prisma';
 import { E } from '@/utilities/error-handling';
 
-export const prismaFetchAuctionEvents = async (page: number, itemsPerPage: number, round: bigint | null = null) => {
+export const prismaFetchAuctionEvents = async (page: number, itemsPerPage: number) => {
   const [error, auctionEndEvents] = await E.try(() =>
     prisma.auctionEndEvent.findMany({
       orderBy: {

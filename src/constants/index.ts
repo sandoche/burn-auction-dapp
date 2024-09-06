@@ -14,3 +14,5 @@ export const UNKNOWN_TOKEN_METADATA_DEFAULT = {
   exponent: 0,
   amountWithDecimals: 0,
 };
+
+export const PAGINATION_ITEMS_PER_PAGE = process.env.PAGINATION_ITEMS_PER_PAGE ? parseInt(process.env.PAGINATION_ITEMS_PER_PAGE) : 10;
