@@ -10,13 +10,11 @@ const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env
 
 export async function GET() {
   try {
-    const latestEvent = await prisma.bidEvent.findFirst({
-      orderBy: {
-        blockNumber: 'desc',
-      },
+    const lastBlockFetched = await prisma.lastBlockFetched.findUnique({
+      where: { eventType: 'BID' },
     });
 
-    let fromBlock = latestEvent ? BigInt(latestEvent.blockNumber) + BigInt(1) : FIRST_AUCTION_BLOCK;
+    let fromBlock = lastBlockFetched ? BigInt(lastBlockFetched.lastBlock) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
     let toBlock = BigInt(fromBlock) + BigInt(10000);
 
@@ -43,6 +41,12 @@ export async function GET() {
           },
         });
       }
+
+      await prisma.lastBlockFetched.upsert({
+        where: { eventType: 'BID' },
+        update: { lastBlock: toBlockOrLatest === 'latest' ? latestBlock.toString() : toBlock.toString() },
+        create: { eventType: 'BID', lastBlock: toBlockOrLatest === 'latest' ? latestBlock.toString() : toBlock.toString() },
+      });
 
       fromBlock = toBlock + BigInt(1);
       toBlock = fromBlock + BigInt(10000);

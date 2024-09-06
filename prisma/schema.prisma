@@ -44,3 +44,15 @@ model Coin {
   auctionEndEvent  AuctionEndEvent  @relation(fields: [auctionEndEventId], references: [id])
   auctionEndEventId Int
 }
+
+model LastBlockFetched {
+  id        Int    @id @default(autoincrement())
+  eventType String @unique
+  lastBlock String
+}
+
+// Not supported by SQLite
+// enum EventType {
+//   AUCTION_END
+//   BID
+// }
