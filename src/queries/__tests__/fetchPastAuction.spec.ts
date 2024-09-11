@@ -12,7 +12,6 @@ import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
 import { fetchAuctionDates } from '../fetchAuctionDates';
 import { fetchPastCryptoPrice } from '../fetchPastCryptoPrice';
 
-
 vi.mock('../prismaFetchAuctionEvent');
 vi.mock('../fetchAuctionDates');
 vi.mock('../fetchPastCryptoPrice');
@@ -53,6 +52,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
@@ -132,6 +132,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
@@ -180,6 +181,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
