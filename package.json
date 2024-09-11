@@ -3,26 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"pnpm dev:next\" \"pnpm dev:dappstore\" \"pnpm dev:indexer\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,js,json}\"",
+    "dev:next": "next dev",
     "dev:dappstore": "dappstore dev --target 3000",
+    "dev:indexer": "tsx run-indexer.ts",
     "prepare": "husky",
     "test": "vitest",
     "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.mts",
     "postinstall": "npm run gen:types",
     "license": "node ./check-license.mjs",
     "license:fix": "node ./check-license.mjs --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prisma:validate": "prisma validate",
+    "prisma:generate": "prisma generate",
+    "prisma:db:push": "prisma db push",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@evmos/dappstore-sdk": "^0.0.6",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@prisma/client": "5.19.1",
     "@xstate/react": "^4.1.1",
     "clsx": "^2.1.1",
+    "cron": "^3.1.7",
     "dappstore": "^0.0.6",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
@@ -41,6 +49,7 @@
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.3.1",
     "chain-token-registry": "github:evmos/chain-token-registry#main",
+    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
@@ -56,9 +65,11 @@
     "lodash-es": "^4.17.21",
     "postcss": "^8",
     "prettier": "3.3.3",
+    "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.17.0",
     "typescript": "^5",
     "vitest": "^2.0.5"
   }
 }
+
