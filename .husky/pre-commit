@@ -1,2 +1,3 @@
 pnpm lint
 pnpm license
+pnpm typecheck
