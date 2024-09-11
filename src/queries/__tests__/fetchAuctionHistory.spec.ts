@@ -5,12 +5,23 @@ import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'v
 import { fetchAuctionHistory } from '../fetchAuctionHistory';
 import type { AuctionHistory } from '@/types/AuctionHistory';
 import { mockAuctionEndEvents } from './mockedData';
-import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
+import * as prismaModule from '../prismaFetchAuctionEvents';
+import { EVMOS_DECIMALS } from '@/constants';
 
-vi.mock('../prismaFetchAuctionEvent');
+// Mock the entire module
+vi.mock('../prismaFetchAuctionEvents');
+
+// Create a typed mock of the prismaFetchAuctionEvents function
+const mockPrismaFetchAuctionEvents = vi.mocked(prismaModule.prismaFetchAuctionEvents);
 
 beforeEach(() => {
-  vi.mocked(prismaFetchAuctionEvent).mockReset();
+  // Reset all mocks before each test
+  vi.resetAllMocks();
+
+  // Set up the mock implementation for prismaFetchAuctionEvents
+  mockPrismaFetchAuctionEvents.mockImplementation(() => Promise.resolve([]));
+  mockPrismaFetchAuctionEvents.count = vi.fn().mockResolvedValue(0);
+  mockPrismaFetchAuctionEvents.totalBurned = vi.fn().mockResolvedValue(0);
 });
 
 afterEach(() => {
@@ -19,10 +30,10 @@ afterEach(() => {
 
 describe('fetchAuctionHistory()', () => {
   it('should return the auction history and the correct total burned amount', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue(
+    mockPrismaFetchAuctionEvents.mockResolvedValue(
       mockAuctionEndEvents.map((event) => ({
         id: 1, // Add a dummy id
-        round: event.args.round.toString(),
+        round: Number(event.args.round),
         burned: event.args.burned.toString(),
         winner: event.args.winner,
         blockNumber: event.blockNumber.toString(),
@@ -32,10 +43,19 @@ describe('fetchAuctionHistory()', () => {
         logIndex: 0,
         removed: false,
         coins: [], // Add an empty coins array
+        burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
       })),
     );
 
-    const result = await fetchAuctionHistory();
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.count.mockResolvedValue(mockAuctionEndEvents.length);
+
+    const expectedTotalBurned = Number(mockAuctionEndEvents.reduce((acc, event) => acc + event.args.burned, BigInt(0)) / BigInt(10 ** EVMOS_DECIMALS));
+
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.totalBurned.mockResolvedValue(expectedTotalBurned);
+
+    const result = await fetchAuctionHistory(1, 10);
 
     expect(result).toBeDefined();
     expectTypeOf(result).toMatchTypeOf<AuctionHistory>();
@@ -44,10 +64,10 @@ describe('fetchAuctionHistory()', () => {
     expect(result.history[0].round).toBe(BigInt(3));
     expect(result.history[1].round).toBe(BigInt(1));
 
-    // Calculate the expected total burned amount
-    const expectedTotalBurned = mockAuctionEndEvents.reduce((acc, event) => acc + event.args.burned, BigInt(0));
+    // Check if the totalItems matches the mock data length
+    expect(result.totalItems).toBe(mockAuctionEndEvents.length);
 
-    // Check if the totalBurned matches the sum of all burned amounts
+    // Check if the totalBurned matches the mocked value
     expect(result.totalBurned).toBe(expectedTotalBurned);
 
     // Check if the history length matches the mock data
@@ -64,42 +84,63 @@ describe('fetchAuctionHistory()', () => {
   });
 
   it('should return an empty history and zero total burned amount when there are no events', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([]);
+    mockPrismaFetchAuctionEvents.mockResolvedValue([]);
 
-    const result = await fetchAuctionHistory();
+    const result = await fetchAuctionHistory(1, 10);
 
     expect(result.history).toEqual([]);
-    expect(result.totalBurned).toBe(BigInt(0));
-  });
-
-  it('should handle very large burned amounts without losing precision', async () => {
-    const largeAmount = BigInt('1' + '0'.repeat(50)); // 1 followed by 50 zeros
-    vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
-      {
-        round: '1',
-        burned: largeAmount.toString(),
-        winner: '0x1234567890123456789012345678901234567890',
-        blockNumber: '1000',
-        coins: [], // Add this line
-        // Add other required properties
-        id: 1,
-        transactionHash: '0x123...',
-        transactionIndex: 0,
-        blockHash: '0x456...',
-        logIndex: 0,
-        removed: false,
-      },
-    ]);
-
-    const result = await fetchAuctionHistory();
-
-    expect(result.history[0].amountInEvmos).toBe(largeAmount);
-    expect(result.totalBurned).toBe(largeAmount);
+    expect(result.totalBurned).toBe(0);
   });
 
   it('should throw an error when prismaFetchAuctionEvent fails', async () => {
-    vi.mocked(prismaFetchAuctionEvent).mockRejectedValue(new Error('Database error'));
+    mockPrismaFetchAuctionEvents.mockRejectedValue(new Error('Database error'));
 
-    await expect(fetchAuctionHistory()).rejects.toThrow('Database error');
+    await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Database error');
+  });
+
+  it('should return paginated auction history', async () => {
+    const mockData = mockAuctionEndEvents.map((event) => ({
+      id: 1,
+      round: Number(event.args.round),
+      burned: event.args.burned.toString(),
+      winner: event.args.winner,
+      blockNumber: event.blockNumber.toString(),
+      transactionHash: '0x123...',
+      transactionIndex: 0,
+      blockHash: '0x456...',
+      logIndex: 0,
+      removed: false,
+      coins: [],
+      burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
+    }));
+
+    mockPrismaFetchAuctionEvents.mockResolvedValue(mockData.slice(0, 1));
+
+    const result = await fetchAuctionHistory(1, 1);
+
+    expect(result.history.length).toBe(1);
+    expect(result.history[0].round).toBe(mockAuctionEndEvents[0].args.round);
+  });
+
+  it('should handle errors when fetching total items', async () => {
+    mockPrismaFetchAuctionEvents.mockResolvedValue([]);
+
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.count.mockRejectedValue(new Error('Count error'));
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.totalBurned.mockResolvedValue(0);
+
+    await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Count error');
+  });
+
+  it('should handle errors when fetching total burned', async () => {
+    mockPrismaFetchAuctionEvents.mockResolvedValue([]);
+
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.count.mockResolvedValue(0);
+    // @ts-ignore
+    mockPrismaFetchAuctionEvents.totalBurned.mockRejectedValue(new Error('Total burned error'));
+
+    await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Total burned error');
   });
 });

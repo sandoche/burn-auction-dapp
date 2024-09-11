@@ -7,6 +7,7 @@ import { viemPublicClient } from '@/utilities/viem';
 import { Log } from '@/utilities/logger';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
+const BATCH_SIZE = BigInt(10000);
 
 export async function GET() {
   try {
@@ -16,7 +17,7 @@ export async function GET() {
 
     let fromBlock = lastBlockFetched ? BigInt(lastBlockFetched.lastBlock) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
-    let toBlock = BigInt(fromBlock) + BigInt(10000);
+    let toBlock = BigInt(fromBlock) + BATCH_SIZE;
     let count = 0;
 
     Log().info(`Fetching bid events initial target: ${fromBlock} to block ${toBlock}; latest block: ${latestBlock}`);
@@ -53,7 +54,7 @@ export async function GET() {
       });
 
       fromBlock = toBlock + BigInt(1);
-      toBlock = fromBlock + BigInt(10000);
+      toBlock = fromBlock + BATCH_SIZE;
     }
 
     return Response.json({ message: 'Bid events indexed successfully', count }, { status: 200 });

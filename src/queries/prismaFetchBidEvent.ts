@@ -3,12 +3,13 @@
 
 import { prisma } from '@/utilities/prisma';
 import { E } from '@/utilities/error-handling';
+import { Log } from '@/utilities/logger';
 
 export const prismaFetchBidEvent = async (round: bigint) => {
   const [error, bidEvents] = await E.try(() =>
     prisma.bidEvent.findMany({
       orderBy: {
-        blockNumber: 'asc',
+        id: 'asc',
       },
       where: {
         round: round.toString(),
@@ -17,7 +18,7 @@ export const prismaFetchBidEvent = async (round: bigint) => {
   );
 
   if (error) {
-    console.error('Error fetching bid events:', error);
+    Log().error('Error fetching bid events:', error);
     throw error;
   }
 

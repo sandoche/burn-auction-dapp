@@ -11,17 +11,18 @@ datasource db {
 }
 
 model AuctionEndEvent {
-  id               Int     @id @default(autoincrement())
-  winner           String
-  round            String  @unique
-  coins            Coin[]
-  burned           String
-  blockNumber      String
-  transactionHash  String
-  transactionIndex Int
-  blockHash        String
-  logIndex         Int
-  removed          Boolean
+  id                    Int     @id @default(autoincrement())
+  winner                String
+  round                 Int     @unique
+  coins                 Coin[]
+  burned                String
+  burnedWithoutDecimals Int
+  blockNumber           String
+  transactionHash       String
+  transactionIndex      Int
+  blockHash             String
+  logIndex              Int
+  removed               Boolean
 }
 
 model BidEvent {

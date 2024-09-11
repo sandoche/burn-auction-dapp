@@ -5,8 +5,10 @@ import { prisma } from '@/utilities/prisma';
 import { rpcFetchAuctionEnd } from '@/queries/rpcFetchAuctionEnd';
 import { viemPublicClient } from '@/utilities/viem';
 import { Log } from '@/utilities/logger';
+import { EVMOS_DECIMALS } from '@/constants';
 
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
+const BATCH_SIZE = BigInt(10000);
 
 export async function GET() {
   try {
@@ -16,7 +18,7 @@ export async function GET() {
 
     let fromBlock = lastBlockFetched ? BigInt(lastBlockFetched.lastBlock) + BigInt(1) : FIRST_AUCTION_BLOCK;
     const latestBlock = await viemPublicClient.getBlockNumber();
-    let toBlock = BigInt(fromBlock) + BigInt(10000);
+    let toBlock = BigInt(fromBlock) + BATCH_SIZE;
     let count = 0;
 
     Log().info(`Fetching auction end events initial target: ${fromBlock} to block ${toBlock}; latest block: ${latestBlock}`);
@@ -29,11 +31,11 @@ export async function GET() {
 
       for (const event of auctionEndEvents) {
         await prisma.auctionEndEvent.upsert({
-          where: { round: event.args.round.toString() },
+          where: { round: Number(event.args.round) },
           update: {},
           create: {
             winner: event.args.winner,
-            round: event.args.round.toString(),
+            round: Number(event.args.round),
             coins: {
               create:
                 event.args.coins?.map((coin) => ({
@@ -43,6 +45,7 @@ export async function GET() {
             },
             burned: event.args.burned.toString(),
             blockNumber: event.blockNumber.toString(),
+            burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,
             blockHash: event.blockHash,
@@ -60,7 +63,7 @@ export async function GET() {
       });
 
       fromBlock = toBlock + BigInt(1);
-      toBlock = fromBlock + BigInt(10000);
+      toBlock = fromBlock + BATCH_SIZE;
     }
 
     return Response.json({ message: 'Auction end events indexed successfully', count }, { status: 200 });

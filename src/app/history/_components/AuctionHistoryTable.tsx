@@ -49,7 +49,7 @@ export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: Auctio
               </a>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <Link href={`/history/${auction.round}`} className="text-evmos-primary hover:text-evmos-primary-light">
+              <Link href={`/auction/${auction.round}`} className="text-evmos-primary hover:text-evmos-primary-light">
                 <Image src="/icons/eye.svg" alt="Evmos Icon" width={20} height={20} />
               </Link>
             </td>

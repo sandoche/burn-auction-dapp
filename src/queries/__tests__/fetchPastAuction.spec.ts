@@ -4,11 +4,11 @@
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 import { fetchPastAuction } from '../fetchPastAuction';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
-import { mockAuctionEndEventsRound3 } from './mockedData';
 import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
 import { fetchAuctionDates } from '../fetchAuctionDates';
 import { fetchPastCryptoPrice } from '../fetchPastCryptoPrice';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
+import { EVMOS_DECIMALS } from '@/constants';
 
 vi.mock('../prismaFetchAuctionEvent');
 vi.mock('../fetchAuctionDates');
@@ -30,7 +30,7 @@ describe('fetchPastAuction()', () => {
   it('should return the past auction info of type AuctionDetailed', async () => {
     const mockAuctionEvent = {
       id: 1,
-      round: '3',
+      round: 3,
       burned: '1000000000000000000',
       winner: '0x1234567890123456789012345678901234567890',
       blockNumber: '1000',
@@ -43,6 +43,7 @@ describe('fetchPastAuction()', () => {
         { denom: 'uatom', amount: '1000000', id: 1, auctionEndEventId: 1 },
         { denom: 'wbtc-satoshi', amount: '100000000', id: 2, auctionEndEventId: 1 },
       ],
+      burnedWithoutDecimals: Number(BigInt(1000000000000000000) / BigInt(10 ** EVMOS_DECIMALS)),
     };
 
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
@@ -111,7 +112,7 @@ describe('fetchPastAuction()', () => {
   it('should handle unknown tokens correctly', async () => {
     const mockAuctionEvent = {
       id: 1,
-      round: '4',
+      round: 4,
       burned: '2000000000000000000',
       winner: '0x1234567890123456789012345678901234567890',
       blockNumber: '2000',
@@ -121,6 +122,7 @@ describe('fetchPastAuction()', () => {
       logIndex: 0,
       removed: false,
       coins: [{ denom: 'unknown-token', amount: '1000000' }],
+      burnedWithoutDecimals: Number(BigInt(2000000000000000000) / BigInt(10 ** EVMOS_DECIMALS)),
     };
 
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
@@ -158,7 +160,7 @@ describe('fetchPastAuction()', () => {
   it('should throw an error when fetchChainRegistryDir fails', async () => {
     const mockAuctionEvent = {
       id: 1,
-      round: '6',
+      round: 6,
       burned: '3000000000000000000',
       winner: '0x1234567890123456789012345678901234567890',
       blockNumber: '3000',
@@ -168,6 +170,7 @@ describe('fetchPastAuction()', () => {
       logIndex: 0,
       removed: false,
       coins: [{ denom: 'uatom', amount: '1000000' }],
+      burnedWithoutDecimals: Number(BigInt(3000000000000000000) / BigInt(10 ** EVMOS_DECIMALS)),
     };
 
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
