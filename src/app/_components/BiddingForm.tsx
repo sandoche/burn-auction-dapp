@@ -13,8 +13,9 @@ import { viemPublicClient } from '@/utilities/viem';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { Tooltip } from '@/components/ui/Tooltip';
 
-export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
+export const BiddingForm = ({ evmosToUsdRate, priceError }: { evmosToUsdRate: number; priceError: boolean }) => {
   const [state, send] = useMachine(biddingStateMachine);
 
   dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
@@ -77,8 +78,13 @@ export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
             {state.matches('submitting') ? <LoadingSpinner /> : 'Bid'}
           </button>
         </div>
-        <div className="flex justify-between mt-2">
-          {Number(state.context.bidAmount) > 0 && <span className="text-evmos-lightish text-sm">≈ ${(Number(state.context.bidAmount) * evmosToUsdRate).toFixed(2)}</span>}
+        <div className="flex mt-2">
+          {Number(state.context.bidAmount) > 0 && <span className="text-evmos-lightish text-sm mr-2">≈ ${(Number(state.context.bidAmount) * evmosToUsdRate).toFixed(2)}</span>}
+          {Number(state.context.bidAmount) > 0 && priceError && (
+            <Tooltip content="Evmos price could not be fetched from Coingecko" extraClasses="-mt-12 -translate-x-2">
+              <Image src="/icons/info.svg" alt="Info" width={20} height={20} />
+            </Tooltip>
+          )}
         </div>
       </form>
       {errorMessage && <div className="text-evmos-error text-sm mt-2">{errorMessage}</div>}

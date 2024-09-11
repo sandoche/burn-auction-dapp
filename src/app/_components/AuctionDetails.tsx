@@ -119,7 +119,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
             </a>
           )}
         </p>
-        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} />}</div>
+        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} priceError={auction.hasPriceError} />}</div>
         <BiddingHistory round={round.round} />
       </section>
     </main>
