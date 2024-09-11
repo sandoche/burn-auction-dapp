@@ -11,7 +11,9 @@ export const prismaFetchAuctionEvent = async (round: bigint) => {
         round: 'asc',
       },
       where: {
-        round: Number(round),
+        where: {
+          round: BigInt(round),
+        },
       },
       include: {
         coins: true,
