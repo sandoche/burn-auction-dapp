@@ -7,6 +7,7 @@ import { Log } from '@/utilities/logger';
 type CryptoPrice = {
   [key: string]: {
     usd: number;
+    error?: boolean;
   };
 };
 
@@ -32,7 +33,7 @@ export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPric
 
   if (error) {
     Log().error('Error fetching crypto price:', error);
-    throw error;
+    return Object.fromEntries(ids.map((id) => [id, { usd: 0, error: true }]));
   }
 
   const price = await result.json();

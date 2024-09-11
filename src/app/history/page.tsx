@@ -6,24 +6,19 @@ import Image from 'next/image';
 import { fetchAuctionHistory } from '@/queries/fetchAuctionHistory';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
+import { HistoryContent } from './_components/HistoryContent';
+import { fetchAuctionHistory } from '@/queries/fetchAuctionHistory';
+import { PAGINATION_ITEMS_PER_PAGE } from '@/constants';
 
 import { AuctionHistoryTable } from './_components/AuctionHistoryTable';
 
 const History = async () => {
-  const auctionHistory = await fetchAuctionHistory();
+  const auctionHistory = await fetchAuctionHistory(1, PAGINATION_ITEMS_PER_PAGE);
+  const totalItems = auctionHistory.totalItems;
+  const itemsPerPage = PAGINATION_ITEMS_PER_PAGE;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  return (
-    <section className="mb-10">
-      <h1 className="text-3xl mb-6 font-bold">History</h1>
-      <section className="mb-12">
-        <h2 className="text-evmos-lightish mb-1">Total amount burned 🔥</h2>
-        <p className="text-3xl mb-6 font-semibold flex">
-          <span className="mr-2">{formatUnits(auctionHistory.totalBurned, EVMOS_DECIMALS, 2)}</span> <Image src="/icons/evmos.svg" alt="Evmos Icon" width={32} height={32} />
-        </p>
-        <AuctionHistoryTable auctionHistory={auctionHistory} />
-      </section>
-    </section>
-  );
+  return <HistoryContent auctionHistory={auctionHistory} pageNumber={totalPages} />;
 };
 
 export default History;

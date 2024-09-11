@@ -1,15 +1,19 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
+
+import { prismaFetchBidEvent } from './prismaFetchBidEvent';
+import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { BiddingHistory } from '@/types/BiddingHistory';
+import { HexAddress } from '@/types/HexAddress';
 
 import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 import { rpcFetchBiddingHistory } from './rpcFetchBiddingHistory';
 
 export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory> => {
-  const [error, biddingEvents] = await E.try(() => rpcFetchBiddingHistory(round));
+  const [error, biddingEvents] = await E.try(() => prismaFetchBidEvent(round));
 
   if (error) {
     Log().error('Error fetching events date:', error);
@@ -18,11 +22,11 @@ export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory
 
   const biddingHistory: BiddingHistory = biddingEvents.map((event) => {
     return {
-      bidder: event.args.sender,
-      amount: event.args.amount,
+      bidder: event.sender as HexAddress,
+      amount: BigInt(event.amount),
       time: new Date(), // to fix
-      transactionHash: event.transactionHash,
-      blockNumber: event.blockNumber,
+      transactionHash: event.transactionHash as HexAddress,
+      blockNumber: BigInt(event.blockNumber),
     };
   });
 

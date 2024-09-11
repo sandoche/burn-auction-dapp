@@ -21,9 +21,10 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-describe('rpcFetchBiddingHistory(round)', async () => {
+describe('rpcFetchBiddingHistory(from, to)', async () => {
   it('should return the Bids for a given round number', async () => {
-    const result = await rpcFetchBiddingHistory(BigInt(1));
+    const result = await rpcFetchBiddingHistory(BigInt(1), BigInt(3));
     expect(result).toBeDefined();
+    expect(result.length).toEqual(3);
   });
 });

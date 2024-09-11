@@ -14,6 +14,7 @@ export type AuctionDetailed = {
   auction: {
     assets: AuctionnedAsset[];
     totalValue: number;
+    hasPriceError: boolean;
   };
   highestBid: {
     bidInEvmos: bigint;

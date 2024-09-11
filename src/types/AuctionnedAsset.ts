@@ -11,4 +11,5 @@ export type AuctionnedAsset = {
   amountWithDecimals: number;
   valueInUsd: number;
   iconUrl: string;
+  priceError?: boolean;
 };

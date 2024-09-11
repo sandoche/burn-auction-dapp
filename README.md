@@ -39,8 +39,12 @@ cp .env.example .env
 ### Development
 
 ```bash
-pnpm dev
+pnpm dev # to run all the services (next, dappstore, indexer)
+
+# or run each service separately
+pnpm dev:next # to run only the next.js app
 pnpm dev:dappstore # to run the dappstore sdk preview that handles the wallet connection
+pnpm dev:indexer # to run the indexer that indexes the blockchain events into the database
 ```
 
 ### Build
@@ -52,6 +56,17 @@ pnpm build
 ### Test with a local node
 
 Follow the instructions described in this issue in order to run a local node with the Burn Auction module enabled: https://github.com/evmos/burn-auction-dapp/issues/5
+
+### Indexing Endpoints
+
+To index blockchain events into the database, you can use the following endpoints:
+
+- `/api/v1/indexer/bid-events`: Indexes bid events from the blockchain to the database.
+- `/api/v1/indexer/auction-end-events`: Indexes auction end events from the blockchain to the database.
+
+These endpoints will index events from the block number specified in `process.env.FIRST_AUCTION_BLOCK` to the latest block number in batches of 10000 blocks.
+
+In order to have the dApp work properly you will need a cron job to call these indexing endpoints ideally at every block, in practice every 30 seconds should be enough.
 
 ## Community
 

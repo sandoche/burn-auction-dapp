@@ -3,6 +3,7 @@
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 
+import { fetchCurrentAuction } from '../fetchCurrentAuction';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 
 import { fetchCurrentAuction } from '../fetchCurrentAuction';

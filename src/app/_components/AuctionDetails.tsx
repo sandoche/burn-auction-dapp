@@ -18,6 +18,12 @@ import { Countdown } from './Countdown';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
 
+import { EVMOS_DECIMALS } from '@/constants';
+import { ButtonLink } from '@/components/ui/ButtonLink';
+import Image from 'next/image';
+import { Tooltip } from '@/components/ui/Tooltip';
+import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
+
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;
 
@@ -82,12 +88,19 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
       </section>
       <section className="mb-12">
         <h2 className="text-evmos-lightish mb-1">{round.isLast ? 'Current total auctioned value' : 'Total auctioned value'}</h2>
-        <p className="text-3xl mb-6 font-semibold">
-          {auction.totalValue.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          })}
-        </p>
+        <div className="flex items-center mb-6">
+          <span className="text-3xl font-semibold mr-2">
+            {auction.totalValue.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          </span>
+          {auction.hasPriceError && (
+            <Tooltip content="Some prices could not be fetched from Coingecko" extraClasses="-mt-12 -translate-x-2">
+              <Image src="/icons/info.svg" alt="Info" width={20} height={20} />
+            </Tooltip>
+          )}
+        </div>
         <AssetsTable assets={auction.assets} />
       </section>
       <section>

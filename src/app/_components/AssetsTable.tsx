@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import type { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { formatUnits } from '@/utilities/formatUnits';
+import { Tooltip } from '@/components/ui/Tooltip';
 
 export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
   return (
@@ -43,13 +44,20 @@ export const AssetsTable = ({ assets }: { assets: AuctionnedAsset[] }) => {
               </div>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <span className="text-evmos-lightish">{formatUnits(asset.amount, asset.exponent, 2)}</span>
-              <span className="text-evmos-lightish opacity-70 text-sm ml-2">
-                {asset.valueInUsd.toLocaleString('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                })}
-              </span>
+              <p className="text-evmos-lightish">{formatUnits(asset.amount, asset.exponent, 2)}</p>
+              <div className="text-evmos-lightish text-sm flex items-center">
+                <span className="opacity-70">
+                  {asset.valueInUsd.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </span>
+                {asset.priceError && (
+                  <Tooltip content="We could not fetch the price of this asset">
+                    <Image src="/icons/info.svg" alt="warning" width="16" height="16" className="ml-1" />
+                  </Tooltip>
+                )}
+              </div>
             </td>
           </tr>
         ))}
