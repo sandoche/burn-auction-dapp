@@ -1,4 +1,4 @@
-# Steps
+# Develop with local node
 
 ## Start local chain
 
