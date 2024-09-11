@@ -12,6 +12,7 @@ type CryptoPrice = {
 };
 
 const MOCK_COINGECKO_API = process.env.MOCK_COINGECKO_API === 'true';
+const STATUS_OK = 200;
 
 export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPrice> => {
   // To avoid hitting the rate limit of the Coingecko API
@@ -31,7 +32,7 @@ export const fetchCurrentCryptoPrice = async (ids: string[]): Promise<CryptoPric
   const [error, result] = await E.try(() => fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coingeckoIds}&vs_currencies=usd`, { next: { revalidate: 60 } }));
   Log().info('Fetching crypto price:', coingeckoIds);
 
-  if (error) {
+  if (error || result.status !== STATUS_OK) {
     Log().error('Error fetching crypto price:', error);
     return Object.fromEntries(ids.map((id) => [id, { usd: 0, error: true }]));
   }
