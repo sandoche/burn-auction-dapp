@@ -1,5 +1,3 @@
-🚧 Work in progress, not ready for production 🚧
-
 <div align="center">
   <h1> Evmos Burn Auction Instant dApp </h1>
 </div>
@@ -31,6 +29,8 @@ Pre-requisites:
 
 ```bash
 pnpm install
+
+pnpm prisma:db:push
 
 cp .env.example .env
 # edit the .env file with your own values
