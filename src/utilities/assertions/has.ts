@@ -7,5 +7,5 @@ export const has = <T extends Record<string, unknown>>(
   obj: unknown,
   property: keyof T,
 ): obj is {
-  [key in keyof T]: unknown;
+  [key in keyof T]: unknown; // eslint-disable-line no-unused-vars
 } => isObject(obj) && property in obj;

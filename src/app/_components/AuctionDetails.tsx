@@ -1,16 +1,23 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
+import Image from 'next/image';
+
 import { Chip } from '@/components/ui/Chip';
 import { StatusIndicatorIcon } from '@/components/icons/StatusIndicatorIcon';
+import type { AuctionDetailed } from '@/types/AuctionDetailed';
+import { formatUnits } from '@/utilities/formatUnits';
+import { EVMOS_DECIMALS } from '@/constants';
+import { ButtonLink } from '@/components/ui/ButtonLink';
+import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
+
 import { AssetsTable } from './AssetsTable';
 import { BiddingHistory } from './BiddingHistory';
 import { BiddingForm } from './BiddingForm';
-import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { Countdown } from './Countdown';
-import { formatUnits } from '@/utilities/formatUnits';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
+
 import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import Image from 'next/image';

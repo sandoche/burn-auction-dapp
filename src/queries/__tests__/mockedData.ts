@@ -3,6 +3,8 @@
 
 import type { AuctionInfo } from '@/types/AuctionInfo';
 
+/* eslint-disable no-magic-numbers */
+
 export const mockBiddingHistoryResponse = [
   {
     eventName: 'Bid',

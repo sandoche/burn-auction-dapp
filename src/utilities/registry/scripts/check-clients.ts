@@ -2,9 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { get } from 'lodash-es';
+import { Log } from 'helpers';
+
 import { readFiles } from './readFiles';
 import { ChainRegistry } from './types/chain';
-import { Log } from 'helpers';
 
 const chains = await readFiles<ChainRegistry>('node_modules/chain-token-registry/chainConfig/*.json');
 const url = 'https://g.w.lavanet.xyz:443/gateway/evmos/rest/ef1ad852a77275e1eeef6c7972370118';

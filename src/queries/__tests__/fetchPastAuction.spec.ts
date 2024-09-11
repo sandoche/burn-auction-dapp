@@ -2,8 +2,11 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
-import { fetchPastAuction } from '../fetchPastAuction';
+
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
+
+import { fetchPastAuction } from '../fetchPastAuction';
+import { mockCoinGeckoResponse, mockAuctionResponse, epochInfoResponse, mockAuctionEndEventsRound3 } from './mockedData';
 import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
 import { fetchAuctionDates } from '../fetchAuctionDates';
 import { fetchPastCryptoPrice } from '../fetchPastCryptoPrice';
@@ -189,6 +192,12 @@ describe('fetchPastAuction()', () => {
     });
     vi.mocked(fetchChainRegistryDir).mockRejectedValue(new Error('Failed to fetch chain registry'));
 
+describe('fetchPastAuction(5)', async () => {
+  it('should return the current auction info of type AuctionDetailed', async () => {
+    // eslint-disable-next-line no-magic-numbers
+    const result = await fetchPastAuction(BigInt(40));
+    expect(result).toBeDefined();
+    expectTypeOf(result).toMatchTypeOf<AuctionDetailed>();
     await expect(fetchPastAuction(BigInt(6))).rejects.toThrow('Failed to fetch chain registry');
   });
 });

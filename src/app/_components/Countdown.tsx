@@ -13,6 +13,8 @@ type TimeLeft = {
   seconds: number;
 };
 
+const REFRESH_INTERVAL = 1000;
+
 const calculateTimeLeft = (date: Date): TimeLeft => {
   const difference = +date - +new Date();
   let timeLeft = {
@@ -24,10 +26,12 @@ const calculateTimeLeft = (date: Date): TimeLeft => {
 
   if (difference > 0) {
     timeLeft = {
+      /* eslint-disable no-magic-numbers */
       days: Math.floor(difference / (1000 * 60 * 60 * 24)),
       hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
       minutes: Math.floor((difference / 1000 / 60) % 60),
       seconds: Math.floor((difference / 1000) % 60),
+      /* eslint-enable no-magic-numbers */
     };
   }
 
@@ -56,6 +60,7 @@ export const Countdown = ({ date }: { date: Date }) => {
         }, 5000);
       }
     }, 1000);
+    
     return () => {
       clearInterval(interval);
     };

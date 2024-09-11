@@ -6,8 +6,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Suspense } from 'react';
-import { BiddingHistoryData } from './BiddingHistoryData';
+
 import { SkeletonBlob } from '@/components/ui/Skeleton';
+
+import { BiddingHistoryData } from './BiddingHistoryData';
 
 dayjs.extend(relativeTime);
 

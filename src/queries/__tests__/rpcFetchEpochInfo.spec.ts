@@ -2,8 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
-import { rpcFetchEpochInfo } from '../rpcFetchEpochInfo';
+
 import { EpochResponse } from '@/types/EpochInfo';
+
+import { rpcFetchEpochInfo } from '../rpcFetchEpochInfo';
 import { epochInfoResponse } from './mockedData';
 
 beforeEach(() => {

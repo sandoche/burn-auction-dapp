@@ -1,5 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["import", "unused-imports", "typescript-sort-keys"],
   "rules": {
     "import/order": [
       "error",

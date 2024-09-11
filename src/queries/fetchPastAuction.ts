@@ -7,8 +7,9 @@ import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
-import { fetchAuctionDates } from './fetchAuctionDates';
 import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
+import { fetchAuctionDates } from './fetchAuctionDates';
+import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 import { fetchPastCryptoPrice } from './fetchPastCryptoPrice';
 import { prismaFetchAuctionEvent } from './prismaFetchAuctionEvent';
 import type { HexAddress } from '@/types/HexAddress';
@@ -49,6 +50,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     },
     highestBid: {
       bidInEvmos: BigInt(roundData.burned),
+      /* eslint-disable-next-line no-magic-numbers */
       bidInEvmosWithDecimals: Number(roundData.burned) / 10 ** EVMOS_DECIMALS,
       bidderAddress: roundData.winner as HexAddress,
       bidInUsd: 0,
@@ -78,6 +80,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     }
 
     const exponent = Number(tokenMetadata.exponent);
+    /* eslint-disable-next-line no-magic-numbers */
     const amountWithDecimals = Number(token.amount) / 10 ** exponent;
 
     const [errorFromFetchPastCryptoPrice, price] = await E.try(() => fetchPastCryptoPrice(tokenMetadata.coingeckoId, dates.end));

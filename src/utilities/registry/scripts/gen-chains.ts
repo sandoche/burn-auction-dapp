@@ -2,9 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { mkdir, writeFile } from 'fs/promises';
+import { groupBy } from 'lodash-es';
+
 import { ChainRegistry } from './types/chain';
 import { TokenRegistry } from './types/token';
-import { groupBy } from 'lodash-es';
 import { fileHeader } from './constants';
 import { overwrites } from './rpc-overwrites';
 import { readFiles } from './readFiles';
@@ -137,7 +138,8 @@ for (const chainRegistry of chains) {
     cosmosId: configuration.chainId,
     identifier,
     gasPriceStep: chainRegistry.gasPriceStep,
-    evmId: chainRegistry.prefix !== 'evmos' ? null : isTestnet ? 9000 : 9001,
+    // eslint-disable-next-line
+    evmId: chainRegistry.prefix !== 'evmos' ? null : isTestnet ? 9000 : 9001, // eslint-disable-line no-magic-number
     channels:
       // TODO: When we start supporting IBC between other chains, we need to add the proper channels here
       chainRegistry.prefix !== 'evmos' && configuration.source

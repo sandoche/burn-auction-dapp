@@ -2,16 +2,17 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 'use client';
-import { Card } from '@/components/ui/Card';
-import { dappstore } from '@/dappstore-client';
 import { useEffect } from 'react';
 import { useMachine } from '@xstate/react';
+import Image from 'next/image';
+
+import { Card } from '@/components/ui/Card';
+import { dappstore } from '@/dappstore-client';
 import { biddingStateMachine } from '@/app/_state-machines/biddingStateMachine';
 import { viemPublicClient } from '@/utilities/viem';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
-import Image from 'next/image';
 
 export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
   const [state, send] = useMachine(biddingStateMachine);

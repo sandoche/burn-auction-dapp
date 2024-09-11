@@ -2,10 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
+
 import { fetchCurrentAuction } from '../fetchCurrentAuction';
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
-import { mockCoinGeckoResponse, mockAuctionResponse } from './mockedData';
-import { epochInfoResponse } from './mockedData';
+
+import { fetchCurrentAuction } from '../fetchCurrentAuction';
+import { mockCoinGeckoResponse, mockAuctionResponse, epochInfoResponse } from './mockedData';
 
 beforeEach(() => {
   vi.mock('../fetchCurrentCryptoPrice', async (importOriginal) => {

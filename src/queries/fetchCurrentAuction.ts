@@ -7,10 +7,11 @@ import { Log } from '@/utilities/logger';
 import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
+import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
+
 import { fetchCurrentCryptoPrice } from './fetchCurrentCryptoPrice';
 import { rpcFetchCurrentAuctionInfo } from './rpcFetchCurrentAuctionInfo';
 import { fetchAuctionDates } from './fetchAuctionDates';
-import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
 
 export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const [error, auctionInfo] = await E.try(() => rpcFetchCurrentAuctionInfo());
@@ -43,6 +44,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     },
     highestBid: {
       bidInEvmos: auctionInfo.highestBid.amount,
+      /* eslint-disable-next-line no-magic-numbers */
       bidInEvmosWithDecimals: Number(auctionInfo.highestBid.amount) / 10 ** EVMOS_DECIMALS,
       bidderAddress: auctionInfo.bidderAddress,
       bidInUsd: 0,
@@ -75,6 +77,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
       valueInUsd: 0,
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
       exponent: Number(tokenMetadata.exponent),
+      /* eslint-disable-next-line no-magic-numbers */
       amountWithDecimals: Number(token.amount) / 10 ** Number(tokenMetadata.exponent),
     };
   });

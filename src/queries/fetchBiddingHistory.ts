@@ -1,12 +1,16 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
+
 import { prismaFetchBidEvent } from './prismaFetchBidEvent';
 import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { BiddingHistory } from '@/types/BiddingHistory';
 import { HexAddress } from '@/types/HexAddress';
+
+import { rpcFetchBlockDate } from './rpcFetchBlockDate';
+import { rpcFetchBiddingHistory } from './rpcFetchBiddingHistory';
 
 export const fetchBiddingHistory = async (round: bigint): Promise<BiddingHistory> => {
   const [error, biddingEvents] = await E.try(() => prismaFetchBidEvent(round));

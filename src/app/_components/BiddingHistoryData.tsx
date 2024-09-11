@@ -3,10 +3,11 @@
 
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import Image from 'next/image';
+
 import { fetchBiddingHistory } from '@/queries/fetchBiddingHistory';
 import { formatUnits } from '@/utilities/formatUnits';
 import { shortenAddress } from '@/utilities/shortenAddress';
-import Image from 'next/image';
 import { EVMOS_DECIMALS } from '@/constants';
 
 dayjs.extend(relativeTime);

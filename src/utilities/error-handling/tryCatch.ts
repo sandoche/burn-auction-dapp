@@ -4,7 +4,9 @@
 import { Log } from '../logger';
 import { ensureError } from './normalizeError';
 
+// eslint-disable-next-line no-unused-vars
 export function tryCatch<T extends Promise<unknown>>(fn: () => T): Promise<[null, Awaited<T>] | [Error, null]>;
+// eslint-disable-next-line no-unused-vars
 export function tryCatch<T>(fn: () => T): [null, T] | [Error, null];
 export function tryCatch<T>(fn: () => T) {
   try {

@@ -3,6 +3,7 @@
 
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { fetchCurrentAuction } from '@/queries/fetchCurrentAuction';
+
 import { AuctionDetails } from './_components/AuctionDetails';
 import { RefreshHome } from './_components/RefreshHome';
 

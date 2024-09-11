@@ -2,13 +2,16 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 'use client';
-import { bid } from '@/wallet-actions/bid';
 import { parseUnits } from 'viem';
+import { assign, setup, fromPromise } from 'xstate';
+
+import { bid } from '@/wallet-actions/bid';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
-import { assign, setup, fromPromise } from 'xstate';
 import { formatUnits } from '@/utilities/formatUnits';
 import reloadData from '@/app/_actions/reloadData';
+
+const DECIMAL_DISPLAY_FIX = 0.1;
 
 export const biddingStateMachine = setup({
   types: {
@@ -36,7 +39,7 @@ export const biddingStateMachine = setup({
       },
     }),
     setMaxBid: assign({
-      bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1, 0),
+      bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - DECIMAL_DISPLAY_FIX, 0),
       error: () => null,
     }),
     refreshPage: () => {
