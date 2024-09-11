@@ -8,9 +8,16 @@ import { HexAddress } from '@/types/HexAddress';
 
 import { prismaFetchAuctionEvents } from './prismaFetchAuctionEvents';
 
-export const fetchAuctionHistory = async (page: number, itemsPerPage: number): Promise<AuctionHistory> => {
-  const [error, auctionEvents] = await E.try(() => prismaFetchAuctionEvents(page, itemsPerPage));
+export const fetchAuctionHistory = async (page: number | 'last', itemsPerPage: number): Promise<AuctionHistory> => {
+  const [errorTotalItems, totalItems] = await E.try(() => prismaFetchAuctionEvents.count());
+  if (errorTotalItems) {
+    Log().error('Error fetching total items:', errorTotalItems);
+    throw errorTotalItems;
+  }
 
+  const lastPage = Math.ceil(totalItems / itemsPerPage);
+
+  const [error, auctionEvents] = await E.try(() => prismaFetchAuctionEvents(page === 'last' ? lastPage : page, itemsPerPage));
   if (error) {
     Log().error('Error fetching events date:', error);
     throw error;
@@ -24,12 +31,6 @@ export const fetchAuctionHistory = async (page: number, itemsPerPage: number): P
       blockNumber: BigInt(event.blockNumber),
     };
   });
-
-  const [errorTotalItems, totalItems] = await E.try(() => prismaFetchAuctionEvents.count());
-  if (errorTotalItems) {
-    Log().error('Error fetching total items:', errorTotalItems);
-    throw error;
-  }
 
   const [errorTotalBurned, totalBurned] = await E.try(() => prismaFetchAuctionEvents.totalBurned());
   if (errorTotalBurned) {
