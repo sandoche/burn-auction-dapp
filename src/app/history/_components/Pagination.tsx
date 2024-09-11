@@ -17,8 +17,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, itemsPerPage, tota
   return (
     <div className="flex justify-center mt-16">
       {currentPage < totalPages && (
-        <ButtonLink href={`/history/${Number(currentPage) + 1}`} className="bg-transparent">
-          <Image src="/icons/arrow-left.svg" alt="Next" width={20} height={20} />
+        <ButtonLink href={`/history/${Number(currentPage) + 1}`} className="bg-transparent" aria-label="Go to next page">
+          <Image src="/icons/arrow-left.svg" alt="Go to next page" width={20} height={20} />
         </ButtonLink>
       )}
 
@@ -29,8 +29,8 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, itemsPerPage, tota
       ))}
 
       {currentPage > 1 && (
-        <ButtonLink href={`/history/${Number(currentPage) - 1}`} className="bg-transparent">
-          <Image src="/icons/arrow-right.svg" alt="Previous" width={20} height={20} />
+        <ButtonLink href={`/history/${Number(currentPage) - 1}`} className="bg-transparent" aria-label="Go to previous page">
+          <Image src="/icons/arrow-right.svg" alt="Go to previous page" width={20} height={20} />
         </ButtonLink>
       )}
     </div>
