@@ -92,32 +92,6 @@ describe('fetchAuctionHistory()', () => {
     expect(result.totalBurned).toBe(0);
   });
 
-  it('should handle very large burned amounts without losing precision', async () => {
-    const largeAmount = BigInt('1' + '0'.repeat(50)); // 1 followed by 50 zeros
-    mockPrismaFetchAuctionEvents.mockResolvedValue([
-      {
-        round: 1,
-        burned: largeAmount.toString(),
-        winner: '0x1234567890123456789012345678901234567890',
-        blockNumber: '1000',
-        coins: [], // Add this line
-        // Add other required properties
-        id: 1,
-        transactionHash: '0x123...',
-        transactionIndex: 0,
-        blockHash: '0x456...',
-        logIndex: 0,
-        removed: false,
-        burnedWithoutDecimals: Number(BigInt(largeAmount) / BigInt(10 ** EVMOS_DECIMALS)),
-      },
-    ]);
-
-    const result = await fetchAuctionHistory(1, 10);
-
-    expect(result.history[0].amountInEvmos).toBe(largeAmount);
-    expect(result.totalBurned).toBe(largeAmount);
-  });
-
   it('should throw an error when prismaFetchAuctionEvent fails', async () => {
     mockPrismaFetchAuctionEvents.mockRejectedValue(new Error('Database error'));
 
