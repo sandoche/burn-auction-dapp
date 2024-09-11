@@ -51,9 +51,3 @@ model LastBlockFetched {
   eventType String @unique
   lastBlock String
 }
-
-// Not supported by SQLite
-// enum EventType {
-//   AUCTION_END
-//   BID
-// }

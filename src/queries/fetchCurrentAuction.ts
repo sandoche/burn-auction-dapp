@@ -50,6 +50,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     auction: {
       assets: [] as AuctionnedAsset[],
       totalValue: 0,
+      hasPriceError: false,
     },
   };
 
@@ -81,24 +82,25 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const coingeckoIds = currentAuctionInfo.auction.assets.map((asset) => asset.coingeckoId);
   coingeckoIds.push('evmos');
 
-  const [_, prices] = await E.try(() => fetchCurrentCryptoPrice(coingeckoIds));
-
+  const prices = await fetchCurrentCryptoPrice(coingeckoIds);
   Log().info('Prices:', prices);
 
-  if (prices) {
-    currentAuctionInfo.auction.assets = currentAuctionInfo.auction.assets.map((asset) => {
-      if (!asset.coingeckoId) {
-        return asset;
-      }
-
-      asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amountWithDecimals);
-
+  currentAuctionInfo.auction.assets = currentAuctionInfo.auction.assets.map((asset) => {
+    if (!asset.coingeckoId) {
       return asset;
-    });
+    }
 
-    currentAuctionInfo.highestBid.bidInUsd = currentAuctionInfo.highestBid.bidInEvmosWithDecimals * prices['evmos']['usd'];
-  }
+    asset.valueInUsd = prices[asset.coingeckoId]['usd'] * Number(asset.amountWithDecimals);
+    asset.priceError = prices[asset.coingeckoId]['error'];
 
+    if (asset.priceError) {
+      currentAuctionInfo.auction.hasPriceError = true;
+    }
+
+    return asset;
+  });
+
+  currentAuctionInfo.highestBid.bidInUsd = currentAuctionInfo.highestBid.bidInEvmosWithDecimals * prices['evmos']['usd'];
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
 
   Log().info('Current auction info:', currentAuctionInfo);
