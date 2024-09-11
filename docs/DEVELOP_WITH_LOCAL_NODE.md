@@ -318,7 +318,9 @@ remove the bottom 2 and on the first one replace custom with nothing
 ## Load precompile on remix
 
 ![Image](/docs/assets/load-precompile-1.png)
+
 ![Image](/docs/assets/load-precompile-2.png)
+
 ![Image](/docs/assets/load-precompile-3.png)
 
 Deposit line:
