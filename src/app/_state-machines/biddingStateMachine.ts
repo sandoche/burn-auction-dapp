@@ -2,11 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 'use client';
-import { bid } from '@/wallet-actions/bid';
 import { parseUnits } from 'viem';
+import { assign, setup, fromPromise } from 'xstate';
+
+import { bid } from '@/wallet-actions/bid';
 import { EVMOS_DECIMALS } from '@/constants';
 import { HexAddress } from '@/types/HexAddress';
-import { assign, setup, fromPromise } from 'xstate';
 import { formatUnits } from '@/utilities/formatUnits';
 import reloadData from '@/app/_actions/reloadData';
 

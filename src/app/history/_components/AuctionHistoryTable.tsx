@@ -2,11 +2,12 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { formatUnits } from '@/utilities/formatUnits';
 import { AuctionHistory } from '@/types/AuctionHistory';
 import { EVMOS_DECIMALS } from '@/constants';
 import { shortenAddress } from '@/utilities/shortenAddress';
-import Link from 'next/link';
 
 export const AuctionHistoryTable = ({ auctionHistory }: { auctionHistory: AuctionHistory }) => {
   return (

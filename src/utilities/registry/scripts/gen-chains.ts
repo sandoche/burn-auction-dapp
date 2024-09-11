@@ -2,9 +2,10 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import { mkdir, writeFile } from 'fs/promises';
+import { groupBy } from 'lodash-es';
+
 import { ChainRegistry } from './types/chain';
 import { TokenRegistry } from './types/token';
-import { groupBy } from 'lodash-es';
 import { fileHeader } from './constants';
 import { overwrites } from './rpc-overwrites';
 import { readFiles } from './readFiles';

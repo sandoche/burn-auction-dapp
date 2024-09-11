@@ -3,11 +3,11 @@
 
 import { compile } from 'json-schema-to-typescript';
 import { writeFile, rm, mkdir } from 'fs/promises';
-
 import kebabCase from 'lodash-es/kebabCase.js';
 import path from 'path';
-import { autogenDir } from './constants';
 import get from 'lodash-es/get.js';
+
+import { autogenDir } from './constants';
 
 await mkdir(autogenDir, { recursive: true });
 

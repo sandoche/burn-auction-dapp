@@ -3,8 +3,9 @@
 
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
-import { rpcFetchEpochInfo } from './rpcFetchEpochInfo';
 import type { AuctionDates } from '@/types/AuctionDates';
+
+import { rpcFetchEpochInfo } from './rpcFetchEpochInfo';
 import { rpcFetchBlockDate } from './rpcFetchBlockDate';
 
 export const fetchAuctionDates = async (block: bigint | null = null): Promise<AuctionDates> => {

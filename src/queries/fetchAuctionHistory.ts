@@ -1,10 +1,11 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
-import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 import { E } from '@/utilities/error-handling';
 import { Log } from '@/utilities/logger';
 import type { AuctionHistory } from '@/types/AuctionHistory';
+
+import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 
 export const fetchAuctionHistory = async (): Promise<AuctionHistory> => {
   const [error, auctionEvents] = await E.try(() => rpcFetchAuctionEnd());

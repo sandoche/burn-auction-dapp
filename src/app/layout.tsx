@@ -3,6 +3,7 @@
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+
 import './globals.css';
 import { Tabs } from '@/components/ui/Tabs';
 import { FireIcon } from '@/components/icons/FireIcon';

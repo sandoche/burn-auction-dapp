@@ -3,6 +3,7 @@
 
 'use client';
 import { useState, useEffect } from 'react';
+
 import { ProgressBar } from '@/components/ui/ProgressBar';
 
 export const BiddingProgress = ({ startDate, endDate }: { startDate: Date; endDate: Date }) => {

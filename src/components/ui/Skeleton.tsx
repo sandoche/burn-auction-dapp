@@ -1,8 +1,9 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
-import { cn } from '@/utilities/classNames';
 import { ComponentProps } from 'react';
+
+import { cn } from '@/utilities/classNames';
 
 export const Skeleton = ({ className, ...rest }: ComponentProps<'div'>) => {
   return <div className={cn('skeleton [&_.skeleton]:animate-none animate-pulse', className)} {...rest} />;
