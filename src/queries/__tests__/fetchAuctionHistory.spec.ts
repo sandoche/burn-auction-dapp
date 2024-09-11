@@ -30,6 +30,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+/* eslint-disable no-magic-numbers */
 describe('fetchAuctionHistory()', () => {
   it('should return the auction history and the correct total burned amount', async () => {
     mockPrismaFetchAuctionEvents.mockResolvedValue(

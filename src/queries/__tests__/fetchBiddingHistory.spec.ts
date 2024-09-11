@@ -12,6 +12,7 @@ import { rpcFetchBlockDate } from '../rpcFetchBlockDate';
 vi.mock('../prismaFetchBidEvent');
 vi.mock('../rpcFetchBlockDate');
 
+/* eslint-disable no-magic-numbers */
 describe('fetchBiddingHistory(round)', () => {
   beforeEach(() => {
     vi.resetAllMocks();

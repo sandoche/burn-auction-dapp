@@ -15,4 +15,5 @@ export const UNKNOWN_TOKEN_METADATA_DEFAULT = {
   amountWithDecimals: 0,
 };
 
+// eslint-disable-next-line no-magic-numbers
 export const PAGINATION_ITEMS_PER_PAGE = process.env.PAGINATION_ITEMS_PER_PAGE ? parseInt(process.env.PAGINATION_ITEMS_PER_PAGE) : 10;

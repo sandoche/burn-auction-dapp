@@ -21,6 +21,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+/* eslint-disable no-magic-numbers */
 describe('rpcFetchBiddingHistory(from, to)', async () => {
   it('should return the Bids for a given round number', async () => {
     const result = await rpcFetchBiddingHistory(BigInt(1), BigInt(3));
