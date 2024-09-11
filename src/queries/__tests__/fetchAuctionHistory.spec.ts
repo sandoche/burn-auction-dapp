@@ -47,13 +47,15 @@ describe('fetchAuctionHistory()', () => {
       })),
     );
 
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.count.mockResolvedValue(mockAuctionEndEvents.length);
 
     const expectedTotalBurned = Number(mockAuctionEndEvents.reduce((acc, event) => acc + event.args.burned, BigInt(0)) / BigInt(10 ** EVMOS_DECIMALS));
+
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.totalBurned.mockResolvedValue(expectedTotalBurned);
 
     const result = await fetchAuctionHistory(1, 10);
-    console.log(result);
 
     expect(result).toBeDefined();
     expectTypeOf(result).toMatchTypeOf<AuctionHistory>();
@@ -148,7 +150,10 @@ describe('fetchAuctionHistory()', () => {
 
   it('should handle errors when fetching total items', async () => {
     mockPrismaFetchAuctionEvents.mockResolvedValue([]);
+
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.count.mockRejectedValue(new Error('Count error'));
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.totalBurned.mockResolvedValue(0);
 
     await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Count error');
@@ -156,7 +161,10 @@ describe('fetchAuctionHistory()', () => {
 
   it('should handle errors when fetching total burned', async () => {
     mockPrismaFetchAuctionEvents.mockResolvedValue([]);
+
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.count.mockResolvedValue(0);
+    // @ts-ignore
     mockPrismaFetchAuctionEvents.totalBurned.mockRejectedValue(new Error('Total burned error'));
 
     await expect(fetchAuctionHistory(1, 10)).rejects.toThrow('Total burned error');
