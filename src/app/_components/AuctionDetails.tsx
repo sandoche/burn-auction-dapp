@@ -58,7 +58,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
                 </ButtonLink>
               </div>
             )}
-            <h1 className="text-3xl flex font-bold">Auction #{Number(round.round)}</h1>
+            <h1 className="text-3xl flex">Auction #{Number(round.round)}</h1>
           </div>
           {round.isLast && (
             <Chip>
