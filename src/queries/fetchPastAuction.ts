@@ -49,6 +49,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     },
     highestBid: {
       bidInEvmos: roundData.args.burned,
+      /* eslint-disable-next-line no-magic-numbers */
       bidInEvmosWithDecimals: Number(roundData.args.burned) / 10 ** EVMOS_DECIMALS,
       bidderAddress: roundData.args.winner,
       bidInUsd: 0,
@@ -76,6 +77,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     }
 
     const exponent = Number(tokenMetadata.exponent);
+    /* eslint-disable-next-line no-magic-numbers */
     const amountWithDecimals = Number(token.amount) / 10 ** exponent;
     const valueInUsd = (await fetchPastCryptoPrice(tokenMetadata.coingeckoId, dates.end)) * amountWithDecimals;
 

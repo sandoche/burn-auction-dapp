@@ -14,6 +14,7 @@ export const rpcFetchBlockDate = async (blockNumber: bigint): Promise<Date | nul
   }
 
   const timestamp = Number(result.timestamp);
+  // eslint-disable-next-line no-magic-numbers
   const date = new Date(timestamp * 1000);
 
   return date;

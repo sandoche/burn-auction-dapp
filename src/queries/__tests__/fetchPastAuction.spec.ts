@@ -53,6 +53,7 @@ afterEach(() => {
 
 describe('fetchPastAuction(5)', async () => {
   it('should return the current auction info of type AuctionDetailed', async () => {
+    // eslint-disable-next-line no-magic-numbers
     const result = await fetchPastAuction(BigInt(40));
     expect(result).toBeDefined();
     expectTypeOf(result).toMatchTypeOf<AuctionDetailed>();

@@ -138,7 +138,8 @@ for (const chainRegistry of chains) {
     cosmosId: configuration.chainId,
     identifier,
     gasPriceStep: chainRegistry.gasPriceStep,
-    evmId: chainRegistry.prefix !== 'evmos' ? null : isTestnet ? 9000 : 9001,
+    // eslint-disable-next-line
+    evmId: chainRegistry.prefix !== 'evmos' ? null : isTestnet ? 9000 : 9001, // eslint-disable-line no-magic-number
     channels:
       // TODO: When we start supporting IBC between other chains, we need to add the proper channels here
       chainRegistry.prefix !== 'evmos' && configuration.source

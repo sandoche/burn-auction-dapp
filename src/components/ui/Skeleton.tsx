@@ -5,6 +5,8 @@ import { ComponentProps } from 'react';
 
 import { cn } from '@/utilities/classNames';
 
+const DEFAULT_LINES = 5;
+
 export const Skeleton = ({ className, ...rest }: ComponentProps<'div'>) => {
   return <div className={cn('skeleton [&_.skeleton]:animate-none animate-pulse', className)} {...rest} />;
 };
@@ -37,7 +39,7 @@ export const SkeletonLine = ({ className, ...rest }: ComponentProps<'span'>) => 
 };
 const WIDTH_RANDOMIZER = ['after:w-3/4', 'after:w-4/6', 'after:w-5/6', 'after:w-2/3', 'after:w-1/2', 'after:w-1/3'];
 const makeArray = (size: number) => Array.from({ length: size }, (_, i) => i);
-export const SkeletonBlock = ({ lines = 5, ...rest }: { lines?: number } & ComponentProps<'div'>) => {
+export const SkeletonBlock = ({ lines = DEFAULT_LINES, ...rest }: { lines?: number } & ComponentProps<'div'>) => {
   return (
     <Skeleton {...rest}>
       {makeArray(lines).map((_, i) => (

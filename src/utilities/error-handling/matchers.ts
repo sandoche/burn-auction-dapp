@@ -38,6 +38,7 @@ function matchByPattern(error: unknown, pattern: RegExp) {
   if (!isString(error.message)) return false;
   return pattern.test(error.message);
 }
+// eslint-disable-next-line no-unused-vars
 function matchByClass<TClass>(error: unknown, Class: new (...args: any[]) => TClass): error is TClass {
   return error instanceof Class;
 }

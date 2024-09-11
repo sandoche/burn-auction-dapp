@@ -6,6 +6,9 @@ import { useState, useEffect } from 'react';
 
 import { ProgressBar } from '@/components/ui/ProgressBar';
 
+const REFRESH_INTERVAL = 1000;
+const PROGRESS_BAR_MAX = 100;
+
 export const BiddingProgress = ({ startDate, endDate }: { startDate: Date; endDate: Date }) => {
   const [isClient, setIsClient] = useState(false);
   const epochDuration = +endDate - +startDate;
@@ -19,9 +22,9 @@ export const BiddingProgress = ({ startDate, endDate }: { startDate: Date; endDa
   useEffect(() => {
     const interval = setInterval(() => {
       const difference = +endDate - +new Date();
-      const progress = 100 - (difference / epochDuration) * 100;
+      const progress = PROGRESS_BAR_MAX - (difference / epochDuration) * PROGRESS_BAR_MAX;
       setProgress(progress);
-    }, 1000);
+    }, REFRESH_INTERVAL);
     return () => {
       clearInterval(interval);
     };

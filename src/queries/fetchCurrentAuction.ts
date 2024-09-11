@@ -44,6 +44,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     },
     highestBid: {
       bidInEvmos: auctionInfo.highestBid.amount,
+      /* eslint-disable-next-line no-magic-numbers */
       bidInEvmosWithDecimals: Number(auctionInfo.highestBid.amount) / 10 ** EVMOS_DECIMALS,
       bidderAddress: auctionInfo.bidderAddress,
       bidInUsd: 0,
@@ -75,6 +76,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
       valueInUsd: 0,
       iconUrl: tokenMetadata.img.svg ?? tokenMetadata.img.png,
       exponent: Number(tokenMetadata.exponent),
+      /* eslint-disable-next-line no-magic-numbers */
       amountWithDecimals: Number(token.amount) / 10 ** Number(tokenMetadata.exponent),
     };
   });
@@ -82,6 +84,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
   const coingeckoIds = currentAuctionInfo.auction.assets.map((asset) => asset.coingeckoId);
   coingeckoIds.push('evmos');
 
+  // eslint-disable-next-line no-unused-vars
   const [_, prices] = await E.try(() => fetchCurrentCryptoPrice(coingeckoIds));
 
   Log().info('Prices:', prices);

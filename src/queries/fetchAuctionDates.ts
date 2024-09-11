@@ -26,8 +26,10 @@ export const fetchAuctionDates = async (block: bigint | null = null): Promise<Au
   const blockEndDate = block ? await rpcFetchBlockDate(block) : null;
   const epochDuration = parseInt(currentEpoch.duration, 10);
 
+  /* eslint-disable no-magic-numbers */
   const start = blockEndDate ? new Date(blockEndDate.getTime() - epochDuration * 1000) : new Date(currentEpoch.current_epoch_start_time);
   const end = blockEndDate ? blockEndDate : new Date(start.getTime() + epochDuration * 1000);
+  /* eslint-enable no-magic-numbers */
 
   Log().info('Start date:', start);
   Log().info('End date:', end);

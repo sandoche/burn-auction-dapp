@@ -11,6 +11,8 @@ import { HexAddress } from '@/types/HexAddress';
 import { formatUnits } from '@/utilities/formatUnits';
 import reloadData from '@/app/_actions/reloadData';
 
+const DECIMAL_DISPLAY_FIX = 0.1;
+
 export const biddingStateMachine = setup({
   types: {
     context: {} as {
@@ -37,7 +39,7 @@ export const biddingStateMachine = setup({
       },
     }),
     setMaxBid: assign({
-      bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - 0.1, 0),
+      bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - DECIMAL_DISPLAY_FIX, 0),
       error: () => null,
     }),
     refreshPage: () => {

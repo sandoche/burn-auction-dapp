@@ -21,6 +21,7 @@ export const formatUnits = (value: bigint, tokenDecimals: number, mode: 'short' 
   if (mode === 0) {
     return `${negative ? '-' : ''}${integer || '0'}`;
   }
+  // eslint-disable-next-line
   fraction = fraction.slice(0, typeof mode === 'number' ? mode : 7);
   return `${negative ? '-' : ''}${integer || '0'}${fraction ? `.${fraction}` : ''}`;
 };

@@ -33,6 +33,7 @@ describe('rpcFetchAuctionEnd()', async () => {
 
 describe('rpcFetchAuctionEnd(round)', async () => {
   it('should return a specific AuctionEnd event', async () => {
+    // eslint-disable-next-line no-magic-numbers
     const result = await rpcFetchAuctionEnd(BigInt(3));
     expect(result).toBeDefined();
     expect(result.length).toEqual(1);
