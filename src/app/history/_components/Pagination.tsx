@@ -1,9 +1,10 @@
 // Copyright Tharsis Labs Ltd.(Evmos)
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
-import { ButtonLink } from '@/components/ui/ButtonLink';
 import Image from 'next/image';
 import { clsx } from 'clsx';
+
+import { ButtonLink } from '@/components/ui/ButtonLink';
 
 interface PaginationProps {
   currentPage: number;

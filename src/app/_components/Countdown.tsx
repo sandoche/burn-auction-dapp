@@ -3,8 +3,10 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import reloadData from '../_actions/reloadData';
+
 import { Log } from '@/utilities/logger';
+
+import reloadData from '../_actions/reloadData';
 
 type TimeLeft = {
   days: number;
@@ -60,7 +62,7 @@ export const Countdown = ({ date }: { date: Date }) => {
         }, 5000);
       }
     }, 1000);
-    
+
     return () => {
       clearInterval(interval);
     };

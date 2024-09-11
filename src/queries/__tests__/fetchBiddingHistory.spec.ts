@@ -6,8 +6,6 @@ import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'v
 import type { BiddingHistory } from '@/types/BiddingHistory';
 
 import { fetchBiddingHistory } from '../fetchBiddingHistory';
-import { mockBiddingHistoryResponse } from './mockedData';
-import type { BiddingHistory } from '@/types/BiddingHistory';
 import { prismaFetchBidEvent } from '../prismaFetchBidEvent';
 import { rpcFetchBlockDate } from '../rpcFetchBlockDate';
 

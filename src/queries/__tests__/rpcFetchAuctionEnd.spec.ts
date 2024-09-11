@@ -6,7 +6,7 @@ import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'v
 import type { AuctionEndEvent } from '@/types/AuctionEndEvent';
 
 import { rpcFetchAuctionEnd } from '../rpcFetchAuctionEnd';
-import { mockAuctionEndEvents, mockAuctionEndEventsRound3 } from './mockedData';
+import { mockAuctionEndEvents } from './mockedData';
 
 beforeEach(() => {
   vi.mock('../rpcFetchAuctionEnd', async (importOriginal) => {

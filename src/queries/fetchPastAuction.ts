@@ -8,11 +8,11 @@ import { AuctionnedAsset } from '@/types/AuctionnedAsset';
 import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
 import { TokenEntity } from '@/utilities//registry/autogen/token-entity';
 import { EVMOS_DECIMALS, UNKNOWN_TOKEN_METADATA_DEFAULT } from '@/constants';
+import type { HexAddress } from '@/types/HexAddress';
+
 import { fetchAuctionDates } from './fetchAuctionDates';
-import { rpcFetchAuctionEnd } from './rpcFetchAuctionEnd';
 import { fetchPastCryptoPrice } from './fetchPastCryptoPrice';
 import { prismaFetchAuctionEvent } from './prismaFetchAuctionEvent';
-import type { HexAddress } from '@/types/HexAddress';
 
 export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> => {
   const [error, auctionEndEvent] = await E.try(() => prismaFetchAuctionEvent(round));
@@ -71,7 +71,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       ...UNKNOWN_TOKEN_METADATA_DEFAULT,
       denom: token.denom,
       amount: BigInt(token.amount),
-      priceError: true
+      priceError: true,
     };
 
     if (!tokenMetadata) {

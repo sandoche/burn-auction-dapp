@@ -10,6 +10,7 @@ import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
 import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
+import { Tooltip } from '@/components/ui/Tooltip';
 
 import { AssetsTable } from './AssetsTable';
 import { BiddingHistory } from './BiddingHistory';
@@ -17,12 +18,6 @@ import { BiddingForm } from './BiddingForm';
 import { Countdown } from './Countdown';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
-
-import { EVMOS_DECIMALS } from '@/constants';
-import { ButtonLink } from '@/components/ui/ButtonLink';
-import Image from 'next/image';
-import { Tooltip } from '@/components/ui/Tooltip';
-import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
 
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;

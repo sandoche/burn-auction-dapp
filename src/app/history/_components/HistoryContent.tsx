@@ -2,12 +2,13 @@
 // SPDX-License-Identifier:ENCL-1.0(https://github.com/evmos/burn-auction-dapp/blob/main/LICENSE)
 
 import Image from 'next/image';
-import { AuctionHistoryTable } from './AuctionHistoryTable';
+
 import { formatUnits } from '@/utilities/formatUnits';
-import { EVMOS_DECIMALS } from '@/constants';
-import Pagination from '../_components/Pagination';
 import type { AuctionHistory } from '@/types/AuctionHistory';
 import { PAGINATION_ITEMS_PER_PAGE } from '@/constants';
+
+import Pagination from '../_components/Pagination';
+import { AuctionHistoryTable } from './AuctionHistoryTable';
 
 export const HistoryContent = ({ auctionHistory, pageNumber }: { auctionHistory: AuctionHistory; pageNumber: number }) => {
   return (
