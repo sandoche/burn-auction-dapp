@@ -36,6 +36,11 @@ jobs:
   test:
     needs: setup
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_RPC_HOST: 'http://127.0.0.1:8545'
+      NEXT_PUBLIC_ENABLED_LOGS: true
+      GITHUB_API_PROXY: ${{ secrets.GH_API_PROXY }}
+      MOCK_COINGECKO_API: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
