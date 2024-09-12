@@ -115,7 +115,7 @@ export const biddingStateMachine = setup({
       after: {
         // average block time is 3 seconds, added a bit of buffer here
         5000: {
-          target: 'success',
+          target: 'idle',
           actions: 'refreshPage',
         },
       },
