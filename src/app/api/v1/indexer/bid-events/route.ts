@@ -64,3 +64,5 @@ export async function GET() {
     return Response.json({ error: 'Failed to index bid events' }, { status: 500 });
   }
 }
+
+export const dynamic = 'force-dynamic';
