@@ -42,6 +42,10 @@ export const biddingStateMachine = setup({
       bidAmount: ({ context }) => Math.max(Number(formatUnits(context.balance, EVMOS_DECIMALS, 2)) - DECIMAL_DISPLAY_FIX, 0),
       error: () => null,
     }),
+    resetBidAmount: assign({
+      bidAmount: () => '',
+      error: () => null,
+    }),
     refreshPage: () => {
       reloadData();
     },
@@ -116,7 +120,7 @@ export const biddingStateMachine = setup({
         // average block time is 3 seconds, added a bit of buffer here
         5000: {
           target: 'idle',
-          actions: 'refreshPage',
+          actions: ['refreshPage', 'resetBidAmount'], // Reset bid amount here
         },
       },
     },
