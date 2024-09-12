@@ -16,7 +16,7 @@ type TimeLeft = {
 };
 
 const REFRESH_INTERVAL = 1000;
-const DELAY_BEFORE_RELOAD_AFTER_COUNTDOWN_GOES_TO_ZERO = 5000;
+export const DELAY_BEFORE_RELOAD_AFTER_COUNTDOWN_GOES_TO_ZERO = 5000;
 
 const calculateTimeLeft = (date: Date): TimeLeft => {
   const difference = +date - +new Date();
