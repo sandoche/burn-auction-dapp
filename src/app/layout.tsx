@@ -35,6 +35,12 @@ const RootLayout = ({
           </nav>
           <main>{children}</main>
         </div>
+        <p className="text-center text-sm text-evmos-lightish mt-8 opacity-50">
+          Data provided by{' '}
+          <a target="_blank" rel="noreferrer" className="font-bold" href="https://www.coingecko.com">
+            CoinGecko
+          </a>
+        </p>
       </body>
     </html>
   );
