@@ -59,6 +59,7 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
       assets: [] as AuctionnedAsset[],
       totalValue: 0,
       hasPriceError: false,
+      evmosToUsdRate: 0,
     },
   };
 
@@ -108,8 +109,9 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     auctionDetails.auction.assets.push(asset);
   }
 
+  auctionDetails.auction.evmosToUsdRate = await fetchPastCryptoPrice('evmos', dates.end);
   auctionDetails.auction.totalValue = totalValue;
-  auctionDetails.highestBid.bidInUsd = (await fetchPastCryptoPrice('evmos', dates.end)) * auctionDetails.highestBid.bidInEvmosWithDecimals;
+  auctionDetails.highestBid.bidInUsd = auctionDetails.auction.evmosToUsdRate * auctionDetails.highestBid.bidInEvmosWithDecimals;
 
   return auctionDetails;
 };

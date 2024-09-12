@@ -9,7 +9,6 @@ import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
-import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
 import { Tooltip } from '@/components/ui/Tooltip';
 
 import { AssetsTable } from './AssetsTable';
@@ -43,8 +42,6 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
     minute: 'numeric',
     timeZoneName: 'short',
   });
-
-  const evmosToUsdRate = await fetchCurrentCryptoPrice(['evmos']).then((res) => res.evmos.usd);
 
   return (
     <main>
@@ -119,7 +116,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
             </a>
           )}
         </p>
-        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} priceError={auction.hasPriceError} />}</div>
+        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={auction.evmosToUsdRate} priceError={auction.hasPriceError} />}</div>
         <BiddingHistory round={round.round} />
       </section>
     </main>
