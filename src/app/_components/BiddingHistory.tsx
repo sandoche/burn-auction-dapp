@@ -40,20 +40,22 @@ export const BiddingHistory = async ({ round }: { round: bigint }) => {
           </thead>
           <Suspense
             fallback={
-              <tr>
-                <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
-                  <SkeletonBlob className="w-full h-2" />
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                  <SkeletonBlob className="w-full h-2" />
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                  <SkeletonBlob className="w-full h-2" />
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                  <SkeletonBlob className="w-full h-2" />
-                </th>
-              </tr>
+              <tbody>
+                <tr>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">
+                    <SkeletonBlob className="w-full h-2" />
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                    <SkeletonBlob className="w-full h-2" />
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                    <SkeletonBlob className="w-full h-2" />
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-white">
+                    <SkeletonBlob className="w-full h-2" />
+                  </th>
+                </tr>
+              </tbody>
             }
           >
             <BiddingHistoryData round={round} />
