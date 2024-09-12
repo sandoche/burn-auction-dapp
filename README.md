@@ -1,5 +1,3 @@
-🚧 Work in progress, not ready for production 🚧
-
 <div align="center">
   <h1> Evmos Burn Auction Instant dApp </h1>
 </div>
@@ -32,6 +30,8 @@ Pre-requisites:
 ```bash
 pnpm install
 
+pnpm prisma:db:push
+
 cp .env.example .env
 # edit the .env file with your own values
 ```
@@ -55,7 +55,7 @@ pnpm build
 
 ### Test with a local node
 
-Follow the instructions described in this issue in order to run a local node with the Burn Auction module enabled: https://github.com/evmos/burn-auction-dapp/issues/5
+Follow the instructions described in this issue in order to run a local node with the Burn Auction module enabled check this [file](./docs/DEVELOP_WITH_LOCAL_NODE.md).
 
 ### Indexing Endpoints
 

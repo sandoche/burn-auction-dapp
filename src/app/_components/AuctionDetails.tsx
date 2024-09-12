@@ -9,7 +9,7 @@ import type { AuctionDetailed } from '@/types/AuctionDetailed';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { ButtonLink } from '@/components/ui/ButtonLink';
-import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
+import { Tooltip } from '@/components/ui/Tooltip';
 
 import { AssetsTable } from './AssetsTable';
 import { BiddingHistory } from './BiddingHistory';
@@ -17,12 +17,6 @@ import { BiddingForm } from './BiddingForm';
 import { Countdown } from './Countdown';
 import { BiddingProgress } from './BiddingProgress';
 import { DiscountChip } from './DiscountChip';
-
-import { EVMOS_DECIMALS } from '@/constants';
-import { ButtonLink } from '@/components/ui/ButtonLink';
-import Image from 'next/image';
-import { Tooltip } from '@/components/ui/Tooltip';
-import { fetchCurrentCryptoPrice } from '@/queries/fetchCurrentCryptoPrice';
 
 export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: AuctionDetailed }) => {
   const { round, auction, highestBid }: AuctionDetailed = auctionDetails;
@@ -49,8 +43,6 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
     timeZoneName: 'short',
   });
 
-  const evmosToUsdRate = await fetchCurrentCryptoPrice(['evmos']).then((res) => res.evmos.usd);
-
   return (
     <main>
       <section className="mb-12">
@@ -63,7 +55,7 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
                 </ButtonLink>
               </div>
             )}
-            <h1 className="text-3xl flex font-bold">Auction #{Number(round.round)}</h1>
+            <h1 className="text-3xl flex">Auction #{Number(round.round)}</h1>
           </div>
           {round.isLast && (
             <Chip>
@@ -119,12 +111,12 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
         </div>
         <p className="mb-6">
           {highestBid.bidderAddress !== '0x0000000000000000000000000000000000000000' && (
-            <a href={`https://www.mintscan.io/evmos/address/${highestBid.bidderAddress}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
-              {highestBid.bidderAddress}
+            <a href={`https://www.mintscan.io/evmos/address/${highestBid.bidderAddress}`} className="text-evmos-primary hover:text-evmos-primary-light flex" target="_blank">
+              <span className="mr-2">{highestBid.bidderAddress}</span> <Image src="/icons/external.svg" alt="Evmos Icon" width={16} height={16} />
             </a>
           )}
         </p>
-        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={evmosToUsdRate} />}</div>
+        <div className="mb-6">{round.isLast && <BiddingForm evmosToUsdRate={auction.evmosToUsdRate} priceError={auction.hasPriceError} />}</div>
         <BiddingHistory round={round.round} />
       </section>
     </main>

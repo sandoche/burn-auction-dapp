@@ -3,8 +3,10 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import reloadData from '../_actions/reloadData';
+
 import { Log } from '@/utilities/logger';
+
+import reloadData from '../_actions/reloadData';
 
 type TimeLeft = {
   days: number;
@@ -14,6 +16,7 @@ type TimeLeft = {
 };
 
 const REFRESH_INTERVAL = 1000;
+const DELAY_BEFORE_RELOAD_AFTER_COUNTDOWN_GOES_TO_ZERO = 5000;
 
 const calculateTimeLeft = (date: Date): TimeLeft => {
   const difference = +date - +new Date();
@@ -57,10 +60,10 @@ export const Countdown = ({ date }: { date: Date }) => {
         setTimeout(() => {
           Log().info('Reloading data after countdown to 0');
           reloadData();
-        }, 5000);
+        }, DELAY_BEFORE_RELOAD_AFTER_COUNTDOWN_GOES_TO_ZERO);
       }
-    }, 1000);
-    
+    }, REFRESH_INTERVAL);
+
     return () => {
       clearInterval(interval);
     };

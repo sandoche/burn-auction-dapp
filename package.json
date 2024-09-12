@@ -15,7 +15,7 @@
     "prepare": "husky",
     "test": "vitest",
     "gen:types": "cross-env NODE_OPTIONS='--experimental-import-meta-resolve' tsx ./src/utilities/registry/scripts/gen-schema-types.mts",
-    "postinstall": "npm run gen:types",
+    "postinstall": "npm run gen:types && npm run prisma:generate",
     "license": "node ./check-license.mjs",
     "license:fix": "node ./check-license.mjs --fix",
     "typecheck": "tsc --noEmit",
@@ -73,4 +73,3 @@
     "vitest": "^2.0.5"
   }
 }
-

@@ -4,11 +4,11 @@
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 
 import type { AuctionHistory } from '@/types/AuctionHistory';
+import { EVMOS_DECIMALS } from '@/constants';
 
 import { fetchAuctionHistory } from '../fetchAuctionHistory';
 import { mockAuctionEndEvents } from './mockedData';
 import * as prismaModule from '../prismaFetchAuctionEvents';
-import { EVMOS_DECIMALS } from '@/constants';
 
 // Mock the entire module
 vi.mock('../prismaFetchAuctionEvents');
@@ -30,6 +30,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+/* eslint-disable no-magic-numbers */
 describe('fetchAuctionHistory()', () => {
   it('should return the auction history and the correct total burned amount', async () => {
     mockPrismaFetchAuctionEvents.mockResolvedValue(

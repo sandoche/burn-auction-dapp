@@ -13,8 +13,9 @@ import { viemPublicClient } from '@/utilities/viem';
 import { formatUnits } from '@/utilities/formatUnits';
 import { EVMOS_DECIMALS } from '@/constants';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
+import { Tooltip } from '@/components/ui/Tooltip';
 
-export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
+export const BiddingForm = ({ evmosToUsdRate, priceError }: { evmosToUsdRate: number; priceError: boolean }) => {
   const [state, send] = useMachine(biddingStateMachine);
 
   dappstore.onAccountsChange((accounts) => send({ type: 'SET_WALLET', wallet: accounts[0] }));
@@ -39,7 +40,7 @@ export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
     send({ type: 'SUBMIT' });
   };
 
-  const isSubmitDisabled = (state.context.bidAmount !== '' && !state.can({ type: 'SUBMIT' })) || state.matches('submitting');
+  const isSubmitDisabled = (state.context.bidAmount !== '' && !state.can({ type: 'SUBMIT' })) || state.matches('submitting') || state.matches('success');
   const errorMessage =
     Number(state.context.bidAmount) < 0
       ? 'Bid amount must be greater than 0'
@@ -66,7 +67,7 @@ export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
               placeholder="Amount"
               value={state.context.bidAmount}
               onChange={(e) => send({ type: 'SET_BID_AMOUNT', value: e.target.value })}
-              disabled={state.matches('submitting')}
+              disabled={isSubmitDisabled}
             />
             <Image src="/icons/evmos.svg" alt="EVMOS" width={24} height={24} className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
           </div>
@@ -74,16 +75,21 @@ export const BiddingForm = ({ evmosToUsdRate }: { evmosToUsdRate: number }) => {
             className="disabled:text-evmos-gray-light disabled:bg-evmos-gray disabled:border-evmos-gray items-center justify-center rounded-full transition-[background-color,outline-color,filter] transition-200 flex gap-x-1 outline outline-offset-2 outline-1 outline-transparent bg-evmos-orange-500 hover:bg-evmos-orange-400 py-[9px] px-5 active:outline-evmos-secondary-dark"
             disabled={isSubmitDisabled}
           >
-            {state.matches('submitting') ? <LoadingSpinner /> : 'Bid'}
+            {state.matches('submitting') || state.matches('success') ? <LoadingSpinner /> : 'Bid'}
           </button>
         </div>
-        <div className="flex justify-between mt-2">
-          {Number(state.context.bidAmount) > 0 && <span className="text-evmos-lightish text-sm">≈ ${(Number(state.context.bidAmount) * evmosToUsdRate).toFixed(2)}</span>}
+        <div className="flex mt-2">
+          {Number(state.context.bidAmount) > 0 && <span className="text-evmos-lightish text-sm mr-2">≈ ${(Number(state.context.bidAmount) * evmosToUsdRate).toFixed(2)}</span>}
+          {Number(state.context.bidAmount) > 0 && priceError && (
+            <Tooltip content="Evmos price could not be fetched from Coingecko" extraClasses="-mt-12 -translate-x-2">
+              <Image src="/icons/info.svg" alt="Info" width={20} height={20} />
+            </Tooltip>
+          )}
         </div>
       </form>
       {errorMessage && <div className="text-evmos-error text-sm mt-2">{errorMessage}</div>}
       {state.matches('error') && <div className="text-evmos-error text-sm mt-2">{state.context.error}</div>}
-      {state.matches('success') && <div className="text-evmos-success text-sm mt-2">Bid placed successfully!</div>}
+      {state.matches('success') && <div className="text-evmos-success text-sm mt-2">Bid placed successfully! It will appear in a few seconds.</div>}
     </Card>
   );
 };

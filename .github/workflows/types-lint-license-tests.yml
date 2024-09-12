@@ -1,0 +1,112 @@
+name: Check types, lint, license and run tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.16.0'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_RPC_HOST: 'http://127.0.0.1:8545'
+      NEXT_PUBLIC_ENABLED_LOGS: true
+      GH_API_PROXY: ${{ secrets.GH_API_PROXY }}
+      MOCK_COINGECKO_API: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.16.0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - run: pnpm install
+      - run: pnpm test
+
+  typecheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.16.0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - run: pnpm install
+      - run: pnpm typecheck
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.16.0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - run: pnpm install
+      - run: pnpm lint
+
+  license:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.16.0'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+      - run: pnpm install
+      - run: pnpm license

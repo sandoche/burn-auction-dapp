@@ -7,8 +7,9 @@ import { viemPublicClient } from '@/utilities/viem';
 import { Log } from '@/utilities/logger';
 import { EVMOS_DECIMALS } from '@/constants';
 
+const MAX_BLOCKS_PER_REQUEST = 10000;
 const FIRST_AUCTION_BLOCK = process.env.FIRST_AUCTION_BLOCK ? BigInt(process.env.FIRST_AUCTION_BLOCK) : BigInt(0);
-const BATCH_SIZE = BigInt(10000);
+const BATCH_SIZE = BigInt(MAX_BLOCKS_PER_REQUEST);
 
 export async function GET() {
   try {
@@ -45,6 +46,7 @@ export async function GET() {
             },
             burned: event.args.burned.toString(),
             blockNumber: event.blockNumber.toString(),
+            // eslint-disable-next-line no-magic-numbers
             burnedWithoutDecimals: Number(BigInt(event.args.burned) / BigInt(10 ** EVMOS_DECIMALS)),
             transactionHash: event.transactionHash,
             transactionIndex: event.transactionIndex,

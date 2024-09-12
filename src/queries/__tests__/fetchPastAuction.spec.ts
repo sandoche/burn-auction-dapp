@@ -4,14 +4,13 @@
 import { expect, describe, it, expectTypeOf, beforeEach, afterEach, vi } from 'vitest';
 
 import type { AuctionDetailed } from '@/types/AuctionDetailed';
+import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
+import { EVMOS_DECIMALS } from '@/constants';
 
 import { fetchPastAuction } from '../fetchPastAuction';
-import { mockCoinGeckoResponse, mockAuctionResponse, epochInfoResponse, mockAuctionEndEventsRound3 } from './mockedData';
 import { prismaFetchAuctionEvent } from '../prismaFetchAuctionEvent';
 import { fetchAuctionDates } from '../fetchAuctionDates';
 import { fetchPastCryptoPrice } from '../fetchPastCryptoPrice';
-import { fetchChainRegistryDir } from '@/utilities/fetchChainRegistryDir';
-import { EVMOS_DECIMALS } from '@/constants';
 
 vi.mock('../prismaFetchAuctionEvent');
 vi.mock('../fetchAuctionDates');
@@ -29,6 +28,7 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
+/* eslint-disable no-magic-numbers */
 describe('fetchPastAuction()', () => {
   it('should return the past auction info of type AuctionDetailed', async () => {
     const mockAuctionEvent = {
@@ -52,6 +52,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
@@ -131,6 +132,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
@@ -179,6 +181,7 @@ describe('fetchPastAuction()', () => {
     vi.mocked(prismaFetchAuctionEvent).mockResolvedValue([
       {
         ...mockAuctionEvent,
+        // @ts-ignore
         coins: mockAuctionEvent.coins.map((coin) => ({
           ...coin,
           id: 1,
@@ -192,12 +195,6 @@ describe('fetchPastAuction()', () => {
     });
     vi.mocked(fetchChainRegistryDir).mockRejectedValue(new Error('Failed to fetch chain registry'));
 
-describe('fetchPastAuction(5)', async () => {
-  it('should return the current auction info of type AuctionDetailed', async () => {
-    // eslint-disable-next-line no-magic-numbers
-    const result = await fetchPastAuction(BigInt(40));
-    expect(result).toBeDefined();
-    expectTypeOf(result).toMatchTypeOf<AuctionDetailed>();
     await expect(fetchPastAuction(BigInt(6))).rejects.toThrow('Failed to fetch chain registry');
   });
 });

@@ -4,10 +4,10 @@
 'use server';
 import { isString } from '@/utilities/assertions';
 
-const GITHUB_API_PROXY = process.env.GITHUB_API_PROXY;
+const GH_API_PROXY = process.env.GH_API_PROXY;
 
 async function getContent(owner: string, repo: string, path: string, ref: string) {
-  return fetch(GITHUB_API_PROXY + 'repos/' + owner + '/' + repo + '/contents/' + path + '?ref=' + ref);
+  return fetch(GH_API_PROXY + 'repos/' + owner + '/' + repo + '/contents/' + path + '?ref=' + ref);
 }
 
 export const fetchChainRegistryDir = async <T>(dir: string) => {

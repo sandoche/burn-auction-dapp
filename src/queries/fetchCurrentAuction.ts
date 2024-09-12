@@ -35,7 +35,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     throw errorEndDate;
   }
 
-  const currentAuctionInfo = {
+  const currentAuctionInfo: AuctionDetailed = {
     round: {
       round: auctionInfo.currentRound,
       isLast: true,
@@ -53,6 +53,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
       assets: [] as AuctionnedAsset[],
       totalValue: 0,
       hasPriceError: false,
+      evmosToUsdRate: 0,
     },
   };
 
@@ -103,6 +104,7 @@ export const fetchCurrentAuction = async (): Promise<AuctionDetailed> => {
     return asset;
   });
 
+  currentAuctionInfo.auction.evmosToUsdRate = prices['evmos']['usd'];
   currentAuctionInfo.highestBid.bidInUsd = currentAuctionInfo.highestBid.bidInEvmosWithDecimals * prices['evmos']['usd'];
   currentAuctionInfo.auction.totalValue = currentAuctionInfo.auction.assets.reduce((acc, asset) => acc + asset.valueInUsd, 0);
 
