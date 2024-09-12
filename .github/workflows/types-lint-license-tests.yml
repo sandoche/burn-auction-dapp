@@ -6,11 +6,13 @@ on:
       - main
 
 jobs:
-  setup:
+  install-dependencies:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -22,19 +24,22 @@ jobs:
         with:
           version: 8
 
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Cache dependencies
         uses: actions/cache@v3
+        id: cache
         with:
-          path: ~/.pnpm-store
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install
 
   test:
-    needs: setup
+    needs: install-dependencies
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_RPC_HOST: 'http://127.0.0.1:8545'
@@ -51,13 +56,13 @@ jobs:
           version: 8
       - uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - run: pnpm install
       - run: pnpm test
 
   typecheck:
-    needs: setup
+    needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -69,13 +74,13 @@ jobs:
           version: 8
       - uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - run: pnpm install
       - run: pnpm typecheck
 
   lint:
-    needs: setup
+    needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -87,13 +92,13 @@ jobs:
           version: 8
       - uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - run: pnpm install
       - run: pnpm lint
 
   license:
-    needs: setup
+    needs: install-dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -105,7 +110,7 @@ jobs:
           version: 8
       - uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: |
+            **/node_modules
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - run: pnpm install
       - run: pnpm license
