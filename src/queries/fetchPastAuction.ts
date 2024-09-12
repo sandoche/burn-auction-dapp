@@ -109,7 +109,11 @@ export const fetchPastAuction = async (round: bigint): Promise<AuctionDetailed> 
     auctionDetails.auction.assets.push(asset);
   }
 
-  auctionDetails.auction.evmosToUsdRate = await fetchPastCryptoPrice('evmos', dates.end);
+  // eslint-disable-next-line no-unused-vars
+  const [_, evmosToUsdRateCoingecko] = await E.try(() => fetchPastCryptoPrice('evmos', dates.end));
+  const evmosToUsdRate = evmosToUsdRateCoingecko ?? 0;
+
+  auctionDetails.auction.evmosToUsdRate = evmosToUsdRate;
   auctionDetails.auction.totalValue = totalValue;
   auctionDetails.highestBid.bidInUsd = auctionDetails.auction.evmosToUsdRate * auctionDetails.highestBid.bidInEvmosWithDecimals;
 
