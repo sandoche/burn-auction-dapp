@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
         port: '',
-        pathname: 'm/evmos/chain-token-registry/main/assets/tokens/',
+        pathname: '/evmos/chain-token-registry/main/assets/tokens/',
       },
     ],
   },
