@@ -114,8 +114,8 @@ export const AuctionDetails = async ({ auctionDetails }: { auctionDetails: Aucti
         </div>
         <p className="mb-6">
           {highestBid.bidderAddress !== '0x0000000000000000000000000000000000000000' && (
-            <a href={`https://www.mintscan.io/evmos/address/${highestBid.bidderAddress}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
-              {highestBid.bidderAddress}
+            <a href={`https://www.mintscan.io/evmos/address/${highestBid.bidderAddress}`} className="text-evmos-primary hover:text-evmos-primary-light flex" target="_blank">
+              <span className="mr-2">{highestBid.bidderAddress}</span> <Image src="/icons/external.svg" alt="Evmos Icon" width={16} height={16} />
             </a>
           )}
         </p>

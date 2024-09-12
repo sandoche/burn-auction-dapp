@@ -30,8 +30,8 @@ export const BiddingHistoryData = async ({ round }: { round: bigint }) => {
         {bids.map((bid) => (
           <tr key={bid.transactionHash}>
             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
-              <a href={`https://www.mintscan.io/evmos/address/${bid.bidder}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
-                {shortenAddress(bid.bidder)}
+              <a href={`https://www.mintscan.io/evmos/address/${bid.bidder}`} className="text-evmos-primary hover:text-evmos-primary-light flex" target="_blank">
+                <span className="mr-2">{shortenAddress(bid.bidder)}</span> <Image src="/icons/external.svg" alt="Evmos Icon" width={16} height={16} />
               </a>
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm flex text-evmos-lightish">
@@ -40,8 +40,8 @@ export const BiddingHistoryData = async ({ round }: { round: bigint }) => {
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-sm text-evmos-lightish">{bid.time ? dayjs(bid.time).fromNow() : ''}</td>
             <td className="whitespace-nowrap px-3 py-4 text-sm">
-              <a href={`https://www.mintscan.io/evmos/tx/${bid.transactionHash}`} className="text-evmos-primary hover:text-evmos-primary-light" target="_blank">
-                {shortenAddress(bid.transactionHash)}
+              <a href={`https://www.mintscan.io/evmos/tx/${bid.transactionHash}`} className="text-evmos-primary hover:text-evmos-primary-light flex" target="_blank">
+                <span className="mr-2">{shortenAddress(bid.transactionHash)}</span> <Image src="/icons/external.svg" alt="Evmos Icon" width={16} height={16} />
               </a>
             </td>
           </tr>
