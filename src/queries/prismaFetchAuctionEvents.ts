@@ -14,7 +14,7 @@ export const prismaFetchAuctionEvents = async (page: number, itemsPerPage: numbe
       include: {
         coins: true,
       },
-      skip: (page - 1) * itemsPerPage,
+      skip: page > 0 ? (page - 1) * itemsPerPage : 0,
       take: itemsPerPage,
     }),
   );
