@@ -67,7 +67,7 @@ export const BiddingForm = ({ evmosToUsdRate, priceError }: { evmosToUsdRate: nu
               placeholder="Amount"
               value={state.context.bidAmount}
               onChange={(e) => send({ type: 'SET_BID_AMOUNT', value: e.target.value })}
-              disabled={isSubmitDisabled}
+              disabled={state.matches('submitting') || state.matches('success')}
             />
             <Image src="/icons/evmos.svg" alt="EVMOS" width={24} height={24} className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
           </div>

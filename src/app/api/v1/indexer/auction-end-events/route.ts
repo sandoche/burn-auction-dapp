@@ -74,3 +74,5 @@ export async function GET() {
     return Response.json({ error: 'Failed to index auction end events' }, { status: 500 });
   }
 }
+
+export const dynamic = 'force-dynamic';
